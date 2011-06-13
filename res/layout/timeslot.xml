@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layoutSlot">
+	<TextView 
+		android:layout_alignParentLeft="true"
+		android:id="@+id/tvTimeLabel" 
+		android:layout_width="wrap_content"
+		android:text="1pm">
+	</TextView>
+	<TextView 
+		android:layout_alignParentRight="true"
+		android:id="@+id/tvInfo " 
+		android:layout_width="wrap_content"
+		android:text="1pm">
+	</TextView>
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_alignParentTop="true"
+		android:text="@string/hello" android:id="@+id/tvTime" />
+	<TabHost android:layout_below="@id/tvTime" android:id="@android:id/tabhost"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<RelativeLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:padding="5dp">
+			<TabWidget android:id="@android:id/tabs"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true" />
+			<FrameLayout android:id="@android:id/tabcontent"
+				android:layout_above="@android:id/tabs" android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:background="#234523" />
+
+		</RelativeLayout>
+	</TabHost>
+</RelativeLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/popup" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout android:id="@+id/linearpopup"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="300dp" android:background="#5F5A59"
+			android:layout_height="350dp" android:gravity="center_horizontal">
+
+			<TextView android:layout_height="wrap_content" android:id="@+id/tvFormTitle"
+				android:layout_width="wrap_content" android:text="What would you like to do?"></TextView>
+			<RelativeLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:gravity="center_horizontal"
+				android:layout_marginTop="10dp">
+				<!-- Title -->
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvTitle"
+					android:layout_width="wrap_content" android:text="Title:          "></TextView>
+				<EditText android:layout_height="wrap_content" android:id="@+id/etTitle"
+					android:layout_width="fill_parent" android:text=""
+					android:inputType="textVisiblePassword" android:layout_toRightOf="@id/tvTitle"></EditText>
+				<!--Type -->
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvType"
+					android:layout_width="wrap_content" android:text="Type:"
+					android:layout_below="@id/etTitle"></TextView>
+				<RadioGroup android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:orientation="horizontal"
+					android:id="@+id/rgType" android:layout_alignLeft="@id/etTitle"
+					android:layout_alignTop="@id/tvType">
+					<RadioButton android:id="@+id/radio_event"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="Event" android:checked="true" />
+					<RadioButton android:id="@+id/radio_task"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:text="Task" />
+				</RadioGroup>
+				<!-- StartTime -->
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvStartTime"
+					android:layout_width="wrap_content" android:text="StartTime: "
+					android:layout_below="@id/rgType"></TextView>
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvDisplayStartTime"
+					android:layout_width="wrap_content" android:text="11pm30"
+					android:layout_alignTop="@id/tvStartTime" android:layout_alignLeft="@id/etTitle"></TextView>
+				<Button android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:id="@+id/btChangeStartTime"
+					android:text="Change start time" android:layout_alignTop="@id/tvStartTime"
+					android:layout_toRightOf="@id/tvDisplayStartTime"
+					android:layout_alignParentRight="true"></Button>
+				<!-- EndTime -->
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvEndTime"
+					android:layout_width="wrap_content" android:text="EndTime: "
+					android:layout_below="@id/btChangeStartTime"
+					android:layout_alignLeft="@id/tvStartTime"></TextView>
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvDisplayEndTime"
+					android:layout_width="wrap_content" android:text="11pm30"
+					android:layout_alignTop="@id/tvEndTime" android:layout_alignLeft="@id/tvDisplayStartTime"></TextView>
+				<Button android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:id="@+id/btChangeEndTime"
+					android:text="Change end time" android:layout_alignTop="@id/tvEndTime"
+					android:layout_alignRight="@id/btChangeStartTime"
+					android:layout_toRightOf="@id/tvDisplayEndTime"
+					android:layout_alignLeft="@id/btChangeStartTime"></Button>
+				<!-- Location -->
+				<TextView android:layout_height="wrap_content" android:id="@+id/tvLocation"
+					android:layout_width="wrap_content" android:text="Location: "
+					android:layout_below="@id/btChangeEndTime"
+					android:layout_alignLeft="@id/tvStartTime">
+				</TextView>
+				<AutoCompleteTextView android:layout_height="wrap_content"
+					android:layout_width="fill_parent" android:id="@+id/autoTvLocation"
+					android:layout_alignTop="@id/tvLocation" android:layout_alignLeft="@id/etTitle" />
+
+			</RelativeLayout>
+
+			<LinearLayout android:id="@+id/linearLayout"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:orientation="horizontal" android:gravity="center_horizontal"
+				android:layout_marginTop="10dp">
+				<!-- Checkboxes -->
+				<Button android:id="@+id/btAdd" android:text="Add"
+					android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:layout_weight="1"></Button>
+				<Button android:layout_width="wrap_content" android:id="@+id/btModify"
+					android:text="Modify" android:layout_height="wrap_content"
+					android:layout_weight="1"></Button>
+				<Button android:id="@+id/btDetail" android:text="Edit details"
+					android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:layout_weight="1"></Button>
+				<Button android:id="@+id/btRemove" android:text="Remove"
+					android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:layout_weight="1"></Button>
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

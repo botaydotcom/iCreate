@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Hello World, Main!</string>
+	<string name="app_name">AppTime</string>
+	<string name="modifycontextmenu">Modify item</string>
+	<string name="removecontextmenu">Remove item</string>
+	
+<!-- 	My organizer API constants -->
+	<string name="my_organizer_uri">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Personal</string>
+	<string name="apikeyfield">APIKey</string>
+	<string name="authfield">AuthToken</string>
+	<string name="startdatefield">StartDate</string>
+	<string name="enddatefield">EndDate</string>
+	
+</resources>

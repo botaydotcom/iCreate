@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<APIDataOfData_Organizer_EventsMTRdQN6P
+	xmlns="http://schemas.datacontract.org/2004/07/" 
+	xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Comments>Valid login!</Comments>
+	<LastUpdate>2011-06-13T21:55:14.4786541+08:00</LastUpdate>
+	<Results>
+		<Data_Organizer_Events>
+			<Date>2011-06-13T21:53:00</Date>
+			<Description>sdfsdfsdf</Description>
+			<EventType>Personal</EventType>
+			<ID>4bbcb08d-3c90-478b-aed7-b2de1b98ef34</ID>
+			<Location>some venue</Location>
+			<Title>Test event</Title>
+		</Data_Organizer_Events>
+		
+		
+	</Results>
+</APIDataOfData_Organizer_EventsMTRdQN6P>
