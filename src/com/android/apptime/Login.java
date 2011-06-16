@@ -48,8 +48,8 @@ public class Login extends Activity  {
         	}
         });
     
-        //wv.loadUrl(getString(R.string.ivle_login));
-        wv.loadUrl("https://ivle.nus.edu.sg/api/login/?apikey=AMie2EgILFdcDJP06BAOZ");
+        wv.loadUrl(getString(R.string.login_uri)+"?"+getString(R.string.login_apikeyfield)+"="+getString(R.string.apikey));
+        
         return IVLE_Token;
     }
     
@@ -79,9 +79,11 @@ public class Login extends Activity  {
         	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
         	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield),"AMie2EgILFdcDJP06BAOZ"));
         	listParams.add(new BasicNameValuePair(getString(R.string.authfield),IVLE_Token));
-        	listParams.add(new BasicNameValuePair(getString(R.string.startdatefield),"10/04/2011"));
-        	listParams.add(new BasicNameValuePair(getString(R.string.enddatefield),"14/06/2011"));
+        	listParams.add(new BasicNameValuePair(getString(R.string.startdatefield),"01/06/2011"));
+        	listParams.add(new BasicNameValuePair(getString(R.string.enddatefield),"10/08/2011"));
+        	
         	String result = DataHandler.sendRequestUsingGet(getString(R.string.my_organizer_uri), listParams);
+        	
         	//print out the token or save for next logon or to navigate to next API call.
         	Log.i("Token", result);
         }
