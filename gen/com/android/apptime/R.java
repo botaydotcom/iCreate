@@ -77,16 +77,23 @@ public final class R {
         public static final int timeslot=0x7f03000a;
     }
     public static final class string {
-        public static final int apikeyfield=0x7f060005;
-        public static final int app_name=0x7f060001;
-        public static final int authfield=0x7f060006;
-        public static final int enddatefield=0x7f060008;
-        public static final int hello=0x7f060000;
-        public static final int modifycontextmenu=0x7f060002;
-        /**  	My organizer API constants 
+        /**  API Key 
          */
-        public static final int my_organizer_uri=0x7f060004;
+        public static final int apikey=0x7f060004;
+        public static final int apikeyfield=0x7f060008;
+        public static final int app_name=0x7f060001;
+        public static final int authfield=0x7f060009;
+        public static final int enddatefield=0x7f06000b;
+        public static final int hello=0x7f060000;
+        public static final int login_apikeyfield=0x7f060006;
+        /**  IVLE Login Constants 
+         */
+        public static final int login_uri=0x7f060005;
+        public static final int modifycontextmenu=0x7f060002;
+        /**  IVLE My Organizer API Constants 
+         */
+        public static final int my_organizer_uri=0x7f060007;
         public static final int removecontextmenu=0x7f060003;
-        public static final int startdatefield=0x7f060007;
+        public static final int startdatefield=0x7f06000a;
     }
 }

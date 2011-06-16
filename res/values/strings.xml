@@ -5,7 +5,14 @@
 	<string name="modifycontextmenu">Modify item</string>
 	<string name="removecontextmenu">Remove item</string>
 	
-<!-- 	My organizer API constants -->
+<!-- API Key -->
+	<string name="apikey">AMie2EgILFdcDJP06BAOZ</string>
+	
+<!-- IVLE Login Constants -->
+	<string name="login_uri">https://ivle.nus.edu.sg/api/login/</string>
+	<string name="login_apikeyfield">apikey</string>
+	
+<!-- IVLE My Organizer API Constants -->
 	<string name="my_organizer_uri">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Personal</string>
 	<string name="apikeyfield">APIKey</string>
 	<string name="authfield">AuthToken</string>
