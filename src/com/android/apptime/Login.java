@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -42,6 +43,8 @@ public class Login extends Activity  {
         			// When login is successful, there will be a &r=0 in the url. It also means the return data is the token itself.
         			if (url.indexOf("&r=0") > 0)
         			{
+        				Intent startMain = new Intent (getApplicationContext(), Main.class);
+        				startActivity(startMain);
         				view.loadUrl("javascript:window.HTMLOUT.processHTML(document.getElementsByTagName('body')[0].innerHTML);");        				
         			}
         		}

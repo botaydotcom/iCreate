@@ -25,7 +25,7 @@ public class DayItemView extends TextView {
 	private int w, h;
 	private String time = "1pm-3pm";
 	private String content = "";
-	private Object item = null;
+	private Item item = null;
 
 	public DayItemView(Context context, AttributeSet ats, int ds) {
 		super(context, ats, ds);
@@ -101,7 +101,7 @@ public class DayItemView extends TextView {
 	 *            - the item
 	 */
 
-	public void setItem(Object object) {
+	public void setItem(Item object) {
 		item = object;
 	}
 
@@ -111,7 +111,7 @@ public class DayItemView extends TextView {
 	 * @return
 	 */
 
-	public Object getItem() {
+	public Item getItem() {
 		return item;
 	}
 

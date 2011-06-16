@@ -1,5 +1,7 @@
 package com.android.apptime;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -13,7 +15,7 @@ public class TimeSlotView extends TextView {
   private Paint linePaint;
   private int paperColor;
   private float margin;
-  private TimeSlot time;
+  private Date time;
   
   public TimeSlotView (Context context, AttributeSet ats, int ds) {
     super(context, ats, ds);
@@ -30,16 +32,17 @@ public class TimeSlotView extends TextView {
     init();
   }
   
-  public void setTime(TimeSlot time){
+  public void setTime(Date time){
 	  this.time = time;
   }
-  public TimeSlot getTime(){
+  public Date getTime(){
 	  return time;
   }
   
   private void init() {
-	time = new TimeSlot();
-	time.setTime(0, 0);
+	time = new Date();
+	time.setHours(0);
+	time.setMinutes(0);
     // Get a reference to our resource table.
     Resources myResources = getResources();
 

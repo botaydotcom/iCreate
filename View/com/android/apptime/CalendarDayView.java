@@ -33,6 +33,9 @@ public class CalendarDayView extends Activity {
 	private final int CONTEXT_MENU_MODIFY = 1;
 	private final int CONTEXT_MENU_REMOVE = 2;
 
+	public static final int POPUP_TIME_SLOT = 0;
+	public static final int POPUP_ITEM= 1;
+
 	private final int POPUP_FORM= 0;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private RelativeLayout listTimeSlotLayout = null;
@@ -97,9 +100,9 @@ public class CalendarDayView extends Activity {
 	private void displayAllTimeSlot() {
 		for (int i = 0; i < Constant.NUM_HOUR; i++) {
 			dayTimeSlot[i] = new TimeSlotView(getApplicationContext());
-			dayTimeSlot[i].getTime().setTime(i, 0);
-			dayTimeSlot[i].setText(dayTimeSlot[i].getTime()
-					.getAPPMHourFormatWithoutHourPadding());
+			dayTimeSlot[i].getTime().setHours(i);
+			dayTimeSlot[i].getTime().setMinutes(0);
+			dayTimeSlot[i].setText(TimeFormat.getAPPMHourFormatWithoutHourPadding(dayTimeSlot[i].getTime()));
 			RelativeLayout.LayoutParams layoutParams = null;
 			layoutParams = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.FILL_PARENT, timeSlotHeight);
@@ -138,7 +141,19 @@ public class CalendarDayView extends Activity {
 		if (itemBeingSelected.getClass().equals(TimeSlotView.class)){
 			TimeSlotView timeSlotView = (TimeSlotView) itemBeingSelected;
 			Intent createPopup = new Intent(getApplicationContext(), PopupForm.class);
-			createPopup.putExtra("startTime", timeSlotView.getTime().getHour());
+			createPopup.putExtra("popupType", POPUP_TIME_SLOT);
+			createPopup.putExtra("startTime", timeSlotView.getTime());
+			createPopup.putExtra("offX", itemBeingSelected.getLeft());
+			createPopup.putExtra("offY", itemBeingSelected.getBottom());
+			startActivityForResult(createPopup, POPUP_FORM);
+		} else
+		{
+			DayItemView itemView = (DayItemView) itemBeingSelected;
+			Intent createPopup = new Intent(getApplicationContext(), PopupForm.class);
+			createPopup.putExtra("startTime", itemView.getItem().GetStartTime());
+			createPopup.putExtra("endTime", itemView.getItem().GetEndTime());
+			createPopup.putExtra("endTime", itemView.getItem().GetEndTime());
+			createPopup.putExtra("popupType", POPUP_ITEM);
 			createPopup.putExtra("offX", itemBeingSelected.getLeft());
 			createPopup.putExtra("offY", itemBeingSelected.getBottom());
 			startActivityForResult(createPopup, POPUP_FORM);
@@ -149,7 +164,8 @@ public class CalendarDayView extends Activity {
 			int toHour, int toMin, int leftMargin, int width) {
 		DayItemView newItem = new DayItemView(getApplicationContext());
 		newItem.setText("Place holder text");
-		newItem.setItem(object);
+		// need to read from database 
+//		newItem.setItem(object);
 		RelativeLayout.LayoutParams layoutParams = null;
 		int height = getHeightForItemInTimeSlot(fromHour, fromMin, toHour,
 				toMin);

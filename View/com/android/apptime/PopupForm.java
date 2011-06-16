@@ -1,12 +1,14 @@
 package com.android.apptime;
 
+import java.io.ObjectOutputStream.PutField;
+import java.util.Date;
+
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -18,7 +20,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class PopupForm extends Activity {
 	public static int nextViewId = 1;
@@ -43,8 +44,7 @@ public class PopupForm extends Activity {
 	private Button mRemoveButton = null;
 	private Button mDetailButton = null;
 	private View itemBeingSelected = null;
-	private TimeSlot startTime = null;
-	private TimeSlot endTime = null;
+	private Date startTime = null, endTime = null;
 	private LinearLayout layout = null;
 
 	@Override
@@ -53,16 +53,16 @@ public class PopupForm extends Activity {
 		setContentView(R.layout.popup);
 		layout = (LinearLayout) findViewById(R.id.linearpopup);
 		Bundle extras = getIntent().getExtras();
+		int type = extras.getInt("popupType");
+		startTime = (Date) extras.get("startTime");
+		endTime = (Date) extras.get("endTime");
 		int offX = extras.getInt("offX");
 		int offY = extras.getInt("offY");
-		RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.leftMargin = offX;
 		params.topMargin = offY;
 		layout.setLayoutParams(params);
-		startTime = new TimeSlot();
-		startTime.setTime(0, 0);
-		endTime = new TimeSlot();
-		endTime.setTime(0, 0);
 		mEtTitle = (EditText) findViewById(R.id.etTitle);
 		mTvStartTime = (TextView) findViewById(R.id.tvDisplayStartTime);
 		mTvEndTime = (TextView) findViewById(R.id.tvDisplayEndTime);
@@ -71,30 +71,7 @@ public class PopupForm extends Activity {
 		changeStartTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// prepare the alert box
-				AlertDialog.Builder alertbox = new AlertDialog.Builder(
-						getApplicationContext());
-
-				// set the message to display
-				alertbox.setMessage("This is the alertbox!");
-
-				// add a neutral button to the alert box and assign a click
-				// listener
-				alertbox.setNeutralButton("Ok",
-						new DialogInterface.OnClickListener() {
-
-							// click listener on the alert box
-							public void onClick(DialogInterface arg0, int arg1) {
-								// the button was clicked
-								Toast.makeText(getApplicationContext(),
-										"OK button clicked", Toast.LENGTH_LONG)
-										.show();
-							}
-						});
-
-				// show it
-				alertbox.show();
-				// showDialog(START_TIME_DIALOG_ID);
+				showDialog(START_TIME_DIALOG_ID);
 			}
 		});
 
@@ -129,6 +106,14 @@ public class PopupForm extends Activity {
 
 			}
 		});
+		switch (type) {
+		case (CalendarDayView.POPUP_TIME_SLOT):
+			mModifyButton.setVisibility(View.GONE);
+			mRemoveButton.setVisibility(View.GONE);
+
+		case (CalendarDayView.POPUP_ITEM):
+			mAddButton.setVisibility(View.GONE);
+		}
 	}
 
 	private void removeItem() {
@@ -141,13 +126,26 @@ public class PopupForm extends Activity {
 	}
 
 	private void addItem() {
-		// TODO Auto-generated method stub
-
+		String title = mEtTitle.getText().toString();
+		
+	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event){
+		Log.d(TAG, "on touch" + event.getX()+" "+event.getY());
+		switch (event.getAction()){
+			case (MotionEvent.ACTION_OUTSIDE): 
+				setResult(RESULT_CANCELED);
+				PopupForm.this.finish();
+				return true;
+		}
+		return false;
 	}
 
 	private void updateDisplay() {
-		mTvStartTime.setText(startTime.getAPPMTimeFormatWithHourPadding());
-		mTvEndTime.setText(endTime.getAPPMTimeFormatWithHourPadding());
+		mTvStartTime.setText(TimeFormat
+				.getAPPMTimeFormatWithHourPadding(startTime));
+		mTvEndTime
+				.setText(TimeFormat.getAPPMTimeFormatWithHourPadding(endTime));
 	}
 
 	private static String pad(int c) {
@@ -159,13 +157,15 @@ public class PopupForm extends Activity {
 
 	private TimePickerDialog.OnTimeSetListener mStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			startTime.setTime(hourOfDay, minute);
+			startTime.setHours(hourOfDay);
+			startTime.setMinutes(minute);
 			updateDisplay();
 		}
 	};
 	private TimePickerDialog.OnTimeSetListener mEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			endTime.setTime(hourOfDay, minute);
+			endTime.setHours(hourOfDay);
+			endTime.setMinutes(minute);
 			updateDisplay();
 		}
 	};
@@ -176,10 +176,10 @@ public class PopupForm extends Activity {
 		switch (id) {
 		case START_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mStartTimeSetListener,
-					startTime.getHour(), startTime.getMinute(), false);
+					startTime.getHours(), startTime.getMinutes(), false);
 		case END_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mEndTimeSetListener,
-					endTime.getHour(), endTime.getMinute(), false);
+					endTime.getHours(), endTime.getMinutes(), false);
 		}
 		return null;
 	}
