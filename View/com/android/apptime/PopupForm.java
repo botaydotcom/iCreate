@@ -1,6 +1,5 @@
 package com.android.apptime;
 
-import java.io.ObjectOutputStream.PutField;
 import java.util.Date;
 
 import android.app.Activity;
@@ -11,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +32,6 @@ public class PopupForm extends Activity {
 	private final int END_TIME_DIALOG_ID = 1;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private RelativeLayout listTimeSlotLayout = null;
-	private int width;
 	private int timeSlotHeight = 80;
 	private PopupWindow popupWindow = null;
 	private EditText mEtTitle = null;
@@ -47,17 +46,20 @@ public class PopupForm extends Activity {
 	private Date startTime = null, endTime = null;
 	private LinearLayout layout = null;
 
+	private int offX, offY, width, height;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.popup);
 		layout = (LinearLayout) findViewById(R.id.linearpopup);
 		Bundle extras = getIntent().getExtras();
 		int type = extras.getInt("popupType");
 		startTime = (Date) extras.get("startTime");
 		endTime = (Date) extras.get("endTime");
-		int offX = extras.getInt("offX");
-		int offY = extras.getInt("offY");
+		offX = extras.getInt("offX");
+		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.leftMargin = offX;
@@ -116,6 +118,11 @@ public class PopupForm extends Activity {
 		}
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+	}
+	
 	private void removeItem() {
 
 	}
@@ -128,13 +135,17 @@ public class PopupForm extends Activity {
 	private void addItem() {
 		String title = mEtTitle.getText().toString();
 		
+		
 	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event){
-		Log.d(TAG, "on touch" + event.getX()+" "+event.getY());
-		switch (event.getAction()){
-			case (MotionEvent.ACTION_OUTSIDE): 
-				setResult(RESULT_CANCELED);
+		width = layout.getWidth();
+		height = layout.getHeight();
+		Log.d(TAG, "on touch" + event.getX()+" "+event.getY()+ " "+ offX+ " "+offY+" "+width+" "+height);
+		float x = event.getX();
+		float y = event.getY();
+		if ((x<offX || x>offX+width || y<offY || x>offY+height)) 
+		{		setResult(RESULT_CANCELED);
 				PopupForm.this.finish();
 				return true;
 		}
