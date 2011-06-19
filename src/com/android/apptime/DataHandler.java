@@ -34,6 +34,7 @@ public class DataHandler {
 	private static final int CONNECTED = 0;
 	private static final int DEFAULT_BUFFER_LENGTH=2048;
 	public static final String TAG = "datahandler";
+	
 	public DataHandler(Context context) throws Exception {
 		this.context = context;
 	}

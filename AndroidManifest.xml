@@ -5,7 +5,7 @@
 	<uses-sdk android:minSdkVersion="4" />
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name">
+	<application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
 
 		<activity android:name=".Login" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
@@ -17,28 +17,28 @@
 		<activity android:name=".Main" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".PopupForm" android:label="@string/app_name"
+		<activity android:name=".view.PopupForm" android:label="@string/app_name"
 			android:theme="@android:style/Theme.Translucent">
 		</activity>
-		<activity android:name=".CalendarView" android:label="@string/app_name"
+		<activity android:name=".view.CalendarView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".MapView" android:label="@string/app_name"
+		<activity android:name=".view.MapView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".OrganizerView" android:label="@string/app_name"
+		<activity android:name=".view.OrganizerView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".CalendarDayView" android:label="@string/app_name"
+		<activity android:name=".view.CalendarDayView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".CalendarWeekView" android:label="@string/app_name"
+		<activity android:name=".view.CalendarWeekView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name=".CalendarMonthView" android:label="@string/app_name"
+		<activity android:name=".view.CalendarMonthView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		<activity android:name="CalendarAgendaView" android:label="@string/app_name"
+		<activity android:name=".view.CalendarAgendaView" android:label="@string/app_name"
 			android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 
