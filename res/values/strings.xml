@@ -19,4 +19,15 @@
 	<string name="startdatefield">StartDate</string>
 	<string name="enddatefield">EndDate</string>
 	
+<!-- 	Popup window - add/modify item -->
+	<string name="strAnnounceNotEnoughDetail">Please fill in the title</string>
+	
+<!-- 	Location Array -->
+	<string-array name="locationArray">
+		<item>Location A</item>
+		<item>Location B</item>
+		<item>Location C</item>
+		<item>Location D</item>
+	</string-array>
+
 </resources>

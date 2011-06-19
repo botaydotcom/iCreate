@@ -1,9 +1,14 @@
 package com.android.apptime;
 
+import com.android.apptime.view.CalendarView;
+import com.android.apptime.view.MapView;
+import com.android.apptime.view.OrganizerView;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TabHost;
 
 public class Main extends TabActivity {
@@ -37,5 +42,9 @@ public class Main extends TabActivity {
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
+    }
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	Log.d("calendarview", "WTF?");
     }
 }
