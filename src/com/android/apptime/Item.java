@@ -1,7 +1,9 @@
 package com.android.apptime;
 
-import java.util.*;  // to use Time type
-import android.graphics.Color; // to use Color type
+import java.util.Date;
+import java.util.List;
+
+import com.android.apptime.database.ItemDBAdapter;
 public abstract class Item {
 	public String _id;
 	public String _title;
@@ -163,6 +165,12 @@ public abstract class Item {
 	public void  SetItemType(String itemType)
 	{
 		_itemType = itemType;
+	}
+	public boolean GetItemInOneDay(Date thedate)
+	{
+		
+		
+		return true;
 	}
 }
 
