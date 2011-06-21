@@ -1,18 +1,18 @@
-package com.android.apptime;
+package com.android.apptime.database;
 
 
-
-import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.util.Log;
+
+import com.android.apptime.EventItem;
+import com.android.apptime.Item;
+import com.android.apptime.TaskItem;
 
 
 public class ItemDBAdapter {

@@ -1,4 +1,4 @@
-package com.android.apptime;
+package com.android.apptime.database;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -49,7 +49,10 @@ public class MainDBAdapter {
     private static final String CATEGORYDB_KEY_ID = "categorydb_category_id";
     private static final String CATEGORYDB_TITLE = "categorydb_title";
     
-    
+    // ALERTTYPE TABLE
+    private static final String DATABASE_TABLE_ALERTTYPE = "Alerttype_Table";
+    private static final String ALERTTYPEDB_KEY_ID = "alerttypedb_alerttype_id";
+    private static final String ALERTTYPEDB_TITLE = "alerttypedb_title";
     
     
       
