@@ -1,4 +1,4 @@
-package com.android.apptime;
+package com.android.apptime.database;
 
 
 import android.content.ContentValues;
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.android.apptime.TaskItem;
 
 
 
