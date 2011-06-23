@@ -3,6 +3,7 @@ package com.android.apptime.view;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
@@ -10,7 +11,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.ZoomButtonsController;
+import android.widget.ZoomButtonsController.OnZoomListener;
 
 /**
  * A viewgroup that can be zoomed in/out when users pinch.
@@ -19,34 +22,7 @@ import android.view.ViewGroup;
  * 
  */
 
-public class ZoomableViewGroup extends ViewGroup {
-	
-	/** 
-	 * Call back when the view is zooming
-	 * @author Tran Cong Hoang
-	 *
-	 */
-	public interface OnZoomListener{
-		public void onZoomWithScale(float zoomScale);
-	}
-	private OnZoomListener mOnZoomListener = null;
-	public void setOnZoomListener(OnZoomListener onZoomListener){
-		mOnZoomListener = onZoomListener;
-	}
-	
-	/** 
-	 * Call back when the view is scrolling
-	 * @author Tran Cong Hoang
-	 *
-	 */
-	public interface OnScrollListener{
-		public void onScrollBy(int dx, int dy);
-	}
-	private OnScrollListener mOnScrollListener = null;
-	public void setOnScrollListener(OnScrollListener onScrollListener){
-		mOnScrollListener = onScrollListener;
-	}
-	
+public class CopyOfZoomableViewGroup extends RelativeLayout {
 	private static final String TAG = "touch";
 	protected static final float DEFAULT_ZOOM_IN_RATE = 1.2f;
 	protected static final float DEFAULT_ZOOM_OUT_RATE = 0.8f;
@@ -83,19 +59,19 @@ public class ZoomableViewGroup extends ViewGroup {
 	private int mScrollX, mScrollY, mMaxScrollX, mMaxScrollY;
 	public int screenWidth, screenHeight, viewWidth, viewHeight;
 
-	public ZoomableViewGroup(Context context) {
+	public CopyOfZoomableViewGroup(Context context) {
 		super(context);
 		Log.d(TAG, "constructor 1 ");
 		init(context);
 	}
 
-	public ZoomableViewGroup(Context context, AttributeSet attrs) {
+	public CopyOfZoomableViewGroup(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		Log.d(TAG, "constructor 2 ");
 		init(context);
 	}
 
-	public ZoomableViewGroup(Context context, AttributeSet attrs, int defStyle) {
+	public CopyOfZoomableViewGroup(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		Log.d(TAG, "constructor 3 ");
 		init(context);
@@ -256,9 +232,6 @@ public class ZoomableViewGroup extends ViewGroup {
 			mScrollY -= deltaY;
 			Log.d("scroll", "scrollBy " + deltaX + " " + deltaY);
 			scrollTo(mScrollX, mScrollY);
-			// dispatch event to observer
-			if (mOnScrollListener!=null)
-				mOnScrollListener.onScrollBy(-deltaX, -deltaY);
 			//this.invalidate(0, 0, getMeasuredWidth(), getMeasuredHeight());
 			break;
 		case MotionEvent.ACTION_CANCEL:
@@ -275,11 +248,7 @@ public class ZoomableViewGroup extends ViewGroup {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		//super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		final int width = MeasureSpec.getSize(widthMeasureSpec);
-		final int height = MeasureSpec.getSize(heightMeasureSpec);
-		setMeasuredDimension(width, height);
-		Log.d("calendarview","the size of this view is "+width+" "+height);
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 //		viewWidth = MeasureSpec.getSize(widthMeasureSpec);
 //		viewHeight = MeasureSpec.getSize(heightMeasureSpec);
 		screenWidth = MeasureSpec.getSize(widthMeasureSpec);
@@ -327,6 +296,7 @@ public class ZoomableViewGroup extends ViewGroup {
 //
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		super.onLayout(changed, l, t, r, b);
 		final int count = getChildCount();
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
@@ -339,8 +309,6 @@ public class ZoomableViewGroup extends ViewGroup {
 						.getRight();
 				viewHeight = viewHeight > child.getBottom() ? viewHeight
 						: child.getBottom();
-				Log.d(TAG, "child left top child width child height " + childLeft+" "+childTop
-						+ " "+childWidth+ " "+childHeight);
 				Log.d(TAG, "view width, view height " + viewWidth + " "
 						+ viewHeight + " screen width, screen height "
 						+ screenWidth + " " + screenHeight);
@@ -352,11 +320,10 @@ public class ZoomableViewGroup extends ViewGroup {
 	public void zoom(float deltaScale) {
 		Log.d(TAG, "zoom with delta scale = " + deltaScale);
 		float tempScale = deltaScale * this.scale;
-		if (tempScale < minScale) tempScale = minScale;
-		if (tempScale > maxScale) tempScale = maxScale;
-		deltaScale = tempScale/this.scale;
+		if (tempScale < minScale || tempScale > maxScale)
+			return;
 		this.deltaScale = deltaScale;
-		Log.d(TAG, "zoom to scale " + tempScale + " delta scale "+deltaScale);
+		Log.d(TAG, "zoom to scale " + tempScale);
 
 		this.scale = tempScale;
 		// int maxRight = 0, maxBottom = 0;
@@ -384,8 +351,8 @@ public class ZoomableViewGroup extends ViewGroup {
 		mScrollX = (int) (mScrollX * deltaScale);
 		mScrollY = (int) (mScrollY * deltaScale);
 		scrollTo(mScrollX, mScrollY);
-		if (mOnZoomListener!=null)
-		mOnZoomListener.onZoomWithScale(deltaScale);
+		invalidate(0,0, 1000, 2000);
+		postInvalidate();
 	}
 
 	public void zoomToScale(float scale) {
