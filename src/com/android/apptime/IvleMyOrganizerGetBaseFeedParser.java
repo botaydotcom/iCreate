@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public abstract class BaseFeedParser implements FeedParser {
+public abstract class IvleMyOrganizerGetBaseFeedParser implements FeedParser {
 
 	// names of the XML tags
 	static final String COMMENTS = "Comments";
@@ -20,7 +20,7 @@ public abstract class BaseFeedParser implements FeedParser {
 	
 	private final URL feedUrl;
 
-	protected BaseFeedParser(String feedUrl){
+	protected IvleMyOrganizerGetBaseFeedParser(String feedUrl){
 		try {
 			this.feedUrl = new URL(feedUrl);
 		} catch (MalformedURLException e) {

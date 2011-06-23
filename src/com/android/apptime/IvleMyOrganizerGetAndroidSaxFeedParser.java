@@ -9,10 +9,10 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.util.Xml;
 
-public class AndroidSaxFeedParser extends BaseFeedParser {
+public class IvleMyOrganizerGetAndroidSaxFeedParser extends IvleMyOrganizerGetBaseFeedParser {
 
 	static final String RSS = "APIDataOfData_Organizer_EventsMTRdQN6P";
-	public AndroidSaxFeedParser(String feedUrl) {
+	public IvleMyOrganizerGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
 
@@ -21,8 +21,6 @@ public class AndroidSaxFeedParser extends BaseFeedParser {
 		RootElement root = new RootElement(RSS);
 		final List<Message> messages = new ArrayList<Message>();
 		
-		//Element comments = root.getChild(COMMENTS);
-		//Element last_update = root.getChild(LAST_UPDATE);
 		Element results = root.getChild(RESULTS);
 		Element data_organizer_events = results.getChild(DATA_ORGANIZER_EVENTS);
 		

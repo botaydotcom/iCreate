@@ -14,10 +14,20 @@
 	
 <!-- IVLE My Organizer API Constants -->
 	<string name="my_organizer_uri">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Personal</string>
+	<string name="my_organizer_add_personal_event_uri"> https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_AddPersonalEvent</string>
 	<string name="apikeyfield">APIKey</string>
 	<string name="authfield">AuthToken</string>
 	<string name="startdatefield">StartDate</string>
 	<string name="enddatefield">EndDate</string>
+	<string name="eventtitle">EventTitle</string>
+	<string name="venue">Venue</string>
+	<string name="eventdatetime">EventDateTime</string>
+	<string name="description">Description</string>
+	<string name="recurtype">RecurType</string>
+	<string name="weeklyrecurevery">WeeklyRecurEvery</string>
+	<string name="strdays">strDays</string>
+	<string name="recurtilldate">RecurTillDate</string>
+	<string name="eventid">EventID</string>
 	
 <!-- 	Popup window - add/modify item -->
 	<string name="strAnnounceNotEnoughDetail">Please fill in the title</string>
