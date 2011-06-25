@@ -3,29 +3,32 @@ package com.android.apptime;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Context;
+
 import com.android.apptime.database.ItemDBAdapter;
-public abstract class Item {
-	public String _id;
-	public String _title;
-	public String _description;
-	public String _location;
-	public String _priority; // LOW-MED-HIGH?
-	public String _itemType; // TaskItem or EventItem?
-	public String _category;
-	public List<String> _alertType;
-	public String _startTime;
-	public String _endTime;
-	public String _alertTime; // alert time means sth like : alert 15 min before/ 1hr before / 2hr before
-	public String _deadline;	
-	public String _repeat;
-	public String _completed;
-	public Integer _color;
+
+public class Item {
+	private String _id;
+	private String _title;
+	private String _description;
+	private String _location;
+	private String _priority; // LOW-MED-HIGH?
+	private String _itemType; // TaskItem or EventItem?
+	private String _category;
+	private List<String> _alertType;
+	private String _startTime;
+	private String _endTime;
+	private String _alertTime; // alert time means sth like : alert 15 min before/ 1hr before / 2hr before
+	private String _deadline;	
+	private String _repeat;
+	private String _completed;
+	private Integer _color;
 	
 	// Constructor
-	Item (String id, String title, String description, String location, String category, List<String> alerttype, String priority, 
+	Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
 	String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
 	{
-		_id = id;
+		
 		_title = title;
 		_description = description;
 		_location = location;
@@ -41,7 +44,8 @@ public abstract class Item {
 		_completed = completed;
 		_color = color;		
 	}
-
+	
+	
 	
 	// Getters
 	public String  GetId()
@@ -166,6 +170,9 @@ public abstract class Item {
 	{
 		_itemType = itemType;
 	}
+	
+	
+	
 	public boolean GetItemInOneDay(Date thedate)
 	{
 		

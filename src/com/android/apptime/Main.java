@@ -1,8 +1,7 @@
 package com.android.apptime;
 
-import com.android.apptime.view.CalendarView;
-import com.android.apptime.view.MapView;
-import com.android.apptime.view.OrganizerView;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -11,7 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
-import com.android.apptime.database.MainDBAdapter;;
+import com.android.apptime.database.MainDBAdapter;
+import com.android.apptime.view.CalendarView;
+import com.android.apptime.view.MapView;
+import com.android.apptime.view.OrganizerView;
 public class Main extends TabActivity {
     /** Called when the activity is first created. */
     @Override
@@ -45,11 +47,19 @@ public class Main extends TabActivity {
         tabHost.setCurrentTab(0);
         MainDBAdapter newdb = new MainDBAdapter(this);
         newdb.open();
-        
-        
+        DatabaseInterface db = new DatabaseInterface(this);
+        List<String> alerttype = new ArrayList<String>();
+        alerttype.add("alert1"); alerttype.add("alert2");
+        Item item = new Item("title test", "description test", "location test", "category test", 
+        		alerttype, "priority test", "Event", "starttime test", "endtime test", 
+        		"deadline test", "alerttime test", "repeat test", "completed test", 1);
+        db.AddItemToDatabase(this, item);
+        newdb.close();
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	Log.d("calendarview", "WTF?");
     }
+    
+    
 }

@@ -1,12 +1,13 @@
 package com.android.apptime.database;
 
-import com.android.apptime.EventItem;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.android.apptime.EventItem;
+import com.android.apptime.Item;
 
 
 
@@ -62,7 +63,7 @@ public class EventDBAdapter {
     
     
   //Insert a new event into the Event table
-    public long createEvent(EventItem _event) {
+    public long createEvent(Item _event) {
       // Create a new row of values to insert.
       ContentValues newEventValues = new ContentValues();
       // Assign values for each row.
@@ -82,7 +83,7 @@ public class EventDBAdapter {
     }
 	
     //Update a new event in the Event table
-    public long updateEvent(EventItem _event) {
+    public long updateEvent(Item _event) {
       // Create a new row of values to insert.
       ContentValues newEventValues = new ContentValues();
       // Assign values for each row.
@@ -102,7 +103,7 @@ public class EventDBAdapter {
     }
 	
     
-    public int removeEvent(EventItem _event)
+    public int removeEvent(Item _event)
     {
     	// TODO: REMOVE ALL THE EVENT RELATIONS ALSO
     	
