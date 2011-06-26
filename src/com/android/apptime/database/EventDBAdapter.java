@@ -15,6 +15,7 @@ public class EventDBAdapter {
 	
 	private static final String DATABASE_TABLE_EVENT = "Events_Table";
     private static final String EVENTDB_KEY_ID = "eventdb_event_id";
+    private static final String EVENTDB_TITLE = "eventdb_event_title";
     private static final String EVENTDB_DESCRIPTION = "eventdb_description";
     private static final String EVENTDB_LOCATION = "eventdb_location";
     private static final String EVENTDB_PRIORITY = "eventdb_priority";
@@ -67,6 +68,8 @@ public class EventDBAdapter {
       // Create a new row of values to insert.
       ContentValues newEventValues = new ContentValues();
       // Assign values for each row.
+      
+      /*
       newEventValues.put(EVENTDB_DESCRIPTION, _event.GetDescription());
       newEventValues.put(EVENTDB_LOCATION, _event.GetLocation());
       newEventValues.put(EVENTDB_PRIORITY, _event.GetPriority());
@@ -77,10 +80,21 @@ public class EventDBAdapter {
       newEventValues.put(EVENTDB_STARTTIME, _event.GetStartTime());
       newEventValues.put(EVENTDB_ENDTIME, _event.GetEndTime());
       newEventValues.put(EVENTDB_KEY_ID, 1);
-
-      String t0 = "INSERT INTO " + DATABASE_TABLE_EVENT + " (" + EVENTDB_DESCRIPTION + ", " + EVENTDB_LOCATION + ", " + EVENTDB_PRIORITY
+		*/
+      String t0 = "INSERT INTO " + DATABASE_TABLE_EVENT + " (" + EVENTDB_TITLE + ", " + EVENTDB_DESCRIPTION + ", " + EVENTDB_LOCATION + ", " + EVENTDB_PRIORITY
       + ", " + EVENTDB_REPEAT + ", " + EVENTDB_CATEGORY + ", " + EVENTDB_COMPLETED + ", " + EVENTDB_COLOR
-      + ", " + EVENTDB_STARTTIME + ", " + EVENTDB_ENDTIME + ")" + " VALUES ('1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+      + ", " + EVENTDB_STARTTIME + ", " + EVENTDB_ENDTIME + ")" + " VALUES ('" +
+      _event.GetTitle() + "','" +
+      _event.GetDescription() + "','" +
+      _event.GetLocation() + "','" +
+      _event.GetPriority() + "','" +
+      _event.GetRepeat() + "','" +
+      _event.GetCategory() + "','" +
+      _event.GetCompleted() + "','" +
+      _event.GetColor() + "','" + 
+      _event.GetStartTime() + "','" +
+      _event.GetEndTime() + "');";
+      //1', '2', '3', '4', '5', '6' , '7', '8', '9');";
       mDb.execSQL(t0);
       // Insert the row.
       long t= mDb.insert(DATABASE_TABLE_EVENT, null, newEventValues);

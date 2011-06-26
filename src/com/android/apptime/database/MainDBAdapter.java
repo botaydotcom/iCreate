@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDB3.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDB.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
     // TASK TABLE
     private static final String DATABASE_TABLE_TASK = "Tasks_Table";
     private static final String TASKDB_KEY_ID = "taskdb_task_id";
+    private static final String TASKDB_TITLE = "taskdb_task_title";
     private static final String TASKDB_DESCRIPTION = "taskdb_description";
     private static final String TASKDB_LOCATION = "taskdb_location";
     private static final String TASKDB_PRIORITY = "taskdb_priority";
@@ -25,6 +26,7 @@ public class MainDBAdapter {
     // EVENT TABLE
     private static final String DATABASE_TABLE_EVENT = "Events_Table";
     private static final String EVENTDB_KEY_ID = "eventdb_event_id";
+    private static final String EVENTDB_TITLE = "eventdb_event_title";
     private static final String EVENTDB_DESCRIPTION = "eventdb_description";
     private static final String EVENTDB_LOCATION = "eventdb_location";
     private static final String EVENTDB_PRIORITY = "eventdb_priority";
@@ -60,19 +62,21 @@ public class MainDBAdapter {
     // SQL COMMAND TO CREATE TASK TABLE
     private static final String DATABASE_CREATE_TASK = "create table " + DATABASE_TABLE_TASK
     + " (" + TASKDB_KEY_ID + " integer primary key autoincrement, " + 
-    TASKDB_DESCRIPTION + "text, " +
-    TASKDB_LOCATION + "text, " +
-    TASKDB_PRIORITY + "text, " +
-    TASKDB_REPEAT + "text not null, " +
-    TASKDB_CATEGORY + "text, " +
-    TASKDB_COMPLETED + "text not null, " +
-    TASKDB_COLOR + "integer not null, " +
-    TASKDB_DEADLINE + "string not null);";
+    TASKDB_TITLE + " text, " +
+    TASKDB_DESCRIPTION + " text, " +
+    TASKDB_LOCATION + " text, " +
+    TASKDB_PRIORITY + " text, " +
+    TASKDB_REPEAT + " text not null, " +
+    TASKDB_CATEGORY + " text, " +
+    TASKDB_COMPLETED + " text not null, " +
+    TASKDB_COLOR + " integer not null, " +
+    TASKDB_DEADLINE + " string not null);";
     
     
     // SQL COMMAND TO CREATE EVENT TABLE
     private static final String DATABASE_CREATE_EVENT = "create table " + DATABASE_TABLE_EVENT
     + " (" + EVENTDB_KEY_ID + " integer primary key autoincrement, " + 
+    EVENTDB_TITLE + " text, " +
     EVENTDB_DESCRIPTION + " text, " +
     EVENTDB_LOCATION + " text, " +
     EVENTDB_PRIORITY + " text, " +
