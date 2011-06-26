@@ -76,10 +76,15 @@ public class EventDBAdapter {
       newEventValues.put(EVENTDB_COLOR, _event.GetColor());
       newEventValues.put(EVENTDB_STARTTIME, _event.GetStartTime());
       newEventValues.put(EVENTDB_ENDTIME, _event.GetEndTime());
-      
-      
+      newEventValues.put(EVENTDB_KEY_ID, 1);
+
+      String t0 = "INSERT INTO " + DATABASE_TABLE_EVENT + " (" + EVENTDB_DESCRIPTION + ", " + EVENTDB_LOCATION + ", " + EVENTDB_PRIORITY
+      + ", " + EVENTDB_REPEAT + ", " + EVENTDB_CATEGORY + ", " + EVENTDB_COMPLETED + ", " + EVENTDB_COLOR
+      + ", " + EVENTDB_STARTTIME + ", " + EVENTDB_ENDTIME + ")" + " VALUES ('1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+      mDb.execSQL(t0);
       // Insert the row.
-      return mDb.insert(DATABASE_TABLE_EVENT, null, newEventValues);
+      long t= mDb.insert(DATABASE_TABLE_EVENT, null, newEventValues);
+      return t;
     }
 	
     //Update a new event in the Event table
@@ -99,7 +104,8 @@ public class EventDBAdapter {
       
       
       // Insert the row.
-      return mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);
+      long t = mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);
+      return t;
     }
 	
     

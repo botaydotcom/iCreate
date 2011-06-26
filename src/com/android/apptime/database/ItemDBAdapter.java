@@ -76,7 +76,8 @@ public class ItemDBAdapter {
     taskDBAdapter.close();
     
     // Insert the row.
-    return mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+    long t =mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+    return t;
   }
 
   //Insert a new event into the Item table
@@ -84,16 +85,18 @@ public class ItemDBAdapter {
     // Create a new row of values to insert.
     ContentValues newTaskValues = new ContentValues();
     // Assign values for each row.
-    newTaskValues.put(ITEMDB_KEY_EVENT, _event.GetId());
-    newTaskValues.put(ITEMDB_KEY_TASK, 0);
-    // Insert the row.
     
+    newTaskValues.put(ITEMDB_KEY_EVENT, 1);
+    newTaskValues.put(ITEMDB_KEY_TASK, 1);
+    // Insert the row.
+    /*
     EventDBAdapter eventDBAdapter = new EventDBAdapter(this.context);
     eventDBAdapter.open();
     eventDBAdapter.createEvent(_event);
     eventDBAdapter.close();
-    
-    return mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+    */
+    long t = mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+    return t;
   }
 
   public int createItem(Item _item)  {

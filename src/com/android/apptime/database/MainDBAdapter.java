@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDB.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDB3.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
@@ -73,15 +73,15 @@ public class MainDBAdapter {
     // SQL COMMAND TO CREATE EVENT TABLE
     private static final String DATABASE_CREATE_EVENT = "create table " + DATABASE_TABLE_EVENT
     + " (" + EVENTDB_KEY_ID + " integer primary key autoincrement, " + 
-    EVENTDB_DESCRIPTION + "text, " +
-    EVENTDB_LOCATION + "text, " +
-    EVENTDB_PRIORITY + "text, " +
-    EVENTDB_REPEAT + "text not null, " +
-    EVENTDB_CATEGORY + "text, " +
-    EVENTDB_COMPLETED + "text not null, " +
-    EVENTDB_COLOR + "integer not null, " +
-    EVENTDB_STARTTIME + "text not null, " +
-    EVENTDB_ENDTIME + "text not null);";
+    EVENTDB_DESCRIPTION + " text, " +
+    EVENTDB_LOCATION + " text, " +
+    EVENTDB_PRIORITY + " text, " +
+    EVENTDB_REPEAT + " text not null, " +
+    EVENTDB_CATEGORY + " text, " +
+    EVENTDB_COMPLETED + " text not null, " +
+    EVENTDB_COLOR + " integer not null, " +
+    EVENTDB_STARTTIME + " text not null, " +
+    EVENTDB_ENDTIME + " text not null);";
     
     
     
