@@ -1,4 +1,6 @@
-package com.android.apptime;
+package com.android.apptime.database;
+
+import com.android.apptime.EventItem;
 
 import android.content.ContentValues;
 import android.content.Context;

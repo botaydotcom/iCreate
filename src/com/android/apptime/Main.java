@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
+import com.android.apptime.database.MainDBAdapter;;
 public class Main extends TabActivity {
     /** Called when the activity is first created. */
     @Override
@@ -42,6 +43,10 @@ public class Main extends TabActivity {
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
+        MainDBAdapter newdb = new MainDBAdapter(this);
+        newdb.open();
+        
+        
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

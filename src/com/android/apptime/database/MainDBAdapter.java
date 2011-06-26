@@ -1,4 +1,4 @@
-package com.android.apptime;
+package com.android.apptime.database;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDB,.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDB.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
@@ -34,10 +34,8 @@ public class MainDBAdapter {
     private static final String EVENTDB_COLOR = "eventdb_color";
     private static final String EVENTDB_STARTTIME = "eventdb_start_time";
     private static final String EVENTDB_ENDTIME = "eventdb_end_time";
-    
-        
-    
-    
+          
+     
     // ITEM TABLE 
     private static final String DATABASE_TABLE_ITEM = "Items_Table";
     private static final String ITEMDB_KEY_ID = "itemdb_itemid";
@@ -49,7 +47,10 @@ public class MainDBAdapter {
     private static final String CATEGORYDB_KEY_ID = "categorydb_category_id";
     private static final String CATEGORYDB_TITLE = "categorydb_title";
     
-    
+    // ALERTTYPE TABLE
+    private static final String DATABASE_TABLE_ALERTTYPE = "Alerttype_Table";
+    private static final String ALERTTYPEDB_KEY_ID = "alerttypedb_alerttype_id";
+    private static final String ALERTTYPEDB_TITLE = "alerttypedb_title";
     
     
       
@@ -87,16 +88,19 @@ public class MainDBAdapter {
     // SQL COMMAND TO CREATE ITEM TABLE
     private static final String DATABASE_CREATE_ITEM = "create table " + 
     DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_ID + " integer primary key autoincrement, " +
-    ITEMDB_KEY_TASK + " integer not null, " + " FOREIGN KEY ("+ ITEMDB_KEY_TASK +") REFERENCES " + DATABASE_TABLE_TASK + " ("+ TASKDB_KEY_ID +")),"
-    + ITEMDB_KEY_EVENT + " integer not null)" + " FOREIGN KEY ("+ ITEMDB_KEY_EVENT +") REFERENCES " + DATABASE_TABLE_EVENT + " ("+ EVENTDB_KEY_ID +"));";
+    ITEMDB_KEY_TASK + " integer not null, " +  ITEMDB_KEY_EVENT + " integer not null," + " FOREIGN KEY ("+ ITEMDB_KEY_TASK +") REFERENCES " + DATABASE_TABLE_TASK + " ("+ TASKDB_KEY_ID +"), "
+    + " FOREIGN KEY ("+ ITEMDB_KEY_EVENT +") REFERENCES " + DATABASE_TABLE_EVENT + " ("+ EVENTDB_KEY_ID +"));";
 
 
 	// SQL COMMAND TO CREATE CATEGORY TABLE
-    private static final String DATABASE_CREATE_CATEGORY = "create table" +
+    private static final String DATABASE_CREATE_CATEGORY = "create table " +
     DATABASE_TABLE_CATEGORY + " (" + CATEGORYDB_KEY_ID + " integer primary key autoincrement, " +
     CATEGORYDB_TITLE + " text not null);";
     
-    
+ // SQL COMMAND TO CREATE ALERTTYPE TABLE
+    private static final String DATABASE_CREATE_ALERTTYPE = "create table " +
+    DATABASE_TABLE_ALERTTYPE + " (" + ALERTTYPEDB_KEY_ID + " integer primary key autoincrement, " +
+    ALERTTYPEDB_TITLE + " text not null);";
     
 
     private final Context context; 
@@ -123,6 +127,7 @@ public class MainDBAdapter {
             db.execSQL(DATABASE_CREATE_EVENT);
             db.execSQL(DATABASE_CREATE_ITEM);  
             db.execSQL(DATABASE_CREATE_CATEGORY);
+            db.execSQL(DATABASE_CREATE_ALERTTYPE);
         }
 
         @Override
