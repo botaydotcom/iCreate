@@ -1,12 +1,13 @@
 package com.android.apptime.database;
 
-import com.android.apptime.EventItem;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.android.apptime.EventItem;
+import com.android.apptime.Item;
 
 
 
@@ -62,7 +63,7 @@ public class EventDBAdapter {
     
     
   //Insert a new event into the Event table
-    public long createEvent(EventItem _event) {
+    public long createEvent(Item _event) {
       // Create a new row of values to insert.
       ContentValues newEventValues = new ContentValues();
       // Assign values for each row.
@@ -75,14 +76,19 @@ public class EventDBAdapter {
       newEventValues.put(EVENTDB_COLOR, _event.GetColor());
       newEventValues.put(EVENTDB_STARTTIME, _event.GetStartTime());
       newEventValues.put(EVENTDB_ENDTIME, _event.GetEndTime());
-      
-      
+      newEventValues.put(EVENTDB_KEY_ID, 1);
+
+      String t0 = "INSERT INTO " + DATABASE_TABLE_EVENT + " (" + EVENTDB_DESCRIPTION + ", " + EVENTDB_LOCATION + ", " + EVENTDB_PRIORITY
+      + ", " + EVENTDB_REPEAT + ", " + EVENTDB_CATEGORY + ", " + EVENTDB_COMPLETED + ", " + EVENTDB_COLOR
+      + ", " + EVENTDB_STARTTIME + ", " + EVENTDB_ENDTIME + ")" + " VALUES ('1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+      mDb.execSQL(t0);
       // Insert the row.
-      return mDb.insert(DATABASE_TABLE_EVENT, null, newEventValues);
+      long t= mDb.insert(DATABASE_TABLE_EVENT, null, newEventValues);
+      return t;
     }
 	
     //Update a new event in the Event table
-    public long updateEvent(EventItem _event) {
+    public long updateEvent(Item _event) {
       // Create a new row of values to insert.
       ContentValues newEventValues = new ContentValues();
       // Assign values for each row.
@@ -98,11 +104,12 @@ public class EventDBAdapter {
       
       
       // Insert the row.
-      return mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);
+      long t = mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);
+      return t;
     }
 	
     
-    public int removeEvent(EventItem _event)
+    public int removeEvent(Item _event)
     {
     	// TODO: REMOVE ALL THE EVENT RELATIONS ALSO
     	
