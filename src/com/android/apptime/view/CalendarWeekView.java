@@ -1,33 +1,31 @@
 package com.android.apptime.view;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.android.apptime.Item;
 import com.android.apptime.R;
 
 public class CalendarWeekView extends Activity {
-	public static int nextViewId = 1;
+	private static int nextViewId = 1;
 	private String TAG = "calendarview";
 	private final int CONTEXT_MENU_ADD = 0;
 	private final int CONTEXT_MENU_MODIFY = 1;
@@ -39,11 +37,17 @@ public class CalendarWeekView extends Activity {
 	private final int POPUP_FORM = 0;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private DayInWeekView[] daysInWeekSlot = new DayInWeekView[Constant.NUM_DAY_IN_WEEK];
-
+	private TextView title = null;
 	private TextView[] daysInWeekTitle = new TextView[Constant.NUM_DAY_IN_WEEK];
-	private RelativeLayout contentLayout = null;
+	private ArrayList<WeekItemView> itemsInWeek = null;
+	
+	
+	private RelativeLayout containerLayout = null;
+	private ZoomableViewGroup titleLayout = null;
+	private ZoomableViewGroup contentLayout = null;
 	private int width;
 	private int timeSlotHeight = 80;
+	private int titleHeight = 50;
 	private PopupWindow popupWindow = null;
 	private EditText mEtTitle = null;
 	private TextView mTvStartTime = null;
@@ -60,82 +64,193 @@ public class CalendarWeekView extends Activity {
 	private int height = 1000;
 	private int daySlotWidth = 50;
 	private int screenWidth = 0, screenHeight = 0;
+	private Handler mHandler = null;
+	
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendarweekview);
-		contentLayout = (RelativeLayout) findViewById(R.id.content);
-		width = contentLayout.getWidth();
-		Log.d(TAG, "" + width);
+		containerLayout = (RelativeLayout) findViewById(R.id.container);
+
+		// width = contentLayout.getWidth();
+		// Log.d(TAG, "" + width);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		screenWidth = metrics.widthPixels;
 		screenHeight = metrics.heightPixels;
+		mHandler = new Handler();
 		try {
 			displayAllTimeSlot();
-			//
-			// TextView timeSlotView = new TextView(getApplicationContext());
-			// timeSlotView.setText("1pm-3pm: \n Meeting with team @YIH");
-			// timeSlotView.setBackgroundColor(Color.RED);
-			//
-			// RelativeLayout.LayoutParams layoutParams = null;
-			// layoutParams = new RelativeLayout.LayoutParams(200, 160);
-			// layoutParams.addRule(RelativeLayout.ALIGN_TOP, nextViewId - 20);
-			// layoutParams.setMargins(50, 0, 0, 0);
-			// timeSlotView.setLayoutParams(layoutParams);
-			// timeSlotView.setId(nextViewId++);
-			// listTimeSlotLayout.addView(timeSlotView);
-			// timeSlotView.setFocusable(true);
-			//
-			// TextView timeSlotView1 = new TextView(getApplicationContext());
-			// timeSlotView1.setText("1pm-2pm: \n Assignment due");
-			// timeSlotView1.setBackgroundColor(Color.GREEN);
-			// layoutParams = null;
-			// layoutParams = new RelativeLayout.LayoutParams(250, 80);
-			// layoutParams.addRule(RelativeLayout.ALIGN_TOP, nextViewId - 21);
-			// layoutParams.setMargins(250, 0, 0, 0);
-			// timeSlotView1.setLayoutParams(layoutParams);
-			// timeSlotView1.setId(nextViewId++);
-			// listTimeSlotLayout.addView(timeSlotView1);
-			// timeSlotView1.setFocusable(true);
-
-			 addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
-			 addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
+			// addZoomButtons(containerLayout);
+			addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
+			addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
+		itemsInWeek = new ArrayList<WeekItemView>();
+		addZoomButtons();
+	}
+	
+	@Override
+	public boolean dispatchTouchEvent (MotionEvent ev){
+		if (ev.getAction() == MotionEvent.ACTION_DOWN){
+			showZoomButtons();
+			Log.d(TAG, "dispatch touch event");
+		}
+		return super.dispatchTouchEvent(ev);
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
+	/*
+	 * Adding zoom controls
+	 * This part adds the zoom buttons to the view
+	 */
+
+	private ZoomControls mZoomButtonsController = null;
+	
+	private void showZoomButtons(){
+		if (!mZoomButtonsController.isShown()){
+			makeZoomButtonAutoDismiss();
+			mZoomButtonsController.bringToFront();
+		}
 	}
+	
+	private void addZoomButtons() {
+		if (mZoomButtonsController == null) {
+			mZoomButtonsController = (ZoomControls) findViewById(R.id.zoomcontrolbutton);
+			try {
+				nextViewId++;
+				showZoomButtons();
+			} catch (Exception e) {
+				Log.e(TAG, e.getMessage());
+			}
+			mZoomButtonsController.setOnZoomInClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					contentLayout
+					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
+				}
+			});
+			mZoomButtonsController.setOnZoomOutClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					contentLayout
+					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
+				}
+			});
+		}
+	}
+	
+	private void makeZoomButtonAutoDismiss() {
+		mZoomButtonsController.show();
+		Runnable hideZoom = new Runnable() {
+			@Override
+			public void run() {
+				mZoomButtonsController.hide();				
+			}
+		};
+		mHandler.removeCallbacks(hideZoom);
+		new Handler().postDelayed(hideZoom, 3000);
+	}
+
+	/*
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	
 
 	private void displayAllTimeSlot() {
 		Resources myResources = getResources();
 		marginWidth = myResources.getDimension(R.dimen.timeslot_margin);
-		daySlotWidth = (int)((screenWidth-marginWidth)/7);
-		Log.d(TAG, "add view to week calendar" + " " + screenWidth+" "+marginWidth+" "+daySlotWidth);
-		TextView title = new TextView(getApplicationContext());
-		RelativeLayout.LayoutParams layoutParams = null;
-		layoutParams = new RelativeLayout.LayoutParams((int) marginWidth,
-				LayoutParams.WRAP_CONTENT);
+		timeSlotHeight = (int) myResources
+				.getDimension(R.dimen.timeslot_height);
+		titleHeight = (int) myResources.getDimension(R.dimen.title_height);
+		daySlotWidth = (int) ((screenWidth - marginWidth) / 7);
+
+		Log.d(TAG, "add view to week calendar" + " " + screenWidth + " "
+				+ marginWidth + " " + daySlotWidth);
+		// containerLayout.setBackgroundColor(Color.BLUE);
+		containerLayout.addView(new View(getApplicationContext()));
+		// Adding title part
+		// This part is used to generate the title for the week calendar
+
+		// adding the big title layout
+		int exTitleHeight = RelativeLayout.MeasureSpec.makeMeasureSpec(
+				titleHeight, RelativeLayout.MeasureSpec.EXACTLY);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.FILL_PARENT, titleHeight);
+		titleLayout = new ZoomableViewGroup(getApplicationContext());
+		// titleLayout.measure(LayoutParams.FILL_PARENT, 200);
+		titleLayout.setLayoutParams(params);
+		titleLayout.setId(nextViewId++);
+		// titleLayout.setBackgroundColor(Color.RED);
+		containerLayout.addView(titleLayout);
+
+		titleLayout.addView(new View(getApplicationContext()));
+		// adding the title row
+		title = new TextView(getApplicationContext());
 		title.setText("Time");
-		title.setId(nextViewId++);
-		title.setLayoutParams(layoutParams);
-		contentLayout.addView(title);
+		int exWidth = View.MeasureSpec.makeMeasureSpec((int) marginWidth,
+				View.MeasureSpec.EXACTLY);
+		int exHeight = View.MeasureSpec.makeMeasureSpec(titleHeight,
+				View.MeasureSpec.EXACTLY);
+		title.measure(exWidth, exHeight);
+		title.layout(0, 0, (int) marginWidth, titleHeight);
+		title.setId(titleLayout.getChildCount());
+		// title.setBackgroundColor(Color.GREEN);
+		titleLayout.addView(title);
+		Log.d(TAG,
+				"add title " + " at " + title.getLeft() + " " + title.getTop()
+						+ " " + " " + title.getMeasuredWidth() + " "
+						+ title.getMeasuredHeight());
+
 		for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
 			daysInWeekTitle[i] = new TextView(getApplicationContext());
 			daysInWeekTitle[i].setText(Constant.DAY_IN_WEEK[i].substring(0, 3));
-			layoutParams = new RelativeLayout.LayoutParams(daySlotWidth,
-					LayoutParams.WRAP_CONTENT);
-			layoutParams.addRule(RelativeLayout.RIGHT_OF, nextViewId - 1);
-			daysInWeekTitle[i].setLayoutParams(layoutParams);
-			daysInWeekTitle[i].setId(nextViewId++);
-			contentLayout.addView(daysInWeekTitle[i]);
+			exWidth = View.MeasureSpec.makeMeasureSpec((int) daySlotWidth,
+					View.MeasureSpec.EXACTLY);
+			exHeight = View.MeasureSpec.makeMeasureSpec(titleHeight,
+					View.MeasureSpec.EXACTLY);
+			daysInWeekTitle[i].measure(exWidth, exHeight);
+			daysInWeekTitle[i].layout((int) marginWidth + i * daySlotWidth, 0,
+					(int) marginWidth + (i + 1) * daySlotWidth, titleHeight);
+			daysInWeekTitle[i].setId(titleLayout.getChildCount());
+			titleLayout.addView(daysInWeekTitle[i]);
+			Log.d(TAG,
+					"add day " + i + " title " + " at "
+							+ daysInWeekTitle[i].getLeft() + " "
+							+ daysInWeekTitle[i].getTop() + " " + " "
+							+ daysInWeekTitle[i].getMeasuredWidth() + " "
+							+ daysInWeekTitle[i].getMeasuredHeight());
+
 		}
 
+		// Adding content part
+		// This part is used to generate the content for the week calendar
+
+		// adding the big content layout
+		int contentHeight = View.MeasureSpec.makeMeasureSpec(1000,
+				View.MeasureSpec.EXACTLY);
+		params = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.FILL_PARENT,
+				RelativeLayout.LayoutParams.FILL_PARENT);
+		params.addRule(RelativeLayout.BELOW, titleLayout.getId());
+		contentLayout = new ZoomableViewGroup(getApplicationContext());
+		contentLayout.setLayoutParams(params);
+		contentLayout.setId(nextViewId++);
+		containerLayout.addView(contentLayout);
+		contentLayout.addView(new View(getApplicationContext()));
+		contentLayout.setClickable(true);
+		contentLayout.setFocusable(true);
+		contentLayout.setScrollContainer(true);
+		contentLayout.setOnZoomListener(mOnZoomListener);
+		contentLayout.setOnScrollListener(mOnScrollListener);
+
+		// adding time slot in content view
 		for (int i = 0; i < Constant.NUM_HOUR; i++) {
 			dayTimeSlot[i] = new TimeSlotView(getApplicationContext());
 			dayTimeSlot[i].getTime().setHours(i);
@@ -143,31 +258,40 @@ public class CalendarWeekView extends Activity {
 			dayTimeSlot[i].setText(TimeFormat
 					.getAPPMHourFormatWithoutHourPadding(dayTimeSlot[i]
 							.getTime()));
-			layoutParams = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.FILL_PARENT, timeSlotHeight);
-			if (i == 0)
-				layoutParams.addRule(RelativeLayout.BELOW, title.getId());
-			else
-				layoutParams.addRule(RelativeLayout.BELOW,
-						dayTimeSlot[i - 1].getId());
-			dayTimeSlot[i].setLayoutParams(layoutParams);
-			dayTimeSlot[i].setId(nextViewId++);
+			exWidth = View.MeasureSpec.makeMeasureSpec(screenWidth,
+					View.MeasureSpec.EXACTLY);
+			exHeight = View.MeasureSpec.makeMeasureSpec(timeSlotHeight,
+					View.MeasureSpec.EXACTLY);
+			dayTimeSlot[i].measure(exWidth, exHeight);
+
+			dayTimeSlot[i]
+					.layout(0, i * timeSlotHeight,
+							dayTimeSlot[i].getMeasuredWidth(), (i + 1)
+									* timeSlotHeight);
+
+			dayTimeSlot[i].setId(contentLayout.getChildCount());
 			contentLayout.addView(dayTimeSlot[i]);
 		}
 
+		// adding day slot in content layout (showing the lines)
 		for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
 			Log.d(TAG, "adding day in week slot");
 			daysInWeekSlot[i] = new DayInWeekView(getApplicationContext());
-			layoutParams = new RelativeLayout.LayoutParams(daySlotWidth, height);
-			if (i == 0)
-				layoutParams.addRule(RelativeLayout.RIGHT_OF, title.getId());
-			else
-				layoutParams.addRule(RelativeLayout.RIGHT_OF,
-						daysInWeekSlot[i - 1].getId());
-			daysInWeekSlot[i].setLayoutParams(layoutParams);
-			daysInWeekSlot[i].setId(nextViewId++);
+
+			exWidth = View.MeasureSpec.makeMeasureSpec(daySlotWidth,
+					View.MeasureSpec.EXACTLY);
+			exHeight = View.MeasureSpec.makeMeasureSpec(Constant.NUM_HOUR
+					* timeSlotHeight, View.MeasureSpec.EXACTLY);
+			daysInWeekSlot[i].measure(exWidth, exHeight);
+			daysInWeekSlot[i].layout((int) marginWidth + i * daySlotWidth, 0,
+					(int) marginWidth + (i + 1) * daySlotWidth,
+					Constant.NUM_HOUR * timeSlotHeight);
+
+			daysInWeekSlot[i].setId(contentLayout.getChildCount());
+
 			contentLayout.addView(daysInWeekSlot[i]);
 			daysInWeekSlot[i].setClickable(true);
+
 			final View thisView = daysInWeekSlot[i];
 			daysInWeekSlot[i].setOnClickListener(new OnClickListener() {
 				@Override
@@ -177,6 +301,14 @@ public class CalendarWeekView extends Activity {
 				}
 			});
 		}
+		Log.d("calendarview",
+				"content layout size screen " + contentLayout.getWidth() + " "
+						+ contentLayout.getHeight());
+		contentLayout.viewWidth = contentLayout.getWidth();
+		contentLayout.viewHeight = timeSlotHeight * Constant.NUM_HOUR;
+		Log.d("calendarview", "content layout size view "
+				+ contentLayout.viewWidth + " " + contentLayout.viewHeight);
+
 	}
 
 	@Override
@@ -219,26 +351,34 @@ public class CalendarWeekView extends Activity {
 		}
 	}
 
-	public WeekItemView addItemViewToTimeSlot(Item item, int day, int fromHour, int fromMin,
-			int toHour, int toMin, int leftMargin, int width) {
+	public WeekItemView addItemViewToTimeSlot(Item item, int day, int fromHour,
+			int fromMin, int toHour, int toMin, int leftMargin, int width) {
 		WeekItemView newItem = new WeekItemView(getApplicationContext());
-		newItem.setText("Place holder text");
-		// need to read from database
+		/*
+		 * need to read from database
+		 */
 		// newItem.setItem(object);
-		RelativeLayout.LayoutParams layoutParams = null;
+		newItem.setText("place holder text");		
+		contentLayout.addView(newItem);
+		adjustPositionWeekItemView(newItem, day, fromHour, fromMin, toHour, toMin, leftMargin, width);
+		return newItem;
+	}
+	
+	private void adjustPositionWeekItemView(WeekItemView newItem, int day, int fromHour,
+			int fromMin, int toHour, int toMin, int leftMargin, int width){
 		int height = getHeightForItemInTimeSlot(fromHour, fromMin, toHour,
 				toMin);
-		layoutParams = new RelativeLayout.LayoutParams(width, height);
-		layoutParams.addRule(RelativeLayout.ALIGN_TOP,
-				dayTimeSlot[fromHour].getId());
-		layoutParams.addRule(RelativeLayout.ALIGN_LEFT,
-				daysInWeekSlot[day].getId());
-		layoutParams.setMargins(leftMargin,
-				getMarginCorrespondingToPeriod(fromMin), 0, 0);
-		newItem.setLayoutParams(layoutParams);
-		newItem.setId(nextViewId++);
-		contentLayout.addView(newItem);
-		return newItem;
+		int exWidth = View.MeasureSpec.makeMeasureSpec(width,
+				View.MeasureSpec.EXACTLY);
+		int exHeight = View.MeasureSpec.makeMeasureSpec(height,
+				View.MeasureSpec.EXACTLY);
+		newItem.measure(exWidth, exHeight);
+		int left = daysInWeekSlot[day].getLeft()+leftMargin;
+		int top  = dayTimeSlot[fromHour].getTop()+ getMarginCorrespondingToPeriod(fromMin);
+		int right = left+newItem.getMeasuredWidth();
+		int bottom = top+newItem.getMeasuredHeight();
+		newItem.layout(left, top, right, bottom);
+		newItem.setId(contentLayout.getChildCount());
 	}
 
 	private int getHeightForItemInTimeSlot(int fromHour, int fromMin,
@@ -257,5 +397,82 @@ public class CalendarWeekView extends Activity {
 		// TODO Auto-generated method stub
 
 	}
+
+	
+	/*
+	 * Zooming and scrolling part
+	 * Since the content view is a viewgroup that already supported zooming and scrolling,
+	 * this part only helps that view to adjust the controls that are added.
+	 * It helps by re-adjust the subviews so that they are not misplaced due to round-off
+	 * error. 
+	 */
+	private ZoomableViewGroup.OnScrollListener mOnScrollListener = new ZoomableViewGroup.OnScrollListener() {
+
+		@Override
+		public void onScrollBy(int dx, int dy) {
+			titleLayout.scrollBy(dx, 0);
+		}
+	};
+
+	private ZoomableViewGroup.OnZoomListener mOnZoomListener = new ZoomableViewGroup.OnZoomListener() {
+
+		@Override
+		public void onZoomWithScale(float zoomScale) {
+			// zoom out the width of the title row
+			int startId = title.getId();
+			for (int i = 0; i <= Constant.NUM_DAY_IN_WEEK; i++) {
+				int id = startId + i;
+				View view = titleLayout.getChildAt(id);
+				if (view == null)
+					continue;
+				int cw = (int) (view.getWidth() * zoomScale);
+				int ch = (int) view.getHeight();
+				int cl = (int) (view.getLeft() * zoomScale);
+				int ct = (int) (view.getTop());
+
+				if (view == title)
+					Log.d(TAG, "this is title");
+				Log.d(TAG, "on zoom, child " + id + " " + cl + " " + ct + " "
+						+ cw + " " + ch);
+				int ecw = View.MeasureSpec.makeMeasureSpec(cw,
+						View.MeasureSpec.EXACTLY);
+				int ech = View.MeasureSpec.makeMeasureSpec(ch,
+						View.MeasureSpec.EXACTLY);
+				view.measure(ecw, ech);
+				view.layout(cl, ct, cl + cw, ct + ch);
+				view.invalidate(cl, ct, cl + cw, ct + ch);
+			}
+
+			// adjusting the day slot so that they are not misplaced due to
+			// round off error
+			startId = dayTimeSlot[0].getId();
+
+			for (int i = 1; i < Constant.NUM_HOUR; i++) {
+				int id = startId + i;
+				View view = contentLayout.getChildAt(id);
+				View prevView = contentLayout.getChildAt(id - 1);
+				int prevBot = prevView.getBottom();
+				int thisTop = prevBot;
+				int thisWidth = view.getWidth();
+				int thisHeight = view.getHeight();
+				view.layout(0, thisTop, thisWidth, thisTop + thisHeight);
+			}
+
+			int viewHeight = dayTimeSlot[Constant.NUM_HOUR - 1].getBottom();
+			// adjust all the day slot height
+			startId = daysInWeekSlot[0].getId();
+			for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
+				int id = startId + i;
+				View view = contentLayout.getChildAt(id);
+				int exWidth = View.MeasureSpec.makeMeasureSpec(view.getWidth(),
+						View.MeasureSpec.EXACTLY);
+				int exHeight = View.MeasureSpec.makeMeasureSpec(viewHeight,
+						View.MeasureSpec.EXACTLY);
+				view.measure(exWidth, exHeight);
+			}
+			contentLayout.invalidate();
+		}
+
+	};
 
 }
