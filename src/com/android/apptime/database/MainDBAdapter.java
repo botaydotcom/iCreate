@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDB.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDBB.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
@@ -22,7 +22,8 @@ public class MainDBAdapter {
     private static final String TASKDB_COMPLETED = "taskdb_completed";
     private static final String TASKDB_COLOR = "taskdb_color";
     private static final String TASKDB_DEADLINE = "taskdb_deadline";
-    
+    private static final String TASKDB_ALERTTIME = "taskdb_alert_time";
+    private static final String TASKDB_TYPE = "taskdb_type";
     // EVENT TABLE
     private static final String DATABASE_TABLE_EVENT = "Events_Table";
     private static final String EVENTDB_KEY_ID = "eventdb_event_id";
@@ -36,8 +37,8 @@ public class MainDBAdapter {
     private static final String EVENTDB_COLOR = "eventdb_color";
     private static final String EVENTDB_STARTTIME = "eventdb_start_time";
     private static final String EVENTDB_ENDTIME = "eventdb_end_time";
-          
-     
+    private static final String EVENTDB_ALERTTIME = "eventdb_alert_time";
+    private static final String EVENTDB_TYPE = "eventdb_type"; 
     // ITEM TABLE 
     private static final String DATABASE_TABLE_ITEM = "Items_Table";
     private static final String ITEMDB_KEY_ID = "itemdb_itemid";
@@ -70,7 +71,9 @@ public class MainDBAdapter {
     TASKDB_CATEGORY + " text, " +
     TASKDB_COMPLETED + " text not null, " +
     TASKDB_COLOR + " integer not null, " +
-    TASKDB_DEADLINE + " string not null);";
+    TASKDB_DEADLINE + " real not null, " +
+    TASKDB_ALERTTIME + " real not null" +  
+    TASKDB_TYPE + " text not null" + ");";
     
     
     // SQL COMMAND TO CREATE EVENT TABLE
@@ -84,8 +87,10 @@ public class MainDBAdapter {
     EVENTDB_CATEGORY + " text, " +
     EVENTDB_COMPLETED + " text not null, " +
     EVENTDB_COLOR + " integer not null, " +
-    EVENTDB_STARTTIME + " text not null, " +
-    EVENTDB_ENDTIME + " text not null);";
+    EVENTDB_STARTTIME + " real not null, " +
+    EVENTDB_ENDTIME + " real not null, " +
+    EVENTDB_ALERTTIME + " real not null" + 
+    EVENTDB_TYPE + " text not null" + ");";
     
     
     

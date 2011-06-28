@@ -1,5 +1,8 @@
 package com.android.apptime;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +39,50 @@ public class Item {
 		_alertType = alerttype;
 		_priority = priority;
 		_itemType = itemtype;
-		_startTime = starttime;
-		_endTime = endtime;
-		_deadline = deadline;
-		_alertTime = alerttime;
+		Date startdate = new Date();
+		Date enddate = new Date();
+		Date deadlinedate = new Date();
+		Date alertdate = new Date();
+		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+			if (starttime!=null)
+			{
+				startdate = dfm.parse(starttime);
+			}
+			if (endtime!=null)
+			{
+				enddate = dfm.parse(endtime);
+			}
+			if (deadline!=null)
+			{
+				deadlinedate = dfm.parse(deadline);
+			}
+			if (alerttime!=null)
+			{
+				alertdate = dfm.parse(alerttime);
+			}
+			int yu= 0;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (starttime!=null)
+		{
+			_startTime = String.valueOf(startdate.getTime());
+		}
+		if (endtime!=null)
+		{
+			_endTime = String.valueOf(enddate.getTime());
+		}
+		if (deadline!=null)
+		{
+			_deadline = String.valueOf(deadlinedate.getTime());
+		}
+		if (alerttime!=null)
+		{
+			_alertTime = String.valueOf(alertdate.getTime());
+		}
+		
 		_repeat = repeat;
 		_completed = completed;
 		_color = color;		
@@ -78,19 +121,23 @@ public class Item {
 	}
 	public String    GetStartTime()
 	{
-		return _startTime;
+		Date startdate = new Date(Long.parseLong(_startTime));	
+		return startdate.toString();
 	}
 	public String   GetEndTime()
 	{
-		return _endTime;
+		Date enddate = new Date(Long.parseLong(_endTime));
+		return enddate.toString();
 	}
 	public String   GetDeadline()
 	{
-		return _deadline;
+		Date deadlinedate = new Date(Long.parseLong(_deadline));
+		return deadlinedate.toString();
 	}
 	public String GetAlertTime()
 	{
-		return _alertTime;
+		Date alertdate = new Date(Long.parseLong(_alertTime));
+		return alertdate.toString();
 	}
 	public String GetRepeat()
 	{
