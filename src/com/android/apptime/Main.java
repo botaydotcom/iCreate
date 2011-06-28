@@ -62,6 +62,9 @@ public class Main extends TabActivity {
         		alerttype, "priority test", "Event", "starttime test", "endtime test", 
         		"deadline test", "alerttime test", "repeat test", "completed test", 1);
         idb.createEvent(item);
+        
+        item.SetTitle("title test 2");
+        idb.updateEvent(item);
         db.AddItemToDatabase(this, item);
         
         newdb.close();
