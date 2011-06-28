@@ -1,11 +1,16 @@
 package com.android.apptime;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
@@ -59,13 +64,36 @@ public class Main extends TabActivity {
         List<String> alerttype = new ArrayList<String>();
         alerttype.add("alert1"); alerttype.add("alert2");
         Item item = new Item("title test", "description test", "location test", "category test", 
-        		alerttype, "priority test", "Event", "starttime test", "endtime test", 
-        		"deadline test", "alerttime test", "repeat test", "completed test", 1);
+        		alerttype, "priority test", "Event", "1991-07-11 12:08:12", "2007-02-26 20:15:00", 
+        		null, "2014-08-20 20:21:22", "repeat test", "completed test", 1);
+        String et = item.GetAlertTime();
+        String et1 = item.GetDeadline();
         idb.createEvent(item);
         
         item.SetTitle("title test 2");
         idb.updateEvent(item);
         db.AddItemToDatabase(this, item);
+        Cursor mycs = idb.getEventById(13);
+        String titletest = mycs.getString(8);
+        
+        Date newdate = new Date();
+        long ttt = newdate.getTime();
+        /*
+        Date olddate = new Date("1991-07-11 12:08:12");
+        boolean tttt = false;
+        if (olddate.getTime() < newdate.getTime()) tttt=true;
+        */
+        
+        
+        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+			Date a = dfm.parse("2007-02-26 20:15:00");
+			int yu= 0;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         
         newdb.close();
     }

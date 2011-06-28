@@ -2,6 +2,9 @@ package com.android.apptime.database;
 
 
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -89,14 +92,30 @@ public class ItemDBAdapter {
     newTaskValues.put(ITEMDB_KEY_EVENT, 1);
     newTaskValues.put(ITEMDB_KEY_TASK, 1);
     // Insert the row.
-    /*
+    
     EventDBAdapter eventDBAdapter = new EventDBAdapter(this.context);
     eventDBAdapter.open();
-    eventDBAdapter.createEvent(_event);
+    long eventid = eventDBAdapter.createEvent(_event);
     eventDBAdapter.close();
-    */
-    long t = mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
-    return t;
+    
+    String t0 = "INSERT INTO " + DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_TASK + ", " + ITEMDB_KEY_EVENT + ")" + " VALUES ('" +
+    "0" + "','" +    
+    eventid + "');";
+    //1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+    mDb.execSQL(t0);
+    String query = "SELECT last_insert_rowid();";
+    Cursor cursor = mDb.rawQuery(query, null);
+    int id = 0;     
+    if (cursor.moveToFirst())
+    {
+        do
+        {           
+            id = cursor.getInt(0);                  
+        } while(cursor.moveToNext());           
+    }
+
+    
+    return id;
   }
 
   public int createItem(Item _item)  {
@@ -206,6 +225,22 @@ public class ItemDBAdapter {
          mCursor.moveToFirst();
      }
      return mCursor;
+ }
+ 
+ 
+ // return an array of 2 arrays, first array includes events, 2nd includes items 
+ public ArrayList<Cursor> getItemByDate(Date date) {
+	 
+	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
+	 EventDBAdapter edb = new EventDBAdapter(this.context);
+	 edb.open();
+	 arrlist.add(edb.getEventByDate(date));
+	 edb.close();
+	 TaskDBAdapter tdb = new TaskDBAdapter(this.context);
+	 tdb.open();
+	 arrlist.add(tdb.getTaskByDate(date));
+	 tdb.close();
+	 return arrlist;
  }
  
 }
