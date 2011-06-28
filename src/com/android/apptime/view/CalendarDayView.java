@@ -2,6 +2,7 @@ package com.android.apptime.view;
 
 import java.util.Date;
 
+import com.android.apptime.DatabaseInterface;
 import com.android.apptime.Item;
 import com.android.apptime.R;
 
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CalendarDayView extends Activity {
+	
+	private DatabaseInterface mDBinterface = null;
 	public static int nextViewId = 1;
 	private String TAG = "calendarview";
 	private final int CONTEXT_MENU_ADD = 0;
@@ -92,6 +95,10 @@ public class CalendarDayView extends Activity {
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
+	}
+	
+	public void setDBInterface (DatabaseInterface dbInterface){
+		this.mDBinterface = dbInterface;
 	}
 
 	private void displayAllTimeSlot() {
