@@ -88,18 +88,19 @@ public final class R {
         public static final int timeslot=0x7f03000c;
     }
     public static final class string {
+        public static final int acadyear=0x7f060019;
         /**  API Key 
          */
         public static final int apikey=0x7f060004;
-        public static final int apikeyfield=0x7f06000a;
+        public static final int apikeyfield=0x7f06000b;
         public static final int app_name=0x7f060001;
-        public static final int authfield=0x7f06000b;
-        public static final int deleteallrecurrence=0x7f060017;
-        public static final int description=0x7f060011;
-        public static final int enddatefield=0x7f06000d;
-        public static final int eventdatetime=0x7f060010;
-        public static final int eventid=0x7f060016;
-        public static final int eventtitle=0x7f06000e;
+        public static final int authfield=0x7f06000c;
+        public static final int deleteallrecurrence=0x7f060018;
+        public static final int description=0x7f060012;
+        public static final int enddatefield=0x7f06000e;
+        public static final int eventdatetime=0x7f060011;
+        public static final int eventid=0x7f060017;
+        public static final int eventtitle=0x7f06000f;
         public static final int hello=0x7f060000;
         public static final int login_apikeyfield=0x7f060006;
         /**  IVLE Login Constants 
@@ -108,18 +109,20 @@ public final class R {
         public static final int modifycontextmenu=0x7f060002;
         public static final int my_organizer_add_personal_event_uri=0x7f060008;
         public static final int my_organizer_delete_personal_event=0x7f060009;
+        public static final int my_organizer_get_timetable_student_uri=0x7f06000a;
         /**  IVLE My Organizer API Constants 
          */
         public static final int my_organizer_uri=0x7f060007;
-        public static final int recurtilldate=0x7f060015;
-        public static final int recurtype=0x7f060012;
+        public static final int recurtilldate=0x7f060016;
+        public static final int recurtype=0x7f060013;
         public static final int removecontextmenu=0x7f060003;
-        public static final int startdatefield=0x7f06000c;
+        public static final int semester=0x7f06001a;
+        public static final int startdatefield=0x7f06000d;
         /**  	Popup window - add/modify item 
          */
-        public static final int strAnnounceNotEnoughDetail=0x7f060018;
-        public static final int strdays=0x7f060014;
-        public static final int venue=0x7f06000f;
-        public static final int weeklyrecurevery=0x7f060013;
+        public static final int strAnnounceNotEnoughDetail=0x7f06001b;
+        public static final int strdays=0x7f060015;
+        public static final int venue=0x7f060010;
+        public static final int weeklyrecurevery=0x7f060014;
     }
 }

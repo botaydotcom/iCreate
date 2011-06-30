@@ -16,8 +16,11 @@
 	<string name="my_organizer_uri">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Personal</string>
 	<string name="my_organizer_add_personal_event_uri">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_AddPersonalEvent</string>
 	<string name="my_organizer_delete_personal_event">https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_DeletePersonalEvent</string>
+	<string name="my_organizer_get_timetable_student_uri"> https://ivle.nus.edu.sg/api/Lapi.svc/Timetable_Student</string>
+	
 	<string name="apikeyfield">APIKey</string>
 	<string name="authfield">AuthToken</string>
+	
 	<string name="startdatefield">StartDate</string>
 	<string name="enddatefield">EndDate</string>
 	<string name="eventtitle">EventTitle</string>
@@ -30,6 +33,9 @@
 	<string name="recurtilldate">RecurTillDate</string>
 	<string name="eventid">EventID</string>
 	<string name="deleteallrecurrence">DeleteAllRecurrence</string>
+	
+	<string name="acadyear">AcadYear</string>
+	<string name="semester">Semester</string>
 	
 <!-- 	Popup window - add/modify item -->
 	<string name="strAnnounceNotEnoughDetail">Please fill in the title</string>

@@ -9,17 +9,17 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.util.Xml;
 
-public class IvleMyOrganizerGetAndroidSaxFeedParser extends IvleMyOrganizerGetBaseFeedParser {
+public class IvleEventGetAndroidSaxFeedParser extends IvleEventGetBaseFeedParser {
 
 	static final String RSS = "APIDataOfData_Organizer_EventsMTRdQN6P";
-	public IvleMyOrganizerGetAndroidSaxFeedParser(String feedUrl) {
+	public IvleEventGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
 
-	public List<Message> parse() {
-		final Message currentMessage = new Message();
+	public List<IvleEventData> parse() {
+		final IvleEventData currentMessage = new IvleEventData();
 		RootElement root = new RootElement(RSS);
-		final List<Message> messages = new ArrayList<Message>();
+		final List<IvleEventData> messages = new ArrayList<IvleEventData>();
 		
 		Element results = root.getChild(RESULTS);
 		Element data_organizer_events = results.getChild(DATA_ORGANIZER_EVENTS);
