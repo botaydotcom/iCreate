@@ -93,7 +93,7 @@ public class Ivle extends Activity  {
     }
     
     // input start and end date as a string in the following format: dd/mm/yyyy
-    public List<Message> getEvents(String start_date, String end_date){
+    public List<IvleEventData> getEvents(String start_date, String end_date){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
@@ -108,7 +108,7 @@ public class Ivle extends Activity  {
     	
     	String feedURL = sb.toString();
     	
-    	IvleMyOrganizerGetAndroidSaxFeedParser newParser = new IvleMyOrganizerGetAndroidSaxFeedParser(feedURL);
+    	IvleEventGetAndroidSaxFeedParser newParser = new IvleEventGetAndroidSaxFeedParser(feedURL);
     	
     	return newParser.parse();
     }
@@ -272,5 +272,36 @@ public class Ivle extends Activity  {
     	String result = DataHandler.sendRequestUsingPost(getString(R.string.my_organizer_delete_personal_event), listParams);
     
     	return result;
+    }
+    
+    /*AcadYear: Academic Year. Eg. 2010/2011
+    Semester: Academic Semester. Eg. 1, 2, 3 or 4
+    ClassNo: Class Number
+    DayCode: Day Code. 1, 2, 3, 4, 5, 6 or 7.
+    DayText: Day description.
+    StartTime: Starting time for the lesson.
+    EndTime: Ending time for the lesson.
+    Venue: Venue of the slot
+    WeekCode: Week Code. Refer to [CodeTable_WeekTypes] function for the full list.
+    WeekText: Week description. Refer to [CodeTable_WeekTypes] function for the full list.
+    LessonType: Type of lesson. Example: Lecture, Tutorial and so on.*/
+    public List<IvleTimetableData> getTimetable(String acad_year, String semester){
+    	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
+    	
+    	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
+    	listParams.add(new BasicNameValuePair(getString(R.string.authfield), IVLE_Token));
+    	listParams.add(new BasicNameValuePair(getString(R.string.acadyear), acad_year));
+    	listParams.add(new BasicNameValuePair(getString(R.string.semester), semester));
+    	
+    	StringBuilder sb = new StringBuilder(getString(R.string.my_organizer_get_timetable_student_uri));
+    	
+    	sb.append("?");
+    	sb.append(listParams);
+    	
+    	String feedURL = sb.toString();
+    	
+    	IvleTimetableGetAndroidSaxFeedParser newParser = new IvleTimetableGetAndroidSaxFeedParser(feedURL);
+    	
+    	return newParser.parse();
     }
 }
