@@ -28,7 +28,7 @@ public class Item {
 	private Integer _color;
 	
 	// Constructor
-	Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
+	public Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
 	String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
 	{
 		

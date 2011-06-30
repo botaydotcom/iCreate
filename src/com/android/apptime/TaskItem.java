@@ -8,7 +8,7 @@ import android.graphics.Color;
 // REMARK: TaskItem *MUST* has deadline.
 public class TaskItem extends Item{
 	
-	TaskItem (String title, String description, String location, String category, List<String> alerttype, String priority, 
+	public TaskItem (String title, String description, String location, String category, List<String> alerttype, String priority, 
 			String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
 	{
 		super(title, description,location, category,alerttype, priority, 

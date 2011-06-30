@@ -8,13 +8,19 @@ import android.database.Cursor;
 
 import com.android.apptime.database.ItemDBAdapter;
 
+
 public class DatabaseInterface {
 	// working with database
 	private static DatabaseInterface theInstance = null;
 	private ItemDBAdapter itemdb = null;;
 	private Context context = null;
 	private DatabaseInterface(){};
-	
+	public DbSetChange dbsetchange;
+	public interface DbSetChange 
+	{
+		public void Update();
+	}
+		
 	public static DatabaseInterface getDatabaseInterface(Context context)
 	{
 		if (theInstance==null) 
@@ -32,6 +38,7 @@ public class DatabaseInterface {
 		long id = itemdb.createItem(_item);
 		itemdb.close();
 		_item.SetId(String.valueOf(id));
+		dbsetchange.Update();
 		return _item;
 	}
 	
@@ -41,6 +48,7 @@ public class DatabaseInterface {
 		itemdb.open();
 		itemdb.removeItem(Integer.parseInt(_item.GetId()));
 		itemdb.close();
+		dbsetchange.Update();
 	}
 	
 	public void UpdateItemFmomDatabase(Context context, Item _item)
@@ -48,7 +56,7 @@ public class DatabaseInterface {
 		itemdb.open();
 		itemdb.updateItem(_item);
 		itemdb.close();
-		
+		dbsetchange.Update();
 	}
 	
 	// retrieve item by ITEM id
@@ -118,5 +126,20 @@ public class DatabaseInterface {
 		return myitem;
 		
 	}
+	
+	
+	
+	
+	
+	public void SetObserver(DbSetChange dbsetchange)
+	{
+		this.dbsetchange = dbsetchange;
+		
+	}
+	
+	
+	
+	
+	
 	
 }
