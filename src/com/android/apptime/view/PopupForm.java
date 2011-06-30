@@ -31,6 +31,8 @@ import android.widget.Toast;
 public class PopupForm extends Activity {
 	private static final int TASK = 0;
 	private static final int EVENT = 1;
+	private static final int LEFTMARGIN = 30;
+	private static final int TOPMARGIN = 100;
 	public static int nextViewId = 1;
 	private String TAG = "calendarview";
 	private final int CONTEXT_MENU_ADD = 0;
@@ -76,8 +78,8 @@ public class PopupForm extends Activity {
 		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = offX;
-		params.topMargin = offY;
+		params.leftMargin = LEFTMARGIN;//offX;
+		params.topMargin = TOPMARGIN;//offY;
 		layout.setLayoutParams(params);
 		mEtTitle = (EditText) findViewById(R.id.etTitle);
 		mTvStartTime = (TextView) findViewById(R.id.tvDisplayStartTime);
