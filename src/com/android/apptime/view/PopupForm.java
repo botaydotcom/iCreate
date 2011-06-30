@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.apptime.DatabaseInterface;
+import com.android.apptime.Item;
 import com.android.apptime.R;
 
 public class PopupForm extends Activity {
@@ -73,19 +74,19 @@ public class PopupForm extends Activity {
 		setContentView(R.layout.popup);
 		layout = (LinearLayout) findViewById(R.id.linearpopup);
 		myResource = getResources();
-		offX = (int)myResource.getDimension(R.dimen.left_margin_popup);
-		offY = (int)myResource.getDimension(R.dimen.top_margin_popup);
+		offX = (int) myResource.getDimension(R.dimen.left_margin_popup);
+		offY = (int) myResource.getDimension(R.dimen.top_margin_popup);
 		Bundle extras = getIntent().getExtras();
 		int type = extras.getInt("popupType");
 		startTime = (Date) extras.get("startTime");
 		endTime = (Date) extras.get("endTime");
-		
+
 		offX = extras.getInt("offX");
 		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = LEFTMARGIN;//offX;
-		params.topMargin = TOPMARGIN;//offY;
+		params.leftMargin = LEFTMARGIN;// offX;
+		params.topMargin = TOPMARGIN;// offY;
 		layout.setLayoutParams(params);
 		mEtTitle = (EditText) findViewById(R.id.etTitle);
 		mTvStartTime = (TextView) findViewById(R.id.tvDisplayStartTime);
@@ -266,8 +267,9 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		//DatabaseInterface database = new DatabaseInterface(getApplicationContext());
-		//database.AddItemToDatabase(getApplicationContext(), _item)
+		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
+		(getApplicationContext());
+		//database.AddItemToDatabase(getApplicationContext(), );
 		
 		data.putExtra("newItem", true);
 		data.putExtra("title", title);
