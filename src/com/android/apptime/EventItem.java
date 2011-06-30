@@ -7,7 +7,7 @@ import android.graphics.Color;
 
 // REMARK: EventItem *MUST* has [startTime,endTime]
 public class EventItem extends Item{
-	EventItem (String title, String description, String location, String category, List<String> alerttype, String priority, 
+	public EventItem (String title, String description, String location, String category, List<String> alerttype, String priority, 
 			String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
 			{
 				super(title, description,location, category,alerttype, priority, 
