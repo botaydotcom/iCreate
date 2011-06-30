@@ -266,7 +266,7 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		DatabaseInterface database = new DatabaseInterface(getApplicationContext());
+		//DatabaseInterface database = new DatabaseInterface(getApplicationContext());
 		//database.AddItemToDatabase(getApplicationContext(), _item)
 		
 		data.putExtra("newItem", true);
