@@ -2,31 +2,33 @@ package com.android.apptime.view;
 
 import java.util.Date;
 
-import com.android.apptime.R;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.android.apptime.DatabaseInterface;
+import com.android.apptime.R;
 
 public class PopupForm extends Activity {
 	private static final int TASK = 0;
@@ -60,7 +62,7 @@ public class PopupForm extends Activity {
 	private LinearLayout layout = null;
 	private RadioGroup mTypeGroup = null;
 	private String location = "";
-
+	private Resources myResource = null;
 	private int offX, offY, width, height;
 
 	@Override
@@ -70,10 +72,14 @@ public class PopupForm extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.popup);
 		layout = (LinearLayout) findViewById(R.id.linearpopup);
+		myResource = getResources();
+		offX = (int)myResource.getDimension(R.dimen.left_margin_popup);
+		offY = (int)myResource.getDimension(R.dimen.top_margin_popup);
 		Bundle extras = getIntent().getExtras();
 		int type = extras.getInt("popupType");
 		startTime = (Date) extras.get("startTime");
 		endTime = (Date) extras.get("endTime");
+		
 		offX = extras.getInt("offX");
 		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -260,6 +266,9 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
+		DatabaseInterface database = new DatabaseInterface(getApplicationContext());
+		//database.AddItemToDatabase(getApplicationContext(), _item)
+		
 		data.putExtra("newItem", true);
 		data.putExtra("title", title);
 		data.putExtra("type", type);
