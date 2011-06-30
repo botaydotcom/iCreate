@@ -2,10 +2,6 @@ package com.android.apptime.view;
 
 import java.util.Date;
 
-import com.android.apptime.DatabaseInterface;
-import com.android.apptime.Item;
-import com.android.apptime.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.apptime.DatabaseInterface;
+import com.android.apptime.Item;
+import com.android.apptime.R;
 
 public class CalendarDayView extends Activity {
 	
@@ -53,7 +54,8 @@ public class CalendarDayView extends Activity {
 	private View itemBeingSelected = null;
 	private TimeSlot startTime = null;
 	private TimeSlot endTime = null;
-
+	private ScrollView mScrollView = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,6 +104,7 @@ public class CalendarDayView extends Activity {
 	}
 
 	private void displayAllTimeSlot() {
+		mScrollView = (ScrollView) findViewById(R.id.tabcontentscrollview);
 		for (int i = 0; i < Constant.NUM_HOUR; i++) {
 			dayTimeSlot[i] = new TimeSlotView(getApplicationContext());
 			dayTimeSlot[i].getTime().setHours(i);
@@ -125,6 +128,7 @@ public class CalendarDayView extends Activity {
 				@Override
 				public void onClick(View v) {
 					itemBeingSelected = thisView;
+					mScrollView.scrollTo(0, thisView.getTop());
 					showPopUpWindow();
 				}
 			});
@@ -141,6 +145,10 @@ public class CalendarDayView extends Activity {
 			return true;
 		}
 		return false;
+	}
+	
+	public void scrollTo(Date startTime){
+		
 	}
 	
 	private void updateView(){
