@@ -68,19 +68,29 @@ public class ItemDBAdapter {
   //Insert a new task into the Item table
   public long insertTask(TaskItem _task) {
     // Create a new row of values to insert.
-    ContentValues newTaskValues = new ContentValues();
-    // Assign values for each row.
-    newTaskValues.put(ITEMDB_KEY_TASK, _task.GetId());
-    newTaskValues.put(ITEMDB_KEY_EVENT, 0);
-    
-    TaskDBAdapter taskDBAdapter = new TaskDBAdapter(this.context);
-    taskDBAdapter.open();
-    taskDBAdapter.createTask(_task);
-    taskDBAdapter.close();
-    
-    // Insert the row.
-    long t =mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
-    return t;
+	  	TaskDBAdapter taskDBAdapter = new TaskDBAdapter(this.context);
+	    taskDBAdapter.open();
+	    long taskid = taskDBAdapter.createTask(_task);
+	    taskDBAdapter.close();
+	    
+	    String t0 = "INSERT INTO " + DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_TASK + ", " + ITEMDB_KEY_EVENT + ")" + " VALUES ('" +
+	    taskid + "," +
+	    "0" + "','" + "');";
+	    //1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+	    mDb.execSQL(t0);
+	    String query = "SELECT last_insert_rowid();";
+	    Cursor cursor = mDb.rawQuery(query, null);
+	    int id = 0;     
+	    if (cursor.moveToFirst())
+	    {
+	        do
+	        {           
+	            id = cursor.getInt(0);                  
+	        } while(cursor.moveToNext());           
+	    }
+
+	    
+	    return taskid;
   }
 
   //Insert a new event into the Item table
@@ -115,12 +125,12 @@ public class ItemDBAdapter {
     }
 
     
-    return id;
+    return eventid;
   }
 
-  public int createItem(Item _item)  {
+  public long createItem(Item _item)  {
 	  if (_item.GetItemType()=="Event")
-		  insertEvent( _item);
+		  return insertEvent( _item);
 	  else
 		  insertTask((TaskItem) _item);
 	  

@@ -10,20 +10,29 @@ import com.android.apptime.database.ItemDBAdapter;
 
 public class DatabaseInterface {
 	// working with database
-	private static ItemDBAdapter itemdb = null;;
+	private static DatabaseInterface theInstance = null;
+	private ItemDBAdapter itemdb = null;;
+	private Context context = null;
+	private DatabaseInterface(){};
 	
-	public DatabaseInterface(Context context)
+	public static DatabaseInterface getDatabaseInterface(Context context)
 	{
-		if (itemdb == null) itemdb = new ItemDBAdapter(context);
-		
+		if (theInstance==null) 
+		{
+			theInstance = new DatabaseInterface();
+		}
+		theInstance.itemdb = new ItemDBAdapter(context);
+		theInstance.context = context;
+		return theInstance;
 	}
 	
-	public void AddItemToDatabase(Context context, Item _item)
+	public Item AddItemToDatabase(Context context, Item _item)
 	{
 		itemdb.open();
-		itemdb.createItem(_item);
+		long id = itemdb.createItem(_item);
 		itemdb.close();
-		
+		_item.SetId(String.valueOf(id));
+		return _item;
 	}
 	
 	public void RemoveItemFromDatabase(Context context, Item _item)

@@ -59,7 +59,7 @@ public class Main extends TabActivity {
         idb.open();
         idb1.open();
         
-        
+        /*
         DatabaseInterface db = new DatabaseInterface(this);
         List<String> alerttype = new ArrayList<String>();
         alerttype.add("alert1"); alerttype.add("alert2");
@@ -75,7 +75,7 @@ public class Main extends TabActivity {
         db.AddItemToDatabase(this, item);
         Cursor mycs = idb.getEventById(1);
         String titletest = mycs.getString(8);
-        
+        */
         Date newdate = new Date();
         long ttt = newdate.getTime();
         /*
