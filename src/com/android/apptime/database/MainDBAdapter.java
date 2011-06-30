@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDBB.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDBB1.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
@@ -72,7 +72,7 @@ public class MainDBAdapter {
     TASKDB_COMPLETED + " text not null, " +
     TASKDB_COLOR + " integer not null, " +
     TASKDB_DEADLINE + " real not null, " +
-    TASKDB_ALERTTIME + " real not null" +  
+    TASKDB_ALERTTIME + " real not null, " +  
     TASKDB_TYPE + " text not null" + ");";
     
     
@@ -89,7 +89,7 @@ public class MainDBAdapter {
     EVENTDB_COLOR + " integer not null, " +
     EVENTDB_STARTTIME + " real not null, " +
     EVENTDB_ENDTIME + " real not null, " +
-    EVENTDB_ALERTTIME + " real not null" + 
+    EVENTDB_ALERTTIME + " real not null," + 
     EVENTDB_TYPE + " text not null" + ");";
     
     
