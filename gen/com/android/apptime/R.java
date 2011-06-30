@@ -21,9 +21,11 @@ public final class R {
         public static final int timeslot_margin=0x7f040002;
     }
     public static final class dimen {
+        public static final int left_margin_popup=0x7f050003;
         public static final int timeslot_height=0x7f050002;
         public static final int timeslot_margin=0x7f050000;
         public static final int title_height=0x7f050001;
+        public static final int top_margin_popup=0x7f050004;
     }
     public static final class drawable {
         public static final int ic_tab_artists_grey=0x7f020000;

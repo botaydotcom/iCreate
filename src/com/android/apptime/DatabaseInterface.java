@@ -10,12 +10,14 @@ import com.android.apptime.database.ItemDBAdapter;
 
 public class DatabaseInterface {
 	// working with database
-	private ItemDBAdapter itemdb;
+	private static ItemDBAdapter itemdb = null;;
 	
 	public DatabaseInterface(Context context)
 	{
-		itemdb = new ItemDBAdapter(context);
+		if (itemdb == null) itemdb = new ItemDBAdapter(context);
+		
 	}
+	
 	public void AddItemToDatabase(Context context, Item _item)
 	{
 		itemdb.open();
@@ -69,6 +71,7 @@ public class DatabaseInterface {
 				String etype = eventcursor.getString(12);
 				Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
 						etype, estarttime, eendtime,null,  ealerttime, erepeat, ecompleted, ecolor);
+				newitem.SetId(eid);
 				myevent.add(newitem);
 				
 				
@@ -95,6 +98,7 @@ public class DatabaseInterface {
 				String etype = eventcursor.getString(12);
 				Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
 						etype, estarttime, eendtime,null,  ealerttime, erepeat, ecompleted, ecolor);
+				newitem.SetId(eid);
 				mytask.add(newitem);
 				
 				
