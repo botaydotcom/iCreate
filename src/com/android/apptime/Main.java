@@ -59,7 +59,7 @@ public class Main extends TabActivity {
         idb.open();
         idb1.open();
         
-        
+        /*
         DatabaseInterface db = new DatabaseInterface(this);
         List<String> alerttype = new ArrayList<String>();
         alerttype.add("alert1"); alerttype.add("alert2");
@@ -67,15 +67,15 @@ public class Main extends TabActivity {
         		alerttype, "priority test", "Event", "1991-07-11 12:08:12", "2007-02-26 20:15:00", 
         		null, "2014-08-20 20:21:22", "repeat test", "completed test", 1);
         String et = item.GetAlertTime();
-        String et1 = item.GetDeadline();
+        //String et1 = item.GetDeadline();
         idb.createEvent(item);
         
         item.SetTitle("title test 2");
         idb.updateEvent(item);
         db.AddItemToDatabase(this, item);
-        Cursor mycs = idb.getEventById(13);
+        Cursor mycs = idb.getEventById(1);
         String titletest = mycs.getString(8);
-        
+        */
         Date newdate = new Date();
         long ttt = newdate.getTime();
         /*
