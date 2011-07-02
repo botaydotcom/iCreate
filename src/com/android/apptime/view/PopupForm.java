@@ -250,7 +250,7 @@ public class PopupForm extends Activity {
 		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
 		(getApplicationContext());
 		
-		modifiedItem = database.getItemById(itemId);
+		modifiedItem = database.RetrieveItemFromDatabase(getApplicationContext(), itemId);
 		modifiedItem.SetTitle(title);
 		modifiedItem.SetLocation(location);
 		if (type == EVENT) {
