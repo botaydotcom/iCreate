@@ -59,10 +59,10 @@ public class DatabaseInterface {
 		dbsetchange.Update();
 	}
 	
-	public Item RetrieveItemFromDatabase(Context context, Item _item)
+	public Item RetrieveItemFromDatabase(Context context, long id)
 	{
 		itemdb.open();
-		Cursor mycs = itemdb.getItemById(Long.parseLong(_item.GetId()));
+		Cursor mycs = itemdb.getItemById(id);
 		if (mycs.getString(12).equalsIgnoreCase("Event"))
 		{
 			// return event
