@@ -29,7 +29,7 @@ public class Item {
 	
 	// Constructor
 	public Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
-	String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
+	String itemtype, Date starttime, Date endtime, Date deadline, Date alerttime, String repeat, String completed, Integer color)
 	{
 		
 		_title = title;
@@ -39,53 +39,57 @@ public class Item {
 		_alertType = alerttype;
 		_priority = priority;
 		_itemType = itemtype;
-		Date startdate = new Date();
-		Date enddate = new Date();
-		Date deadlinedate = new Date();
-		Date alertdate = new Date();
-		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-			if (starttime!=null)
-			{
-				startdate = dfm.parse(starttime);
-			}
-			if (endtime!=null)
-			{
-				enddate = dfm.parse(endtime);
-			}
-			if (deadline!=null)
-			{
-				deadlinedate = dfm.parse(deadline);
-			}
-			if (alerttime!=null)
-			{
-				alertdate = dfm.parse(alerttime);
-			}
-			int yu= 0;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		if (starttime!=null)
 		{
-			_startTime = String.valueOf(startdate.getTime());
+			_startTime = String.valueOf(starttime.getTime());
 		}
 		if (endtime!=null)
 		{
-			_endTime = String.valueOf(enddate.getTime());
+			_endTime = String.valueOf(endtime.getTime());
 		}
 		if (deadline!=null)
 		{
-			_deadline = String.valueOf(deadlinedate.getTime());
+			_deadline = String.valueOf(deadline.getTime());
 		}
 		if (alerttime!=null)
 		{
-			_alertTime = String.valueOf(alertdate.getTime());
+			_alertTime = String.valueOf(alerttime.getTime());
 		}
 		
 		_repeat = repeat;
 		_completed = completed;
 		_color = color;		
+	}
+	
+	
+	
+	// title, type, start/endtime, location
+	public Item(String title, String type, Date starttime, Date endtime, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_startTime = String.valueOf(starttime.getTime());
+		_endTime = String.valueOf(endtime.getTime());
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 1;
+		
+	}
+	
+	public Item(String title, String type, Date deadline, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_deadline = String.valueOf(deadline.getTime());
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 10;
+		
 	}
 	
 	
@@ -119,25 +123,25 @@ public class Item {
 	{
 		return _priority;
 	}
-	public String    GetStartTime()
+	public Date   GetStartTime()
 	{
 		Date startdate = new Date(Long.parseLong(_startTime));	
-		return startdate.toString();
+		return startdate;
 	}
-	public String   GetEndTime()
+	public Date  GetEndTime()
 	{
 		Date enddate = new Date(Long.parseLong(_endTime));
-		return enddate.toString();
+		return enddate;
 	}
-	public String   GetDeadline()
+	public Date   GetDeadline()
 	{
 		Date deadlinedate = new Date(Long.parseLong(_deadline));
-		return deadlinedate.toString();
+		return deadlinedate;
 	}
-	public String GetAlertTime()
+	public Date GetAlertTime()
 	{
 		Date alertdate = new Date(Long.parseLong(_alertTime));
-		return alertdate.toString();
+		return alertdate;
 	}
 	public String GetRepeat()
 	{
@@ -185,21 +189,21 @@ public class Item {
 	{
 		_priority = newPriority;
 	}
-	public void  SetStartTime(String newStartTime)
+	public void  SetStartTime(Date newStartTime)
 	{
-		_startTime = newStartTime;
+		_startTime = String.valueOf(newStartTime.getTime());
 	}
-	public void  SetEndTime(String newEndTime)
+	public void  SetEndTime(Date newEndTime)
 	{
-		_endTime = newEndTime;
+		_endTime = String.valueOf(newEndTime.getTime());
 	}
-	public void  SetDeadline(String newDeadline)
+	public void  SetDeadline(Date newDeadline)
 	{
-		_deadline = newDeadline;
+		_deadline = String.valueOf(newDeadline.getTime());
 	}
-	public void  SetAlertTime(String newAlertTime)
+	public void  SetAlertTime(Date newAlertTime)
 	{
-		_alertTime = newAlertTime;
+		_alertTime = String.valueOf(newAlertTime.getTime());
 	}
 	public void  SetRepeat(String newRepeat)
 	{
@@ -220,12 +224,7 @@ public class Item {
 	
 	
 	
-	public boolean GetItemInOneDay(Date thedate)
-	{
-		
-		
-		return true;
-	}
+	
 }
 
 
