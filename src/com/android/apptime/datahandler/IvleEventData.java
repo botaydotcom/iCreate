@@ -21,7 +21,7 @@ public class IvleEventData implements Comparable<IvleEventData>{
 	}
 	
 	public void setDescription(String description){
-		this.date = description.trim();
+		this.description = description.trim();
 	}
 	
 	public String getEventType(){

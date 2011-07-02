@@ -307,4 +307,51 @@ public class Ivle extends Activity  {
     	
     	return newParser.parse();
     }
+    
+    /*StartDate: Starting date. Format: dd-mmm-yyyy
+    EndDate: Ending date. Format: dd-mmm-yyyy
+    If StartDate or EndDate is empty, it default to today's date.*/    
+    
+    public List<IvleSpecialDayData> getSpecialDays(String start_date, String end_date){
+    	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
+    	
+    	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
+    	listParams.add(new BasicNameValuePair(getString(R.string.authfield), IVLE_Token));
+    	listParams.add(new BasicNameValuePair(getString(R.string.startdatefield), start_date));
+    	listParams.add(new BasicNameValuePair(getString(R.string.enddatefield), end_date));
+    	
+    	StringBuilder sb = new StringBuilder(getString(R.string.my_organizer_get_special_days_uri));
+    	
+    	sb.append("?");
+    	sb.append(listParams);
+    	
+    	String feedURL = sb.toString();
+    	
+    	IvleSpecialDayGetAndroidSaxFeedParser newParser = new IvleSpecialDayGetAndroidSaxFeedParser(feedURL);
+    	
+    	return newParser.parse();
+    }
+    
+    /*AcadYear: Academic Year. Eg. 2010/2011
+    Semester: Academic Semester. Eg. 1, 2, 3 or 4*/
+    
+    public List<IvleAcadSemesterInfoData> getAcadSemesterInfo(String acad_year, String semester){
+    	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
+    	
+    	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
+    	listParams.add(new BasicNameValuePair(getString(R.string.authfield), IVLE_Token));
+    	listParams.add(new BasicNameValuePair(getString(R.string.acadyear), acad_year));
+    	listParams.add(new BasicNameValuePair(getString(R.string.semester), semester));
+    	
+    	StringBuilder sb = new StringBuilder(getString(R.string.my_organizer_get_acad_semester_info_uri));
+    	
+    	sb.append("?");
+    	sb.append(listParams);
+    	
+    	String feedURL = sb.toString();
+    	
+    	IvleAcadSemesterInfoGetAndroidSaxFeedParser newParser = new IvleAcadSemesterInfoGetAndroidSaxFeedParser(feedURL);
+    	
+    	return newParser.parse();
+    }
 }
