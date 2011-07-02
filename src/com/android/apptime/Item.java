@@ -88,6 +88,34 @@ public class Item {
 		_color = color;		
 	}
 	
+	// title, type, start/endtime, location
+	public Item(String title, String type, String starttime, String endtime, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_startTime = starttime;
+		_endTime = endtime;
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 1;
+		
+	}
+	
+	public Item(String title, String type, String deadline, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_deadline = deadline;
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 10;
+		
+	}
+	
 	
 	
 	// Getters

@@ -5,28 +5,27 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public abstract class IvleTimetableGetBaseFeedParser implements IvleTimetableFeedParser{
+public abstract class IvleAcadSemesterInfoGetBaseFeedParser implements IvleAcadSemesterInfoFeedParser{
+
 	// names of the XML tags
 	static final String COMMENTS = "Comments";
 	static final String LAST_UPDATE = "LastUpdate";
 	static final String RESULTS = "Results";
-	static final String DATA_TIMETABLE_STUDENT = "Data_Timetable_Student";
+	static final String DATA_ACAD_SEMESTER_INFO = "Data_AcadSemesterInfo";
 	static final String ACAD_YEAR = "AcadYear";
-	static final String CLASS_NO = "ClassNo";
-	static final String DAY_CODE = "DayCode";
-	static final String DAY_TEXT = "DayText";
-	static final String END_TIME = "EndTime";
-	static final String LESSON_TYPE = "LessonType";
-	static final String MODULE_CODE = "ModuleCode";
+	static final String EVEN_ODD_WEEK = "EvenOddWeek";
+	static final String LECTURE_START_DATE = "LectureStartDate";
 	static final String SEMESTER = "Semester";
-	static final String START_TIME = "StartTime";
-	static final String VENUE = "Venue";
-	static final String WEEK_CODE = "WeekCode";
-	static final String WEEK_TEXT = "WeekText";
+	static final String SEMESTER_END_DATE = "SemesterEndDate";
+	static final String SEMESTER_START_DATE = "SemesterStartDate";
+	static final String TUTORIAL_START_DATE = "TutorialStartDate";
+	static final String TYPE_NAME = "TypeName";
+	static final String WEEK_TYPE_END_DATE = "WeekTypeEndDate";
+	static final String WEEK_TYPE_START_DATE = "WeekTypeStartDate";
 	
 	private final URL feedUrl;
 
-	protected IvleTimetableGetBaseFeedParser(String feedUrl){
+	protected IvleAcadSemesterInfoGetBaseFeedParser(String feedUrl){
 		try {
 			this.feedUrl = new URL(feedUrl);
 		} catch (MalformedURLException e) {
