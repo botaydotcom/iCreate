@@ -59,6 +59,62 @@ public class DatabaseInterface {
 		dbsetchange.Update();
 	}
 	
+	public Item RetrieveItemFromDatabase(Context context, Item _item)
+	{
+		itemdb.open();
+		Cursor mycs = itemdb.getItemById(Long.parseLong(_item.GetId()));
+		if (mycs.getString(12).equalsIgnoreCase("Event"))
+		{
+			// return event
+			Cursor eventcursor = mycs;
+			String eid = eventcursor.getString(0);
+			String etitle = eventcursor.getString(1);
+			String edescription = eventcursor.getString(2);
+			String elocation = eventcursor.getString(3);
+			String epriority = eventcursor.getString(4);
+			String erepeat = eventcursor.getString(5);
+			String ecategory = eventcursor.getString(6);
+			String ecompleted = eventcursor.getString(7);
+			Integer ecolor = Integer.parseInt(eventcursor.getString(8));
+			Long starttime = Long.parseLong(eventcursor.getString(9));
+			Date estarttime = new Date(starttime);
+			Long endtime = Long.parseLong(eventcursor.getString(10));
+			Date eendtime = new Date(endtime);
+			Long alerttime = Long.parseLong(eventcursor.getString(11));
+			Date ealerttime = new Date(alerttime); 
+			String etype = eventcursor.getString(12);
+			Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
+					etype, estarttime, eendtime,null,  ealerttime, erepeat, ecompleted, ecolor);
+			newitem.SetId(eid);
+			return newitem;
+		}
+		else
+		{
+			Cursor eventcursor = mycs;
+			String eid = eventcursor.getString(0);
+			String etitle = eventcursor.getString(1);
+			String edescription = eventcursor.getString(2);
+			String elocation = eventcursor.getString(3);
+			String epriority = eventcursor.getString(4);
+			String erepeat = eventcursor.getString(5);
+			String ecategory = eventcursor.getString(6);
+			String ecompleted = eventcursor.getString(7);
+			Integer ecolor = Integer.parseInt(eventcursor.getString(8));
+			
+			Long edeadline = Long.parseLong(eventcursor.getString(9));
+			Date deadline = new Date(edeadline);
+			Long alerttime = Long.parseLong(eventcursor.getString(10));
+			Date ealerttime = new Date(alerttime);
+			String etype = eventcursor.getString(11);
+			Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
+					etype, null, null, deadline,  ealerttime, erepeat, ecompleted, ecolor);
+			newitem.SetId(eid);
+			return newitem;
+		}
+		
+	}
+	
+	
 	// retrieve item by ITEM id
 	public ArrayList<ArrayList<Item>> RetrieveItemFromDatabase(Context context, Date datetime)
 	{
@@ -82,9 +138,12 @@ public class DatabaseInterface {
 				String ecategory = eventcursor.getString(6);
 				String ecompleted = eventcursor.getString(7);
 				Integer ecolor = Integer.parseInt(eventcursor.getString(8));
-				String estarttime = eventcursor.getString(9);
-				String eendtime = eventcursor.getString(10);
-				String ealerttime = eventcursor.getString(11);
+				Long starttime = Long.parseLong(eventcursor.getString(9));
+				Date estarttime = new Date(starttime);
+				Long endtime = Long.parseLong(eventcursor.getString(10));
+				Date eendtime = new Date(endtime);
+				Long alerttime = Long.parseLong(eventcursor.getString(11));
+				Date ealerttime = new Date(alerttime); 
 				String etype = eventcursor.getString(12);
 				Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
 						etype, estarttime, eendtime,null,  ealerttime, erepeat, ecompleted, ecolor);
@@ -109,12 +168,14 @@ public class DatabaseInterface {
 				String ecategory = eventcursor.getString(6);
 				String ecompleted = eventcursor.getString(7);
 				Integer ecolor = Integer.parseInt(eventcursor.getString(8));
-				String estarttime = eventcursor.getString(9);
-				String eendtime = eventcursor.getString(10);
-				String ealerttime = eventcursor.getString(11);
-				String etype = eventcursor.getString(12);
+				
+				Long edeadline = Long.parseLong(eventcursor.getString(9));
+				Date deadline = new Date(edeadline);
+				Long alerttime = Long.parseLong(eventcursor.getString(10));
+				Date ealerttime = new Date(alerttime);
+				String etype = eventcursor.getString(11);
 				Item newitem = new Item (etitle, edescription, elocation, ecategory, null, epriority,
-						etype, estarttime, eendtime,null,  ealerttime, erepeat, ecompleted, ecolor);
+						etype, null, null, deadline,  ealerttime, erepeat, ecompleted, ecolor);
 				newitem.SetId(eid);
 				mytask.add(newitem);
 				
