@@ -123,25 +123,25 @@ public class Item {
 	{
 		return _priority;
 	}
-	public String    GetStartTime()
+	public Date   GetStartTime()
 	{
 		Date startdate = new Date(Long.parseLong(_startTime));	
-		return startdate.toString();
+		return startdate;
 	}
-	public String   GetEndTime()
+	public Date  GetEndTime()
 	{
 		Date enddate = new Date(Long.parseLong(_endTime));
-		return enddate.toString();
+		return enddate;
 	}
-	public String   GetDeadline()
+	public Date   GetDeadline()
 	{
 		Date deadlinedate = new Date(Long.parseLong(_deadline));
-		return deadlinedate.toString();
+		return deadlinedate;
 	}
-	public String GetAlertTime()
+	public Date GetAlertTime()
 	{
 		Date alertdate = new Date(Long.parseLong(_alertTime));
-		return alertdate.toString();
+		return alertdate;
 	}
 	public String GetRepeat()
 	{
@@ -189,21 +189,21 @@ public class Item {
 	{
 		_priority = newPriority;
 	}
-	public void  SetStartTime(String newStartTime)
+	public void  SetStartTime(Date newStartTime)
 	{
-		_startTime = newStartTime;
+		_startTime = String.valueOf(newStartTime.getTime());
 	}
-	public void  SetEndTime(String newEndTime)
+	public void  SetEndTime(Date newEndTime)
 	{
-		_endTime = newEndTime;
+		_endTime = String.valueOf(newEndTime.getTime());
 	}
-	public void  SetDeadline(String newDeadline)
+	public void  SetDeadline(Date newDeadline)
 	{
-		_deadline = newDeadline;
+		_deadline = String.valueOf(newDeadline.getTime());
 	}
-	public void  SetAlertTime(String newAlertTime)
+	public void  SetAlertTime(Date newAlertTime)
 	{
-		_alertTime = newAlertTime;
+		_alertTime = String.valueOf(newAlertTime.getTime());
 	}
 	public void  SetRepeat(String newRepeat)
 	{
@@ -224,12 +224,7 @@ public class Item {
 	
 	
 	
-	public boolean GetItemInOneDay(Date thedate)
-	{
-		
-		
-		return true;
-	}
+	
 }
 
 
