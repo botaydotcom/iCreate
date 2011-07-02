@@ -120,9 +120,11 @@ public class EventDBAdapter {
       newEventValues.put(EVENTDB_CATEGORY, _event.GetCategory());
       newEventValues.put(EVENTDB_COMPLETED, _event.GetCompleted());
       newEventValues.put(EVENTDB_COLOR, _event.GetColor());
-      newEventValues.put(EVENTDB_STARTTIME, _event.GetStartTime());
-      newEventValues.put(EVENTDB_ENDTIME, _event.GetEndTime());
-      newEventValues.put(EVENTDB_ALERTTIME, _event.GetEndTime());
+      
+		 
+      newEventValues.put(EVENTDB_STARTTIME, String.valueOf(_event.GetStartTime().getTime()));
+      newEventValues.put(EVENTDB_ENDTIME, String.valueOf(_event.GetEndTime().getTime()));
+      newEventValues.put(EVENTDB_ALERTTIME, String.valueOf(_event.GetEndTime().getTime()));
       newEventValues.put(EVENTDB_TYPE, _event.GetItemType());
       // Insert the row.
       long t = mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);

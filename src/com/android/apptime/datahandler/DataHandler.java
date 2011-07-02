@@ -214,6 +214,19 @@ public class DataHandler {
 			throw(e);
 		}
 	}
+	
+	public String getDataFromFileToString(String fileName) throws Exception{
+		try{
+			Log.d(TAG, "get data from file " + fileName);
+			byte[] tmp = getDataFromFileToByteArray(fileName);
+			String result = new String(tmp);
+			return result;
+		} catch (Exception e)
+		{
+			throw(e);
+		}
+	}
+	
 	public int checkConnectionAndRoaming(){		
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		Log.d(TAG, "connectivity manager");

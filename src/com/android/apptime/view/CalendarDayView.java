@@ -1,5 +1,6 @@
 package com.android.apptime.view;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -54,7 +55,20 @@ public class CalendarDayView extends Activity {
 	private View itemBeingSelected = null;
 	private TimeSlot startTime = null;
 	private TimeSlot endTime = null;
+	private Date thisDate = null;
+	
 	private ScrollView mScrollView = null;
+	
+	private ArrayList<ArrayList <Item>> listItem = null;
+	private ArrayList <Item> listTask = null, listEvent = null;
+	private DatabaseInterface.DbSetChange observer = new DatabaseInterface.DbSetChange() {
+		
+		@Override
+		public void Update() {
+			updateView();			
+		}
+	};
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +76,8 @@ public class CalendarDayView extends Activity {
 		setContentView(R.layout.calendardayview);
 		listTimeSlotLayout = (RelativeLayout) findViewById(R.id.timeslotlistlayout);
 		width = listTimeSlotLayout.getWidth();
+		setDBInterface();
+		thisDate = new Date();
 		Log.d(TAG, "" + width);
 
 		try {
@@ -91,16 +107,21 @@ public class CalendarDayView extends Activity {
 			// timeSlotView1.setId(nextViewId++);
 			// listTimeSlotLayout.addView(timeSlotView1);
 			// timeSlotView1.setFocusable(true);
-
-			addItemViewToTimeSlot(null, 5, 35, 10, 30, 50, 200);
-			addItemViewToTimeSlot(null, 6, 30, 7, 30, 250, 200);
+			//addItemViewToTimeSlot(null, 5, 35, 10, 30, 50, 200);
+			//addItemViewToTimeSlot(null, 6, 30, 7, 30, 250, 200);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
 	}
 	
-	public void setDBInterface (DatabaseInterface dbInterface){
-		this.mDBinterface = dbInterface;
+	@Override
+	public void onResume(){
+		super.onResume();
+		//updateView();
+	}
+	
+	private void setDBInterface (){
+		this.mDBinterface = DatabaseInterface.getDatabaseInterface(getApplicationContext());
 	}
 
 	private void displayAllTimeSlot() {
@@ -152,7 +173,15 @@ public class CalendarDayView extends Activity {
 	}
 	
 	private void updateView(){
-		
+		listItem = mDBinterface.RetrieveItemFromDatabase(getApplicationContext(), thisDate);
+		listEvent = listItem.get(0);
+		listTask = listItem.get(1);
+		for (int i = 0; i<listEvent.size(); i++){
+			Item item = listEvent.get(i);
+			Date startTime = item.GetStartTime();
+			Date endTime = item.GetEndTime();
+			addItemViewToTimeSlot(item, startTime.getHours(), startTime.getMinutes(), endTime.getHours(), endTime.getMinutes(), 50, 200);
+		}
 	}
 
 	private void showPopUpWindow() {
