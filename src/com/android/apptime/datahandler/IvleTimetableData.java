@@ -1,16 +1,16 @@
 package com.android.apptime.datahandler;
 
 public class IvleTimetableData implements Comparable<IvleTimetableData>{
-	private String acad_year;
-	private String class_no;
-	private String day_code;
+	private String acad_year; // 
+	private String class_no; // description 
+	private String day_code; // 
 	private String day_text;
-	private String end_time;
-	private String lesson_type;
-	private String module_code;
-	private String semester;
-	private String start_time;
-	private String venue;
+	private String end_time; // end time 
+	private String lesson_type; // title
+	private String module_code; // title
+	private String semester; 
+	private String start_time; // start time
+	private String venue; // location
 	private String week_code;
 	private String week_text;
 
