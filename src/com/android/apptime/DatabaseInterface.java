@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.android.apptime.database.ItemDBAdapter;
+import com.android.apptime.database.MainDBAdapter;
 
 
 public class DatabaseInterface {
@@ -14,6 +15,7 @@ public class DatabaseInterface {
 	private static DatabaseInterface theInstance = null;
 	private ItemDBAdapter itemdb = null;;
 	private Context context = null;
+	private MainDBAdapter newdb; 
 	private DatabaseInterface(){};
 	public DbSetChange dbsetchange;
 	public interface DbSetChange 
@@ -32,6 +34,16 @@ public class DatabaseInterface {
 		return theInstance;
 	}
 	
+	public void CreateDatabase(Context newcontext)
+	{
+		newdb = new MainDBAdapter(newcontext);
+        newdb.open();
+	}
+	
+	public void CloseDatabase()
+	{
+		newdb.close();
+	}
 	public Item AddItemToDatabase(Context context, Item _item)
 	{
 		itemdb.open();
