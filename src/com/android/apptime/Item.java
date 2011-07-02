@@ -62,6 +62,8 @@ public class Item {
 		_color = color;		
 	}
 	
+	
+	
 	// title, type, start/endtime, location
 	public Item(String title, String type, Date starttime, Date endtime, String location)
 	{
