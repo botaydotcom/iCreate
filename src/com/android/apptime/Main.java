@@ -3,7 +3,9 @@ package com.android.apptime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.TabHost;
 import com.android.apptime.database.EventDBAdapter;
 import com.android.apptime.database.ItemDBAdapter;
 import com.android.apptime.database.MainDBAdapter;
+import com.android.apptime.datahandler.Ivle;
 import com.android.apptime.datahandler.IvleTimetableData;
 import com.android.apptime.view.CalendarView;
 import com.android.apptime.view.MapView;
@@ -94,8 +97,9 @@ public class Main extends TabActivity {
         
         
         newdb.close();
-        IvleTimetableData timetable = new IvleTimetableData();
-        
+        Ivle newivle = new Ivle();
+        List<IvleTimetableData> newtt = new ArrayList<IvleTimetableData>();
+        newtt = newivle.getTimetable("2011-2012", "1");
         
         
     }
