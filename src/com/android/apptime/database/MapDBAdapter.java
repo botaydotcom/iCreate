@@ -64,8 +64,8 @@ public class MapDBAdapter {
       }  
     
     
-  //Insert a new event into the Event table
-    public long createMap(MapItem _map) {
+  //Insert a new location into the map table
+    public long insertLocation(MapItem _map) {
       // Create a new row of values to insert.
       ContentValues newMapValues = new ContentValues();
       // Assign values for each row.
@@ -127,8 +127,8 @@ public class MapDBAdapter {
 //    	return this.mDb.delete(DATABASE_TABLE_EVENT, _event.GetId()+ "=" + EVENTDB_KEY_ID, null);
 //    }
     
-    // get item by item id
-    public Cursor getEventById(long rowId) throws SQLException {
+    // get map location by location id
+    public Cursor getLocationById(long rowId) throws SQLException {
 
         Cursor mCursor =
 
@@ -138,6 +138,45 @@ public class MapDBAdapter {
         }
         return mCursor;
     }
+    
+    // get map location by map position
+    public Cursor getLocationByLocation(long xCoord, long yCoord){
+    	Cursor mCursor = 
+    	this.mDb.query(true, DATABASE_TABLE_MAP, new String[] {MAPDB_KEY_ID, MAPDB_TITLE, MAPDB_HORIZONTAL, MAPDB_VERTICAL, MAPDB_LONGITUDE, MAPDB_LATITUDE, MAPDB_LINK,}, 
+    			null, null, null, "("+MAPDB_HORIZONTAL+"-"+xCoord+"<10) AND "+"("+MAPDB_VERTICAL+"-"+yCoord+"<10)", 
+    			MAPDB_HORIZONTAL+"-"+xCoord+"+"+MAPDB_VERTICAL+"-"+yCoord, null);
+    	if (mCursor != null) {
+    		mCursor.moveToFirst();
+    	}
+    	return mCursor;
+    }
+    
+ // get map location by map location
+    public Cursor getLocationByGeoLocation(double xCoord, double yCoord){
+    	Cursor mCursor = 
+    	this.mDb.query(true, DATABASE_TABLE_MAP, new String[] {MAPDB_KEY_ID, MAPDB_TITLE, MAPDB_HORIZONTAL, MAPDB_VERTICAL, MAPDB_LONGITUDE, MAPDB_LATITUDE, MAPDB_LINK,}, 
+    			null, null, null, "("+MAPDB_LATITUDE+"-"+xCoord+"<0.0001) AND "+"("+MAPDB_LONGITUDE+"-"+yCoord+"<0.0001)", 
+    			MAPDB_LATITUDE+"-"+xCoord+"+"+MAPDB_LONGITUDE+"-"+yCoord, null);
+    	if (mCursor != null) {
+    		mCursor.moveToFirst();
+    	}
+    	return mCursor;
+    }
+    
+    // get map location by name
+    public Cursor getLocationByName(String mapName){
+    	Cursor mCursor = null; 
+    	
+    	if (mCursor != null) {
+    		mCursor.moveToFirst();
+    	}
+    	return mCursor;
+    }
+    
+    
+    
+    
+    
     
     // get item by item id
 //    public Cursor getEventByDate(Date datetime) throws SQLException {

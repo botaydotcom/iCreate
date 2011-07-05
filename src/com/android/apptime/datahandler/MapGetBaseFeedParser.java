@@ -1,8 +1,13 @@
 package com.android.apptime.datahandler;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
+
+import android.net.Uri;
+
+import com.android.apptime.R;
 
 public abstract class MapGetBaseFeedParser implements MapFeedParser {
 
@@ -17,19 +22,20 @@ public abstract class MapGetBaseFeedParser implements MapFeedParser {
 	static final String DICT = "dict";
 	//static final String TITLE = "Title";
 	
-	private final URL feedUrl;
+	private final String fileName;
 
-	protected MapGetBaseFeedParser(String feedUrl){
+	protected MapGetBaseFeedParser(String feedUri){
 		try {
-			this.feedUrl = new URL(feedUrl);
-		} catch (MalformedURLException e) {
+			this.fileName = feedUri;
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	protected InputStream getInputStream() {
 		try {
-			return feedUrl.openConnection().getInputStream();
+			return new FileInputStream(new File(fileName)); 
+			//feedUri.openConnection().getInputStream();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
