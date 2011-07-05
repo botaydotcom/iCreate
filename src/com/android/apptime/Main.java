@@ -3,14 +3,11 @@ package com.android.apptime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
@@ -18,6 +15,7 @@ import android.widget.TabHost;
 import com.android.apptime.database.EventDBAdapter;
 import com.android.apptime.database.ItemDBAdapter;
 import com.android.apptime.database.MainDBAdapter;
+import com.android.apptime.datahandler.IvleTimetableData;
 import com.android.apptime.view.CalendarView;
 import com.android.apptime.view.MapView;
 import com.android.apptime.view.OrganizerView;
@@ -52,12 +50,9 @@ public class Main extends TabActivity {
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
-        MainDBAdapter newdb = new MainDBAdapter(this);
-        newdb.open();
-        ItemDBAdapter idb1 = new ItemDBAdapter(this);
-        EventDBAdapter idb = new EventDBAdapter(this);
-        idb.open();
-        idb1.open();
+       // DatabaseInterface database = DatabaseInterface.getDatabaseInterface(getApplicationContext());
+       // database.CreateDatabase(getApplicationContext());
+        
         
         /*
         DatabaseInterface db = new DatabaseInterface(this);
@@ -76,26 +71,30 @@ public class Main extends TabActivity {
         Cursor mycs = idb.getEventById(1);
         String titletest = mycs.getString(8);
         */
-        Date newdate = new Date();
-        long ttt = newdate.getTime();
-        /*
-        Date olddate = new Date("1991-07-11 12:08:12");
-        boolean tttt = false;
-        if (olddate.getTime() < newdate.getTime()) tttt=true;
-        */
+//        Date newdate = new Date();
+//        long ttt = newdate.getTime();
+//        /*
+//        Date olddate = new Date("1991-07-11 12:08:12");
+//        boolean tttt = false;
+//        if (olddate.getTime() < newdate.getTime()) tttt=true;
+//        */
+//        
+//        
+//        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//			Date a = dfm.parse("2007-02-26 20:15:00");
+//			int yu= 0;
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//        
+//        newdb.close();
+//        IvleTimetableData timetable = new IvleTimetableData();
+//        
         
         
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-			Date a = dfm.parse("2007-02-26 20:15:00");
-			int yu= 0;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        
-        newdb.close();
     }
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

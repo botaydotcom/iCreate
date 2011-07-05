@@ -55,8 +55,31 @@ public class MainDBAdapter {
     private static final String ALERTTYPEDB_KEY_ID = "alerttypedb_alerttype_id";
     private static final String ALERTTYPEDB_TITLE = "alerttypedb_title";
     
+ // MAP TABLE
+    private static final String DATABASE_TABLE_MAP = "Map_Table";
+    private static final String MAPDB_KEY_ID = "mapdb_loc_id";
+    private static final String MAPDB_TITLE = "map_title";
+    private static final String MAPDB_HORIZONTAL = "mapdb_horizontal";
+    private static final String MAPDB_VERTICAL = "map_vertical";
+    private static final String MAPDB_LONGITUDE = "mapdb_longitude";
+    private static final String MAPDB_LATITUDE = "map_latitude";
+    private static final String MAPDB_LINK = "map_link";
     
-      
+    /*
+     * Map SQL commands  
+     */
+    
+    // SQL COMMAND TO CREATE MAP TABLE
+    private static final String DATABASE_CREATE_MAP = "create table " + DATABASE_TABLE_MAP
+    + " (" + MAPDB_KEY_ID + " integer primary key autoincrement, " + 
+    MAPDB_TITLE + " text, " +
+    MAPDB_HORIZONTAL + " text not null " +
+    MAPDB_VERTICAL + " text not null " +
+    MAPDB_LONGITUDE + " text not null " +
+    MAPDB_LATITUDE + " text not null, " +
+    MAPDB_LINK + " text" + ");";
+    
+    
     
     
     
@@ -137,6 +160,7 @@ public class MainDBAdapter {
             db.execSQL(DATABASE_CREATE_ITEM);  
             db.execSQL(DATABASE_CREATE_CATEGORY);
             db.execSQL(DATABASE_CREATE_ALERTTYPE);
+            db.execSQL(DATABASE_CREATE_MAP);
         }
 
         @Override

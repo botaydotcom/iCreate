@@ -28,7 +28,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class DataHandler {
-	private Context context;
+	private static Context theContext;
 	private static DefaultHttpClient theHttpClient = null;
 	private static final int NOT_CONNECTED = -1;
 	private static final int CONNECTED = 0;
@@ -36,7 +36,7 @@ public class DataHandler {
 	public static final String TAG = "datahandler";
 	
 	public DataHandler(Context context) throws Exception {
-		this.context = context;
+		theContext = context;
 	}
 	
 	public static DefaultHttpClient getHttpClient(){
@@ -199,10 +199,10 @@ public class DataHandler {
 		}
 	}
 	
-	public byte[] getDataFromFileToByteArray(String fileName) throws Exception{
+	public static byte[] getDataFromFileToByteArray(String fileName) throws Exception{
 		try{
 			Log.d(TAG, "get data from file " + fileName);
-			InputStream instream = context.openFileInput(fileName);
+			InputStream instream = theContext.openFileInput(fileName);
 			BufferedInputStream bif = new BufferedInputStream(instream);
 			byte[] tmp = new byte[instream.available()];
 	        bif.read(tmp);
@@ -214,8 +214,21 @@ public class DataHandler {
 			throw(e);
 		}
 	}
+	
+	public static String getDataFromFileToString(String fileName) throws Exception{
+		try{
+			Log.d(TAG, "get data from file " + fileName);
+			byte[] tmp = getDataFromFileToByteArray(fileName);
+			String result = new String(tmp);
+			return result;
+		} catch (Exception e)
+		{
+			throw(e);
+		}
+	}
+	
 	public int checkConnectionAndRoaming(){		
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) theContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 		Log.d(TAG, "connectivity manager");
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 		Log.d(TAG, "networkinfo");

@@ -112,8 +112,10 @@ public class TaskDBAdapter {
       newTaskValues.put(TASKDB_CATEGORY, _task.GetCategory());
       newTaskValues.put(TASKDB_COMPLETED, _task.GetCompleted());
       newTaskValues.put(TASKDB_COLOR, _task.GetColor());
-      newTaskValues.put(TASKDB_DEADLINE, _task.GetDeadline());
-      newTaskValues.put(TASKDB_ALERTTIME, _task.GetAlertTime());
+      
+      
+      newTaskValues.put(TASKDB_DEADLINE, String.valueOf(_task.GetDeadline().getTime()));
+      newTaskValues.put(TASKDB_ALERTTIME, String.valueOf(_task.GetAlertTime().getTime()));
       newTaskValues.put(TASKDB_TYPE, _task.GetItemType());
       return this.mDb.update(DATABASE_TABLE_TASK, newTaskValues, TASKDB_KEY_ID + "=" + _task.GetId(), null);    	
     }
