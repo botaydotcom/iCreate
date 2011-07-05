@@ -53,12 +53,9 @@ public class Main extends TabActivity {
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
-        MainDBAdapter newdb = new MainDBAdapter(this);
-        newdb.open();
-        ItemDBAdapter idb1 = new ItemDBAdapter(this);
-        EventDBAdapter idb = new EventDBAdapter(this);
-        idb.open();
-        idb1.open();
+       // DatabaseInterface database = DatabaseInterface.getDatabaseInterface(getApplicationContext());
+       // database.CreateDatabase(getApplicationContext());
+        
         
         /*
         DatabaseInterface db = new DatabaseInterface(this);
@@ -77,6 +74,7 @@ public class Main extends TabActivity {
         Cursor mycs = idb.getEventById(1);
         String titletest = mycs.getString(8);
         */
+
         Date newdate = new Date();
         long ttt = newdate.getTime();
         /*
@@ -96,11 +94,31 @@ public class Main extends TabActivity {
 		}
         
         
-        newdb.close();
-        Ivle newivle = new Ivle();
-        List<IvleTimetableData> newtt = new ArrayList<IvleTimetableData>();
-        newtt = newivle.getTimetable("2011-2012", "1");
-        
+
+//        Date newdate = new Date();
+//        long ttt = newdate.getTime();
+//        /*
+//        Date olddate = new Date("1991-07-11 12:08:12");
+//        boolean tttt = false;
+//        if (olddate.getTime() < newdate.getTime()) tttt=true;
+//        */
+//        
+//        
+//        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//			Date a = dfm.parse("2007-02-26 20:15:00");
+//			int yu= 0;
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//        
+//        newdb.close();
+//        IvleTimetableData timetable = new IvleTimetableData();
+//        
+
+    
         
     }
     @Override

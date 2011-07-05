@@ -1,6 +1,8 @@
 package com.android.apptime.view;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -65,6 +67,8 @@ public class PopupForm extends Activity {
 	private String location = "";
 	private Resources myResource = null;
 	private int offX, offY, width, height;
+	
+	private Item modifiedItem = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -242,13 +246,20 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		data.putExtra("detailed", false);
-		data.putExtra("title", title);
-		data.putExtra("type", type);
-		data.putExtra("startTime", startTime);
-		data.putExtra("endTime", endTime);
-		data.putExtra("location", location);
-		this.setResult(RESULT_OK, data);
+		
+		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
+		(getApplicationContext());
+		
+		modifiedItem = database.RetrieveItemFromDatabase(getApplicationContext(), itemId);
+		modifiedItem.SetTitle(title);
+		modifiedItem.SetLocation(location);
+		if (type == EVENT) {
+			modifiedItem.SetStartTime(startTime);
+			modifiedItem.SetEndTime(endTime);			
+		} else {
+			modifiedItem.SetDeadline(endTime);
+		}
+		database.UpdateItemFmomDatabase(getApplicationContext(), modifiedItem);
 		this.finish();
 	}
 
@@ -269,17 +280,19 @@ public class PopupForm extends Activity {
 		location = mAutoTvLocation.getText().toString();
 		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
 		(getApplicationContext());
-		//database.AddItemToDatabase(getApplicationContext(), );
-		
-		data.putExtra("newItem", true);
-		data.putExtra("title", title);
-		data.putExtra("type", type);
-		data.putExtra("startTime", startTime);
-		data.putExtra("endTime", endTime);
-		data.putExtra("location", location);
+		Item newItem = null;
+		if (type == EVENT) {
+			newItem = new Item (title, "Event", startTime, endTime, location);
+		} else {
+			newItem = new Item (title, "Task", endTime, location);
+		}
+		newItem = database.AddItemToDatabase(getApplicationContext(), newItem);
+		if (newItem == null){
+			Log.d(TAG, "got problem in inserting to database");
+		} else {
+			Log.d(TAG, "item inserted to database");
+		}
 		Log.d(TAG, "result set");
-		this.setResult(RESULT_OK, data);
-		this.finish();
 	}
 
 	@Override
