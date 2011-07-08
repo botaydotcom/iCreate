@@ -39,8 +39,10 @@ public final class R {
         public static final int WebViewLogin=0x7f090005;
         public static final int autoTvLocation=0x7f09001c;
         public static final int btAdd=0x7f09001e;
-        public static final int btChangeEndTime=0x7f09001a;
-        public static final int btChangeStartTime=0x7f090017;
+        public static final int btChangeEndDate=0x7f09001a;
+        public static final int btChangeEndTime=0x7f090019;
+        public static final int btChangeStartDate=0x7f090017;
+        public static final int btChangeStartTime=0x7f090016;
         public static final int btDetail=0x7f090020;
         public static final int btLogin=0x7f09000a;
         public static final int btModify=0x7f09001f;
@@ -58,8 +60,6 @@ public final class R {
         public static final int rgType=0x7f090012;
         public static final int tabcontentscrollview=0x7f090000;
         public static final int timeslotlistlayout=0x7f090001;
-        public static final int tvDisplayEndTime=0x7f090019;
-        public static final int tvDisplayStartTime=0x7f090016;
         public static final int tvEndTime=0x7f090018;
         public static final int tvFormTitle=0x7f09000e;
         public static final int tvInfo =0x7f090024;

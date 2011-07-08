@@ -1,15 +1,15 @@
 package com.android.apptime.view;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,13 +19,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,7 +39,7 @@ public class PopupForm extends Activity {
 	private static final int LEFTMARGIN = 30;
 	private static final int TOPMARGIN = 100;
 	public static int nextViewId = 1;
-	private String TAG = "calendarview";
+	private String TAG = "popup";
 	private final int CONTEXT_MENU_ADD = 0;
 	private final int CONTEXT_MENU_MODIFY = 1;
 	private final int CONTEXT_MENU_REMOVE = 2;
@@ -48,13 +48,16 @@ public class PopupForm extends Activity {
 
 	private final int START_TIME_DIALOG_ID = 0;
 	private final int END_TIME_DIALOG_ID = 1;
+	protected static final int START_DATE_DIALOG_ID = 2;
+	protected static final int END_DATE_DIALOG_ID = 3;
+
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private RelativeLayout listTimeSlotLayout = null;
 	private int timeSlotHeight = 80;
 	private PopupWindow popupWindow = null;
 	private EditText mEtTitle = null;
-	private TextView mTvStartTime = null;
-	private TextView mTvEndTime = null;
+	private Button mBtChangeStartTime = null, mBtChangeEndTime = null,
+			mBtChangeStartDate = null, mBtChangeEndDate = null;
 	private AutoCompleteTextView mAutoTvLocation = null;
 	private Button mAddButton = null;
 	private Button mModifyButton = null;
@@ -67,7 +70,7 @@ public class PopupForm extends Activity {
 	private String location = "";
 	private Resources myResource = null;
 	private int offX, offY, width, height;
-	
+
 	private Item modifiedItem = null;
 
 	@Override
@@ -85,6 +88,8 @@ public class PopupForm extends Activity {
 		startTime = (Date) extras.get("startTime");
 		endTime = (Date) extras.get("endTime");
 
+		Log.d(TAG, "time " + startTime.toString() + " " + endTime.toString());
+
 		offX = extras.getInt("offX");
 		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -92,27 +97,48 @@ public class PopupForm extends Activity {
 		params.leftMargin = LEFTMARGIN;// offX;
 		params.topMargin = TOPMARGIN;// offY;
 		layout.setLayoutParams(params);
-		mEtTitle = (EditText) findViewById(R.id.etTitle);
-		mTvStartTime = (TextView) findViewById(R.id.tvDisplayStartTime);
-		mTvEndTime = (TextView) findViewById(R.id.tvDisplayEndTime);
-		Button changeStartTime = (Button) findViewById(R.id.btChangeStartTime);
-		Button changeEndTime = (Button) findViewById(R.id.btChangeEndTime);
-		mTypeGroup = (RadioGroup) findViewById(R.id.rgType);
-
-		changeStartTime.setOnClickListener(new OnClickListener() {
+		try {
+			mEtTitle = (EditText) findViewById(R.id.etTitle);
+			mBtChangeStartTime = (Button) findViewById(R.id.btChangeStartTime);
+			mBtChangeEndTime = (Button) findViewById(R.id.btChangeEndTime);
+			mBtChangeStartDate = (Button) findViewById(R.id.btChangeStartDate);
+			mBtChangeEndDate = (Button) findViewById(R.id.btChangeEndDate);
+			mTypeGroup = (RadioGroup) findViewById(R.id.rgType);
+		
+		mBtChangeStartTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(START_TIME_DIALOG_ID);
 			}
 		});
 
-		changeEndTime.setOnClickListener(new OnClickListener() {
+		mBtChangeEndTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(END_TIME_DIALOG_ID);
 			}
 		});
+		mBtChangeStartDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(START_DATE_DIALOG_ID);
+			}
+		});
 
+		mBtChangeEndDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(END_DATE_DIALOG_ID);
+			}
+		});
+		
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+
+		/*
+		 * auto complete textview - Location
+		 */
 		mAutoTvLocation = (AutoCompleteTextView) findViewById(R.id.autoTvLocation);
 		// Prepares Atv
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -135,6 +161,9 @@ public class PopupForm extends Activity {
 					}
 				});
 
+		/*
+		 * Controller buttons
+		 */
 		mAddButton = (Button) findViewById(R.id.btAdd);
 		mModifyButton = (Button) findViewById(R.id.btModify);
 		mRemoveButton = (Button) findViewById(R.id.btRemove);
@@ -222,6 +251,7 @@ public class PopupForm extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+//		updateDisplay();
 	}
 
 	private void removeItem() {
@@ -246,16 +276,17 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		
-		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
-		(getApplicationContext());
-		
-		modifiedItem = database.RetrieveItemFromDatabase(getApplicationContext(), itemId);
+
+		DatabaseInterface database = DatabaseInterface
+				.getDatabaseInterface(getApplicationContext());
+
+		modifiedItem = database.RetrieveItemFromDatabase(
+				getApplicationContext(), itemId);
 		modifiedItem.SetTitle(title);
 		modifiedItem.SetLocation(location);
 		if (type == EVENT) {
 			modifiedItem.SetStartTime(startTime);
-			modifiedItem.SetEndTime(endTime);			
+			modifiedItem.SetEndTime(endTime);
 		} else {
 			modifiedItem.SetDeadline(endTime);
 		}
@@ -278,16 +309,16 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
-		(getApplicationContext());
+		DatabaseInterface database = DatabaseInterface
+				.getDatabaseInterface(getApplicationContext());
 		Item newItem = null;
 		if (type == EVENT) {
-			newItem = new Item (title, "Event", startTime, endTime, location);
+			newItem = new Item(title, "Event", startTime, endTime, location);
 		} else {
-			newItem = new Item (title, "Task", endTime, location);
+			newItem = new Item(title, "Task", endTime, location);
 		}
 		newItem = database.AddItemToDatabase(getApplicationContext(), newItem);
-		if (newItem == null){
+		if (newItem == null) {
 			Log.d(TAG, "got problem in inserting to database");
 		} else {
 			Log.d(TAG, "item inserted to database");
@@ -312,10 +343,14 @@ public class PopupForm extends Activity {
 	}
 
 	private void updateDisplay() {
-		mTvStartTime.setText(TimeFormat
+		mBtChangeStartTime.setText(TimeFormat
 				.getAPPMTimeFormatWithHourPadding(startTime));
-		mTvEndTime
-				.setText(TimeFormat.getAPPMTimeFormatWithHourPadding(endTime));
+		mBtChangeStartDate.setText(DateFormat.format("MMM/dd/yyyy", startTime)
+				.toString());
+		mBtChangeEndTime.setText(TimeFormat
+				.getAPPMTimeFormatWithHourPadding(endTime));
+		mBtChangeEndDate.setText(DateFormat.format("MMM/dd/yyyy", endTime)
+				.toString());
 	}
 
 	private static String pad(int c) {
@@ -339,6 +374,24 @@ public class PopupForm extends Activity {
 			updateDisplay();
 		}
 	};
+	private DatePickerDialog.OnDateSetListener mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			startTime.setYear(year);
+			startTime.setMonth(monthOfYear);
+			startTime.setDate(dayOfMonth);
+			updateDisplay();
+		}
+	};
+	private DatePickerDialog.OnDateSetListener mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			endTime.setYear(year);
+			endTime.setMonth(monthOfYear);
+			endTime.setDate(dayOfMonth);
+			updateDisplay();
+		}
+	};
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -350,6 +403,13 @@ public class PopupForm extends Activity {
 		case END_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mEndTimeSetListener,
 					endTime.getHours(), endTime.getMinutes(), false);
+		case START_DATE_DIALOG_ID:
+			return new DatePickerDialog(this, mStartDateSetListener,
+					startTime.getYear(), startTime.getMonth(),
+					startTime.getDate());
+		case END_DATE_DIALOG_ID:
+			return new DatePickerDialog(this, mEndDateSetListener,
+					endTime.getYear(), endTime.getMonth(), endTime.getDate());
 		}
 		return null;
 	}

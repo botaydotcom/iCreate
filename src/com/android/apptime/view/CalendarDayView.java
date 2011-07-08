@@ -27,7 +27,7 @@ import com.android.apptime.Item;
 import com.android.apptime.R;
 
 public class CalendarDayView extends Activity {
-	
+
 	private DatabaseInterface mDBinterface = null;
 	public static int nextViewId = 1;
 	private String TAG = "calendarview";
@@ -56,20 +56,19 @@ public class CalendarDayView extends Activity {
 	private TimeSlot startTime = null;
 	private TimeSlot endTime = null;
 	private Date thisDate = null;
-	
+
 	private ScrollView mScrollView = null;
-	
-	private ArrayList<ArrayList <Item>> listItem = null;
-	private ArrayList <Item> listTask = null, listEvent = null;
+
+	private ArrayList<ArrayList<Item>> listItem = null;
+	private ArrayList<Item> listTask = null, listEvent = null;
 	private DatabaseInterface.DbSetChange observer = new DatabaseInterface.DbSetChange() {
-		
+
 		@Override
 		public void Update() {
-			updateView();			
+			updateView();
 		}
 	};
-	
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,51 +76,28 @@ public class CalendarDayView extends Activity {
 		listTimeSlotLayout = (RelativeLayout) findViewById(R.id.timeslotlistlayout);
 		width = listTimeSlotLayout.getWidth();
 		setDBInterface();
+
 		thisDate = new Date();
 		Log.d(TAG, "" + width);
 
 		try {
 			displayAllTimeSlot();
-			//
-			// TextView timeSlotView = new TextView(getApplicationContext());
-			// timeSlotView.setText("1pm-3pm: \n Meeting with team @YIH");
-			// timeSlotView.setBackgroundColor(Color.RED);
-			//
-			// RelativeLayout.LayoutParams layoutParams = null;
-			// layoutParams = new RelativeLayout.LayoutParams(200, 160);
-			// layoutParams.addRule(RelativeLayout.ALIGN_TOP, nextViewId - 20);
-			// layoutParams.setMargins(50, 0, 0, 0);
-			// timeSlotView.setLayoutParams(layoutParams);
-			// timeSlotView.setId(nextViewId++);
-			// listTimeSlotLayout.addView(timeSlotView);
-			// timeSlotView.setFocusable(true);
-			//
-			// TextView timeSlotView1 = new TextView(getApplicationContext());
-			// timeSlotView1.setText("1pm-2pm: \n Assignment due");
-			// timeSlotView1.setBackgroundColor(Color.GREEN);
-			// layoutParams = null;
-			// layoutParams = new RelativeLayout.LayoutParams(250, 80);
-			// layoutParams.addRule(RelativeLayout.ALIGN_TOP, nextViewId - 21);
-			// layoutParams.setMargins(250, 0, 0, 0);
-			// timeSlotView1.setLayoutParams(layoutParams);
-			// timeSlotView1.setId(nextViewId++);
-			// listTimeSlotLayout.addView(timeSlotView1);
-			// timeSlotView1.setFocusable(true);
-			//addItemViewToTimeSlot(null, 5, 35, 10, 30, 50, 200);
-			//addItemViewToTimeSlot(null, 6, 30, 7, 30, 250, 200);
+			// addItemViewToTimeSlot(null, 5, 35, 10, 30, 50, 200);
+			// addItemViewToTimeSlot(null, 6, 30, 7, 30, 250, 200);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
 	}
-	
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
-		//updateView();
+		// updateView();
 	}
-	
-	private void setDBInterface (){
-		this.mDBinterface = DatabaseInterface.getDatabaseInterface(getApplicationContext());
+
+	private void setDBInterface() {
+		this.mDBinterface = DatabaseInterface
+				.getDatabaseInterface(getApplicationContext());
 	}
 
 	private void displayAllTimeSlot() {
@@ -167,21 +143,25 @@ public class CalendarDayView extends Activity {
 		}
 		return false;
 	}
-	
-	public void scrollTo(Date startTime){
-		
+
+	public void scrollTo(Date startTime) {
+
 	}
-	
-	private void updateView(){
-		listItem = mDBinterface.RetrieveItemFromDatabase(getApplicationContext(), thisDate);
+
+	private void updateView() {
+		listItem = mDBinterface.RetrieveItemFromDatabase(
+				getApplicationContext(), thisDate);
 		listEvent = listItem.get(0);
 		listTask = listItem.get(1);
-		for (int i = 0; i<listEvent.size(); i++){
+		for (int i = 0; i < listEvent.size(); i++) {
 			Item item = listEvent.get(i);
 			Date startTime = item.GetStartTime();
 			Date endTime = item.GetEndTime();
-			addItemViewToTimeSlot(item, startTime.getHours(), startTime.getMinutes(), endTime.getHours(), endTime.getMinutes(), 50, 200);
+			addItemViewToTimeSlot(item, startTime.getHours(),
+					startTime.getMinutes(), endTime.getHours(),
+					endTime.getMinutes(), 50, 200);
 		}
+
 	}
 
 	private void showPopUpWindow() {
@@ -191,6 +171,8 @@ public class CalendarDayView extends Activity {
 					PopupForm.class);
 			createPopup.putExtra("popupType", POPUP_TIME_SLOT);
 			createPopup.putExtra("startTime", timeSlotView.getTime());
+			Log.d(TAG, timeSlotView.getTime().toString());
+			createPopup.putExtra("endTime", new Date(timeSlotView.getTime().getTime()+Constant.NUM_MILI_SEC_IN_HOUR));
 			createPopup.putExtra("offX", itemBeingSelected.getLeft());
 			createPopup.putExtra("offY", itemBeingSelected.getBottom());
 			startActivityForResult(createPopup, POPUP_FORM);
@@ -198,19 +180,18 @@ public class CalendarDayView extends Activity {
 			DayItemView itemView = (DayItemView) itemBeingSelected;
 			Intent createPopup = new Intent(getApplicationContext(),
 					PopupForm.class);
-			createPopup
-					.putExtra("startTime", itemView.getItem().GetStartTime());
-			createPopup.putExtra("endTime", itemView.getItem().GetEndTime());
+			createPopup.putExtra("startTime", itemView.getItem().GetStartTime());
 			createPopup.putExtra("endTime", itemView.getItem().GetEndTime());
 			createPopup.putExtra("popupType", POPUP_ITEM);
+			createPopup.putExtra("itemId", itemView.getItem().GetId());
 			createPopup.putExtra("offX", itemBeingSelected.getLeft());
 			createPopup.putExtra("offY", itemBeingSelected.getBottom());
 			startActivityForResult(createPopup, POPUP_FORM);
 		}
 	}
 
-	public DayItemView addItemViewToTimeSlot(Item item, int fromHour, int fromMin,
-			int toHour, int toMin, int leftMargin, int width) {
+	public DayItemView addItemViewToTimeSlot(Item item, int fromHour,
+			int fromMin, int toHour, int toMin, int leftMargin, int width) {
 		DayItemView newItem = new DayItemView(getApplicationContext());
 		newItem.setText("Place holder text");
 		// need to read from database
@@ -278,7 +259,7 @@ public class CalendarDayView extends Activity {
 		}
 		return false;
 	}
-	
+
 	// will not get called
 
 	@Override
@@ -294,10 +275,13 @@ public class CalendarDayView extends Activity {
 				} else {
 
 				}
-				
+
 				Date startTime = (Date) data.getSerializableExtra("startTime");
 				Date endTime = (Date) data.getSerializableExtra("endTime");
-				Log.d(TAG, "on activity result, startHour "+startTime.toGMTString() + " end hour " + endTime.toGMTString());
+				Log.d(TAG,
+						"on activity result, startHour "
+								+ startTime.toGMTString() + " end hour "
+								+ endTime.toGMTString());
 				if (data.getBooleanExtra("newItem", false) == true)
 					addItemViewToTimeSlot(null, startTime.getHours(),
 							startTime.getMinutes(), endTime.getHours(),

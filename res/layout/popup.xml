@@ -37,30 +37,30 @@
 				</RadioGroup>
 				<!-- StartTime -->
 				<TextView android:layout_height="wrap_content" android:id="@+id/tvStartTime"
-					android:layout_width="wrap_content" android:text="StartTime: "
+					android:layout_width="wrap_content" android:text="From: "
 					android:layout_below="@id/rgType"></TextView>
-				<TextView android:layout_height="wrap_content" android:id="@+id/tvDisplayStartTime"
+				<Button android:layout_height="wrap_content" android:id="@+id/btChangeStartTime"
 					android:layout_width="wrap_content" android:text="11pm30"
-					android:layout_alignTop="@id/tvStartTime" android:layout_alignLeft="@id/etTitle"></TextView>
+					android:layout_alignTop="@id/tvStartTime" android:layout_alignLeft="@id/etTitle"></Button>
 				<Button android:layout_height="wrap_content"
-					android:layout_width="wrap_content" android:id="@+id/btChangeStartTime"
-					android:text="Change start time" android:layout_alignTop="@id/tvStartTime"
-					android:layout_toRightOf="@id/tvDisplayStartTime"
+					android:layout_width="wrap_content" android:id="@+id/btChangeStartDate"
+					android:text="07/Jun/2011" android:layout_alignTop="@id/tvStartTime"
+					android:layout_toRightOf="@id/btChangeStartTime"
 					android:layout_alignParentRight="true"></Button>
 				<!-- EndTime -->
 				<TextView android:layout_height="wrap_content" android:id="@+id/tvEndTime"
-					android:layout_width="wrap_content" android:text="EndTime: "
+					android:layout_width="wrap_content" android:text="To: "
 					android:layout_below="@id/btChangeStartTime"
 					android:layout_alignLeft="@id/tvStartTime"></TextView>
-				<TextView android:layout_height="wrap_content" android:id="@+id/tvDisplayEndTime"
+				<Button android:layout_height="wrap_content" android:id="@+id/btChangeEndTime"
 					android:layout_width="wrap_content" android:text="11pm30"
-					android:layout_alignTop="@id/tvEndTime" android:layout_alignLeft="@id/tvDisplayStartTime"></TextView>
+					android:layout_alignTop="@id/tvEndTime" android:layout_alignLeft="@id/btChangeStartTime"></Button>
 				<Button android:layout_height="wrap_content"
-					android:layout_width="wrap_content" android:id="@+id/btChangeEndTime"
-					android:text="Change end time" android:layout_alignTop="@id/tvEndTime"
-					android:layout_alignRight="@id/btChangeStartTime"
-					android:layout_toRightOf="@id/tvDisplayEndTime"
-					android:layout_alignLeft="@id/btChangeStartTime"></Button>
+					android:layout_width="wrap_content" android:id="@+id/btChangeEndDate"
+					android:text="07/Jun/2011" android:layout_alignTop="@id/tvEndTime"
+					android:layout_toRightOf="@id/btChangeEndTime"
+					android:layout_alignRight="@id/btChangeStartDate"					
+					android:layout_alignLeft="@id/btChangeStartDate"></Button>
 				<!-- Location -->
 				<TextView android:layout_height="wrap_content" android:id="@+id/tvLocation"
 					android:layout_width="wrap_content" android:text="Location: "
