@@ -167,9 +167,10 @@ public class MapDBAdapter {
     public Cursor getLocationByName(String mapName){
     	Cursor mCursor = null; 
     	
-    	if (mCursor != null) {
-    		mCursor.moveToFirst();
-    	}
+    	
+//    	if (mCursor != null) {
+//    		mCursor.moveToFirst();
+//    	}
     	return mCursor;
     }
     
