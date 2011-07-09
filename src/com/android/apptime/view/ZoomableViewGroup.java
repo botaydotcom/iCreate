@@ -20,33 +20,39 @@ import android.view.ViewGroup;
  */
 
 public class ZoomableViewGroup extends ViewGroup {
-	
-	/** 
+
+	/**
 	 * Call back when the view is zooming
+	 * 
 	 * @author Tran Cong Hoang
-	 *
+	 * 
 	 */
-	public interface OnZoomListener{
+	public interface OnZoomListener {
 		public void onZoomWithScale(float zoomScale);
 	}
+
 	private OnZoomListener mOnZoomListener = null;
-	public void setOnZoomListener(OnZoomListener onZoomListener){
+
+	public void setOnZoomListener(OnZoomListener onZoomListener) {
 		mOnZoomListener = onZoomListener;
 	}
-	
-	/** 
+
+	/**
 	 * Call back when the view is scrolling
+	 * 
 	 * @author Tran Cong Hoang
-	 *
+	 * 
 	 */
-	public interface OnScrollListener{
+	public interface OnScrollListener {
 		public void onScrollBy(int dx, int dy);
 	}
+
 	private OnScrollListener mOnScrollListener = null;
-	public void setOnScrollListener(OnScrollListener onScrollListener){
+
+	public void setOnScrollListener(OnScrollListener onScrollListener) {
 		mOnScrollListener = onScrollListener;
 	}
-	
+
 	private static final String TAG = "touch";
 	protected static final float DEFAULT_ZOOM_IN_RATE = 1.2f;
 	protected static final float DEFAULT_ZOOM_OUT_RATE = 0.8f;
@@ -161,7 +167,7 @@ public class ZoomableViewGroup extends ViewGroup {
 		case MotionEvent.ACTION_MOVE:
 			Log.d("scroll", "on touch intercept - action move");
 
-			final int diff = (int) Math.hypot(x-lastPoint.x, y - lastPoint.y);
+			final int diff = (int) Math.hypot(x - lastPoint.x, y - lastPoint.y);
 			if (diff > mTouchSlop) {
 				mIsBeingDragged = true;
 				Log.d("scroll", "being dragged");
@@ -221,8 +227,8 @@ public class ZoomableViewGroup extends ViewGroup {
 		case MotionEvent.ACTION_MOVE:
 			Log.d("scroll", "on touch event - action move in scrollview");
 			// Scroll to follow the motion event
-			int deltaX = (int) (x- lastPoint.x);
-			int deltaY = (int) (y- lastPoint.y);
+			int deltaX = (int) (x - lastPoint.x);
+			int deltaY = (int) (y - lastPoint.y);
 			lastPoint.set(x, y);
 			Log.d("scroll", "delta X, deltaY" + deltaX + " " + deltaY);
 			if (deltaX > 0) {
@@ -233,8 +239,10 @@ public class ZoomableViewGroup extends ViewGroup {
 			} else if (deltaX < 0) {
 				if (mScrollX < computeHorizontalScrollRange()
 						- computeHorizontalScrollExtent()) {
-					deltaX = Math.max(deltaX, mScrollX - (computeHorizontalScrollRange()
-							- computeHorizontalScrollExtent()));
+					deltaX = Math
+							.max(deltaX,
+									mScrollX
+											- (computeHorizontalScrollRange() - computeHorizontalScrollExtent()));
 				} else
 					deltaX = 0;
 			}
@@ -246,8 +254,10 @@ public class ZoomableViewGroup extends ViewGroup {
 			} else if (deltaY < 0) {
 				if (mScrollY < computeVerticalScrollRange()
 						- computeVerticalScrollExtent()) {
-					deltaY = Math.max(deltaY, mScrollY - (computeVerticalScrollRange()
-							- computeVerticalScrollExtent()));
+					deltaY = Math
+							.max(deltaY,
+									mScrollY
+											- (computeVerticalScrollRange() - computeVerticalScrollExtent()));
 				} else
 					deltaY = 0;
 			}
@@ -257,9 +267,9 @@ public class ZoomableViewGroup extends ViewGroup {
 			Log.d("scroll", "scrollBy " + deltaX + " " + deltaY);
 			scrollTo(mScrollX, mScrollY);
 			// dispatch event to observer
-			if (mOnScrollListener!=null)
+			if (mOnScrollListener != null)
 				mOnScrollListener.onScrollBy(-deltaX, -deltaY);
-			//this.invalidate(0, 0, getMeasuredWidth(), getMeasuredHeight());
+			// this.invalidate(0, 0, getMeasuredWidth(), getMeasuredHeight());
 			break;
 		case MotionEvent.ACTION_CANCEL:
 		case MotionEvent.ACTION_UP:
@@ -271,60 +281,63 @@ public class ZoomableViewGroup extends ViewGroup {
 		return true;
 	}
 
-	
-
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		//super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		final int width = MeasureSpec.getSize(widthMeasureSpec);
-		final int height = MeasureSpec.getSize(heightMeasureSpec);
-		setMeasuredDimension(width, height);
-		Log.d("calendarview","the size of this view is "+width+" "+height);
-//		viewWidth = MeasureSpec.getSize(widthMeasureSpec);
-//		viewHeight = MeasureSpec.getSize(heightMeasureSpec);
-		screenWidth = MeasureSpec.getSize(widthMeasureSpec);
-		screenHeight = MeasureSpec.getSize(heightMeasureSpec);
-		Log.d(TAG, "on measure " + viewWidth + " " + viewHeight);
+		// super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		try {
+			final int width = MeasureSpec.getSize(widthMeasureSpec);
+			final int height = MeasureSpec.getSize(heightMeasureSpec);
+			setMeasuredDimension(width, height);
+			Log.d(TAG, "the size of this view is " + width + " "
+					+ height);
+			// viewWidth = MeasureSpec.getSize(widthMeasureSpec);
+			// viewHeight = MeasureSpec.getSize(heightMeasureSpec);
+			screenWidth = MeasureSpec.getSize(widthMeasureSpec);
+			screenHeight = MeasureSpec.getSize(heightMeasureSpec);
+			Log.d(TAG, "on measure " + viewWidth + " " + viewHeight);
+		} catch (Exception e) {
+			Log.e("calendarview", e.getMessage());
+		}
 	}
 
-//	@Override
-//	public void removeView(View view) {
-//		int id = view.getId();
-//		if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
-//			return;
-//		childrenInfoList.set(id, null);
-//		Log.d(TAG, "remove view id " + id);
-//		super.removeView(view);
-//	}
-//
-//	@Override
-//	public void removeViewAt(int id) {
-//		if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
-//			return;
-//		childrenInfoList.set(id, null);
-//		Log.d(TAG, "remove view id " + id);
-//		super.removeViewAt(id);
-//	}
-//
-//	@Override
-//	public void addView(View child, int id) {
-//		super.addView(child, id);
-//		Log.d(TAG, "id " + id);
-//		if (id == NO_ID)
-//			id = getChildCount();
-//		Log.d(TAG, "add view id " + id);
-//	}
-//
-//	@Override
-//	public void addView(View child) {
-//		super.addView(child);
-//		int id = child.getId();
-//		Log.d(TAG, "id " + id);
-//		if (id == NO_ID)
-//			id = getChildCount();
-//		Log.d(TAG, "add view id " + id);
-//	}
-//
+	// @Override
+	// public void removeView(View view) {
+	// int id = view.getId();
+	// if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
+	// return;
+	// childrenInfoList.set(id, null);
+	// Log.d(TAG, "remove view id " + id);
+	// super.removeView(view);
+	// }
+	//
+	// @Override
+	// public void removeViewAt(int id) {
+	// if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
+	// return;
+	// childrenInfoList.set(id, null);
+	// Log.d(TAG, "remove view id " + id);
+	// super.removeViewAt(id);
+	// }
+	//
+	// @Override
+	// public void addView(View child, int id) {
+	// super.addView(child, id);
+	// Log.d(TAG, "id " + id);
+	// if (id == NO_ID)
+	// id = getChildCount();
+	// Log.d(TAG, "add view id " + id);
+	// }
+	//
+	// @Override
+	// public void addView(View child) {
+	// super.addView(child);
+	// int id = child.getId();
+	// Log.d(TAG, "id " + id);
+	// if (id == NO_ID)
+	// id = getChildCount();
+	// Log.d(TAG, "add view id " + id);
+	// }
+	//
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		final int count = getChildCount();
@@ -339,24 +352,27 @@ public class ZoomableViewGroup extends ViewGroup {
 						.getRight();
 				viewHeight = viewHeight > child.getBottom() ? viewHeight
 						: child.getBottom();
-				Log.d(TAG, "child left top child width child height " + childLeft+" "+childTop
-						+ " "+childWidth+ " "+childHeight);
+				Log.d(TAG, "child left top child width child height "
+						+ childLeft + " " + childTop + " " + childWidth + " "
+						+ childHeight);
 				Log.d(TAG, "view width, view height " + viewWidth + " "
 						+ viewHeight + " screen width, screen height "
 						+ screenWidth + " " + screenHeight);
 			}
 		}
-		
+
 	}
 
 	public void zoom(float deltaScale) {
 		Log.d(TAG, "zoom with delta scale = " + deltaScale);
 		float tempScale = deltaScale * this.scale;
-		if (tempScale < minScale) tempScale = minScale;
-		if (tempScale > maxScale) tempScale = maxScale;
-		deltaScale = tempScale/this.scale;
+		if (tempScale < minScale)
+			tempScale = minScale;
+		if (tempScale > maxScale)
+			tempScale = maxScale;
+		deltaScale = tempScale / this.scale;
 		this.deltaScale = deltaScale;
-		Log.d(TAG, "zoom to scale " + tempScale + " delta scale "+deltaScale);
+		Log.d(TAG, "zoom to scale " + tempScale + " delta scale " + deltaScale);
 
 		this.scale = tempScale;
 		// int maxRight = 0, maxBottom = 0;
@@ -371,8 +387,10 @@ public class ZoomableViewGroup extends ViewGroup {
 				continue;
 			Log.d(TAG, "on zoom, child " + id + " " + cl + " " + ct + " " + cw
 					+ " " + ch);
-			int ecw = View.MeasureSpec.makeMeasureSpec(cw,View.MeasureSpec.EXACTLY); 
-			int ech = View.MeasureSpec.makeMeasureSpec(ch,View.MeasureSpec.EXACTLY);
+			int ecw = View.MeasureSpec.makeMeasureSpec(cw,
+					View.MeasureSpec.EXACTLY);
+			int ech = View.MeasureSpec.makeMeasureSpec(ch,
+					View.MeasureSpec.EXACTLY);
 			view.measure(ecw, ech);
 			view.layout(cl, ct, cl + cw, ct + ch);
 			view.invalidate(cl, ct, cl + cw, ct + ch);
@@ -384,20 +402,20 @@ public class ZoomableViewGroup extends ViewGroup {
 		mScrollX = (int) (mScrollX * deltaScale);
 		mScrollY = (int) (mScrollY * deltaScale);
 		scrollTo(mScrollX, mScrollY);
-		if (mOnZoomListener!=null)
-		mOnZoomListener.onZoomWithScale(deltaScale);
+		if (mOnZoomListener != null)
+			mOnZoomListener.onZoomWithScale(deltaScale);
 	}
 
 	public void zoomToScale(float scale) {
 		zoom(scale / this.scale);
 	}
 
-//	@Override
-//	protected void onDraw(Canvas canvas) {
-//		canvas.save(Canvas.MATRIX_SAVE_FLAG);
-//		canvas.scale(scale, scale);
-//		canvas.restore();
-//		super.onDraw(canvas);
-//	}
+	// @Override
+	// protected void onDraw(Canvas canvas) {
+	// canvas.save(Canvas.MATRIX_SAVE_FLAG);
+	// canvas.scale(scale, scale);
+	// canvas.restore();
+	// super.onDraw(canvas);
+	// }
 
 }

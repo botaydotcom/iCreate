@@ -1,23 +1,25 @@
 package com.android.apptime.view;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ZoomButtonsController;
-import android.widget.ZoomButtonsController.OnZoomListener;
+import android.widget.ZoomControls;
 
 import com.android.apptime.Item;
 import com.android.apptime.R;
@@ -35,9 +37,11 @@ public class CalendarWeekView extends Activity {
 	private final int POPUP_FORM = 0;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private DayInWeekView[] daysInWeekSlot = new DayInWeekView[Constant.NUM_DAY_IN_WEEK];
-
 	private TextView title = null;
 	private TextView[] daysInWeekTitle = new TextView[Constant.NUM_DAY_IN_WEEK];
+	private ArrayList<WeekItemView> itemsInWeek = null;
+	
+	
 	private RelativeLayout containerLayout = null;
 	private ZoomableViewGroup titleLayout = null;
 	private ZoomableViewGroup contentLayout = null;
@@ -60,76 +64,10 @@ public class CalendarWeekView extends Activity {
 	private int height = 1000;
 	private int daySlotWidth = 50;
 	private int screenWidth = 0, screenHeight = 0;
-
-	private ZoomableViewGroup.OnScrollListener mOnScrollListener = new ZoomableViewGroup.OnScrollListener() {
-
-		@Override
-		public void onScrollBy(int dx, int dy) {
-			titleLayout.scrollBy(dx, 0);
-		}
-	};
-
-	private ZoomableViewGroup.OnZoomListener mOnZoomListener = new ZoomableViewGroup.OnZoomListener() {
-
-		@Override
-		public void onZoomWithScale(float zoomScale) {
-			// zoom out the width of the title row
-			int startId = title.getId();
-			for (int i = 0; i <= Constant.NUM_DAY_IN_WEEK; i++) {
-				int id = startId + i;
-				View view = titleLayout.getChildAt(id);
-				if (view == null)
-					continue;
-				int cw = (int) (view.getWidth() * zoomScale);
-				int ch = (int) view.getHeight();
-				int cl = (int) (view.getLeft() * zoomScale);
-				int ct = (int) (view.getTop());
-
-				if (view == title)
-					Log.d(TAG, "this is title");
-				Log.d(TAG, "on zoom, child " + id + " " + cl + " " + ct + " "
-						+ cw + " " + ch);
-				int ecw = View.MeasureSpec.makeMeasureSpec(cw,
-						View.MeasureSpec.EXACTLY);
-				int ech = View.MeasureSpec.makeMeasureSpec(ch,
-						View.MeasureSpec.EXACTLY);
-				view.measure(ecw, ech);
-				view.layout(cl, ct, cl + cw, ct + ch);
-				view.invalidate(cl, ct, cl + cw, ct + ch);
-			}
-
-			// adjusting the day slot so that they are not misplaced due to
-			// round off error
-			startId = dayTimeSlot[0].getId();
-
-			for (int i = 1; i < Constant.NUM_HOUR; i++) {
-				int id = startId + i;
-				View view = contentLayout.getChildAt(id);
-				View prevView = contentLayout.getChildAt(id - 1);
-				int prevBot = prevView.getBottom();
-				int thisTop = prevBot;
-				int thisWidth = view.getWidth();
-				int thisHeight = view.getHeight();
-				view.layout(0, thisTop, thisWidth, thisTop + thisHeight);
-			}
-
-			int viewHeight = dayTimeSlot[Constant.NUM_HOUR - 1].getBottom();
-			// adjust all the day slot height
-			startId = daysInWeekSlot[0].getId();
-			for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
-				int id = startId + i;
-				View view = contentLayout.getChildAt(id);
-				int exWidth = View.MeasureSpec.makeMeasureSpec(view.getWidth(),
-						View.MeasureSpec.EXACTLY);
-				int exHeight = View.MeasureSpec.makeMeasureSpec(viewHeight,
-						View.MeasureSpec.EXACTLY);
-				view.measure(exWidth, exHeight);
-			}
-			contentLayout.invalidate();
-		}
-
-	};
-
+	private Handler mHandler = null;
+	
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -142,69 +80,88 @@ public class CalendarWeekView extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		screenWidth = metrics.widthPixels;
 		screenHeight = metrics.heightPixels;
+		mHandler = new Handler();
 		try {
 			displayAllTimeSlot();
 			// addZoomButtons(containerLayout);
-			// addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
-			// addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
+			addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
+			addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
+		itemsInWeek = new ArrayList<WeekItemView>();
+		addZoomButtons();
+	}
+	
+	@Override
+	public boolean dispatchTouchEvent (MotionEvent ev){
+		if (ev.getAction() == MotionEvent.ACTION_DOWN){
+			showZoomButtons();
+			Log.d(TAG, "dispatch touch event");
+		}
+		return super.dispatchTouchEvent(ev);
 	}
 
-	/**
-	 * Zoom handling part This part adds the zoom buttons to the view
+	/*
+	 * Adding zoom controls
+	 * This part adds the zoom buttons to the view
 	 */
 
-	private ZoomButtonsController mZoomButtonsController = null;
-
+	private ZoomControls mZoomButtonsController = null;
+	
+	private void showZoomButtons(){
+		if (!mZoomButtonsController.isShown()){
+			makeZoomButtonAutoDismiss();
+			mZoomButtonsController.bringToFront();
+		}
+	}
+	
 	private void addZoomButtons() {
 		if (mZoomButtonsController == null) {
-			mZoomButtonsController = new ZoomButtonsController(containerLayout);
-
-			Log.d(TAG, "" + containerLayout.getWindowToken());
-			mZoomButtonsController.setAutoDismissed(true);
-			mZoomButtonsController.setVisible(true);
-
-			Log.d(TAG, "" + mZoomButtonsController.getContainer() + " "
-					+ mZoomButtonsController.isVisible() + " "
-					+ mZoomButtonsController.isAutoDismissed());
-			nextViewId++;
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.FILL_PARENT,
-					RelativeLayout.LayoutParams.FILL_PARENT);
-			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-			//mZoomButtonsController.getContainer().setLayoutParams(params);
-			FrameLayout layout = (FrameLayout) findViewById(R.id.zoomcontrol);
-			layout.addView(mZoomButtonsController.getContainer());
-			layout.bringToFront();
-			mZoomButtonsController.setOnZoomListener(new OnZoomListener() {
-
+			mZoomButtonsController = (ZoomControls) findViewById(R.id.zoomcontrolbutton);
+			try {
+				nextViewId++;
+				showZoomButtons();
+			} catch (Exception e) {
+				Log.e(TAG, e.getMessage());
+			}
+			mZoomButtonsController.setOnZoomInClickListener(new View.OnClickListener() {
+				
 				@Override
-				public void onZoom(boolean zoomIn) {
-					if (zoomIn) {
-						contentLayout
-								.zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
-					} else {
-						contentLayout
-								.zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
-					}
-				}
-
-				@Override
-				public void onVisibilityChanged(boolean visible) {
+				public void onClick(View v) {
 					// TODO Auto-generated method stub
-
+					contentLayout
+					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
+				}
+			});
+			mZoomButtonsController.setOnZoomOutClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					contentLayout
+					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
 				}
 			});
 		}
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		addZoomButtons();
+	
+	private void makeZoomButtonAutoDismiss() {
+		mZoomButtonsController.show();
+		Runnable hideZoom = new Runnable() {
+			@Override
+			public void run() {
+				mZoomButtonsController.hide();				
+			}
+		};
+		mHandler.removeCallbacks(hideZoom);
+		new Handler().postDelayed(hideZoom, 3000);
 	}
+
+	/*
+	 * 
+	 * @see android.app.Activity#onResume()
+	 */
+	
 
 	private void displayAllTimeSlot() {
 		Resources myResources = getResources();
@@ -336,13 +293,13 @@ public class CalendarWeekView extends Activity {
 			daysInWeekSlot[i].setClickable(true);
 
 			final View thisView = daysInWeekSlot[i];
-			// daysInWeekSlot[i].setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View v) {
-			// itemBeingSelected = thisView;
-			// Log.d(TAG, "day slot selected");
-			// }
-			// });
+			daysInWeekSlot[i].setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					itemBeingSelected = thisView;
+					Log.d(TAG, "day slot selected");
+				}
+			});
 		}
 		Log.d("calendarview",
 				"content layout size screen " + contentLayout.getWidth() + " "
@@ -397,27 +354,31 @@ public class CalendarWeekView extends Activity {
 	public WeekItemView addItemViewToTimeSlot(Item item, int day, int fromHour,
 			int fromMin, int toHour, int toMin, int leftMargin, int width) {
 		WeekItemView newItem = new WeekItemView(getApplicationContext());
-		newItem.setText("Place holder text");
-		// need to read from database
+		/*
+		 * need to read from database
+		 */
 		// newItem.setItem(object);
-		RelativeLayout.LayoutParams layoutParams = null;
+		newItem.setText("place holder text");		
+		contentLayout.addView(newItem);
+		adjustPositionWeekItemView(newItem, day, fromHour, fromMin, toHour, toMin, leftMargin, width);
+		return newItem;
+	}
+	
+	private void adjustPositionWeekItemView(WeekItemView newItem, int day, int fromHour,
+			int fromMin, int toHour, int toMin, int leftMargin, int width){
 		int height = getHeightForItemInTimeSlot(fromHour, fromMin, toHour,
 				toMin);
-		layoutParams = new RelativeLayout.LayoutParams(width, height);
-		layoutParams.addRule(RelativeLayout.ALIGN_TOP,
-				dayTimeSlot[fromHour].getId());
-
-		layoutParams.addRule(RelativeLayout.ALIGN_LEFT,
-				daysInWeekSlot[day].getLeft());
-
-		// layoutParams.addRule(RelativeLayout.ALIGN_LEFT,
-		// daysInWeekSlot[day].getId());
-		layoutParams.setMargins(leftMargin,
-				getMarginCorrespondingToPeriod(fromMin), 0, 0);
-		newItem.setLayoutParams(layoutParams);
-		newItem.setId(nextViewId++);
-		contentLayout.addView(newItem);
-		return newItem;
+		int exWidth = View.MeasureSpec.makeMeasureSpec(width,
+				View.MeasureSpec.EXACTLY);
+		int exHeight = View.MeasureSpec.makeMeasureSpec(height,
+				View.MeasureSpec.EXACTLY);
+		newItem.measure(exWidth, exHeight);
+		int left = daysInWeekSlot[day].getLeft()+leftMargin;
+		int top  = dayTimeSlot[fromHour].getTop()+ getMarginCorrespondingToPeriod(fromMin);
+		int right = left+newItem.getMeasuredWidth();
+		int bottom = top+newItem.getMeasuredHeight();
+		newItem.layout(left, top, right, bottom);
+		newItem.setId(contentLayout.getChildCount());
 	}
 
 	private int getHeightForItemInTimeSlot(int fromHour, int fromMin,
@@ -437,385 +398,81 @@ public class CalendarWeekView extends Activity {
 
 	}
 
-	/**
-	 * Zoom and scrolling part
+	
+	/*
+	 * Zooming and scrolling part
+	 * Since the content view is a viewgroup that already supported zooming and scrolling,
+	 * this part only helps that view to adjust the controls that are added.
+	 * It helps by re-adjust the subviews so that they are not misplaced due to round-off
+	 * error. 
 	 */
+	private ZoomableViewGroup.OnScrollListener mOnScrollListener = new ZoomableViewGroup.OnScrollListener() {
 
-	// public static final float DEFAULT_ZOOM_IN_RATE = 1.2f;
-	// public static final float DEFAULT_ZOOM_OUT_RATE = 0.8f;
-	// private float scale = 1f;
-	// private float maxScale = 3f, minScale = 1f;
-	//
-	// public float getMaxScale() {
-	// return maxScale;
-	// }
-	//
-	// public float getMinScale() {
-	// return minScale;
-	// }
-	//
-	// public void setMaxScale(float scale) {
-	// maxScale = scale;
-	// }
-	//
-	// public void setMinScale(float scale) {
-	// minScale = scale;
-	// }
-	//
-	// private ArrayList<ViewInfo> childrenInfoList = null;
-	// private float deltaScale = 1f;
-	// private boolean mIsBeingDragged = false;
-	// private PointF lastPoint;
-	// private int mTouchSlop = 5;
-	// private int mScrollX, mScrollY, mMaxScrollX, mMaxScrollY;
-	// private int screenWidth, screenHeight, viewWidth, viewHeight;
-	//
-	// public ZoomableViewGroup(Context context) {
-	// super(context);
-	// Log.d(TAG, "constructor 1 ");
-	// init(context);
-	// }
-	//
-	// public ZoomableViewGroup(Context context, AttributeSet attrs) {
-	// super(context, attrs);
-	// Log.d(TAG, "constructor 2 ");
-	// init(context);
-	// }
-	//
-	// public ZoomableViewGroup(Context context, AttributeSet attrs, int
-	// defStyle) {
-	// super(context, attrs, defStyle);
-	// Log.d(TAG, "constructor 3 ");
-	// init(context);
-	// }
-	//
-	// private void init(Context context) {
-	// Log.d(TAG, "init");
-	// this.setBackgroundDrawable(new BitmapDrawable());
-	// lastPoint = new PointF();
-	// }
-	//
-	// @Override
-	// protected int computeVerticalScrollRange() {
-	// return viewHeight;
-	// }
-	//
-	// @Override
-	// protected int computeHorizontalScrollRange() {
-	// return viewWidth;
-	// }
-	//
-	// @Override
-	// protected int computeVerticalScrollExtent() {
-	// return screenHeight;
-	// }
-	//
-	// @Override
-	// protected int computeHorizontalScrollExtent() {
-	// return screenWidth;
-	// }
-	//
-	// @Override
-	// protected int computeVerticalScrollOffset() {
-	// return mScrollY;
-	// }
-	//
-	// @Override
-	// protected int computeHorizontalScrollOffset() {
-	// return mScrollX;
-	// }
-	//
-	// @Override
-	// public boolean onInterceptTouchEvent(MotionEvent ev) {
-	// Log.d("scroll", "on touch intercept" + ev.getAction() + " being drag"
-	// + mIsBeingDragged);
-	// final int action = ev.getAction();
-	// if ((action == MotionEvent.ACTION_MOVE) && (mIsBeingDragged)) {
-	// Log.d("scroll", "on touch intercept - action move - drag");
-	// lastPoint.set(ev.getX(), ev.getY());
-	// return true;
-	// }
-	//
-	// if (!canScroll()) {
-	// mIsBeingDragged = false;
-	// Log.d("scroll",
-	// "on touch intercept - cannot scroll, so return false");
-	// lastPoint.set(ev.getX(), ev.getY());
-	// return false;
-	// }
-	// final float x = ev.getX();
-	// final float y = ev.getY();
-	// switch (action) {
-	// case MotionEvent.ACTION_MOVE:
-	// Log.d("scroll", "on touch intercept - action move");
-	//
-	// final int diff = (int) Math.hypot(x-lastPoint.x, y - lastPoint.y);
-	// if (diff > mTouchSlop) {
-	// mIsBeingDragged = true;
-	// Log.d("scroll", "being dragged");
-	// }
-	// break;
-	//
-	// // case MotionEvent.ACTION_CANCEL:
-	// case MotionEvent.ACTION_UP:
-	// /* Release the drag */
-	// mIsBeingDragged = false;
-	// Log.d("scroll", "on touch intercept - not drag");
-	// break;
-	// }
-	//
-	// /*
-	// * The only time we want to intercept motion events is if we are in the
-	// * drag mode.
-	// */
-	// lastPoint.set(ev.getX(), ev.getY());
-	// return mIsBeingDragged;
-	// }
-	//
-	// private boolean canScroll() {
-	// Log.d("scroll", "extent - range" + computeHorizontalScrollExtent()
-	// + " " + computeHorizontalScrollRange() + " "
-	// + computeVerticalScrollExtent() + " "
-	// + computeVerticalScrollRange() + "offset: "
-	// + computeHorizontalScrollOffset() + " "
-	// + computeVerticalScrollOffset());
-	// return (computeHorizontalScrollExtent() < computeHorizontalScrollRange()
-	// || computeVerticalScrollExtent() < computeVerticalScrollRange());
-	// }
-	//
-	// @Override
-	// public boolean onTouchEvent(MotionEvent ev) {
-	// Log.d("scroll", "on touch event " + ev.getAction());
-	// if (ev.getAction() == MotionEvent.ACTION_DOWN && ev.getEdgeFlags() != 0)
-	// {
-	// // Don't handle edge touches immediately -- they may actually belong
-	// // to one of our
-	// // descendants.
-	// Log.d("scroll", "dispatch click to children");
-	// return false;
-	// }
-	//
-	// if (!canScroll()) {
-	// return false;
-	// }
-	//
-	// final int action = ev.getAction();
-	// final float x = ev.getX();
-	// final float y = ev.getY();
-	//
-	// switch (action) {
-	// case MotionEvent.ACTION_DOWN:
-	// Log.d("scroll", "on touch event - action down in scrollview");
-	// lastPoint.set(x, y);
-	// break;
-	// case MotionEvent.ACTION_MOVE:
-	// Log.d("scroll", "on touch event - action move in scrollview");
-	// // Scroll to follow the motion event
-	// int deltaX = (int) (x- lastPoint.x);
-	// int deltaY = (int) (y- lastPoint.y);
-	// lastPoint.set(x, y);
-	// Log.d("scroll", "delta X, deltaY" + deltaX + " " + deltaY);
-	// if (deltaX > 0) {
-	// if (mScrollX > 0) {
-	// deltaX = Math.min(deltaX, mScrollX);
-	// } else
-	// deltaX = 0;
-	// } else if (deltaX < 0) {
-	// if (mScrollX < computeHorizontalScrollRange()
-	// - computeHorizontalScrollExtent()) {
-	// deltaX = Math.max(deltaX, mScrollX - (computeHorizontalScrollRange()
-	// - computeHorizontalScrollExtent()));
-	// } else
-	// deltaX = 0;
-	// }
-	// if (deltaY > 0) {
-	// if (mScrollY > 0) {
-	// deltaY = Math.min(deltaY, mScrollY);
-	// } else
-	// deltaY = 0;
-	// } else if (deltaY < 0) {
-	// if (mScrollY < computeVerticalScrollRange()
-	// - computeVerticalScrollExtent()) {
-	// deltaY = Math.max(deltaY, mScrollY - (computeVerticalScrollRange()
-	// - computeVerticalScrollExtent()));
-	// } else
-	// deltaY = 0;
-	// }
-	// Log.d("scroll", "delta X, deltaY" + deltaX + " " + deltaY);
-	// mScrollX -= deltaX;
-	// mScrollY -= deltaY;
-	// Log.d("scroll", "scrollBy " + deltaX + " " + deltaY);
-	// scrollTo(mScrollX, mScrollY);
-	// break;
-	// case MotionEvent.ACTION_CANCEL:
-	// case MotionEvent.ACTION_UP:
-	// default:
-	// mIsBeingDragged = false;
-	// lastPoint.set(ev.getX(), ev.getY());
-	// return false;
-	// }
-	// return true;
-	// }
-	//
-	// /**
-	// * Zoom handling part This part adds the zoom buttons to the view
-	// */
-	//
-	// private ZoomButtonsController mZoomButtonsController = null;
-	//
-	// @Override
-	// protected void onAttachedToWindow() {
-	// super.onAttachedToWindow();
-	// this.setVerticalScrollBarEnabled(true);
-	// this.setHorizontalScrollBarEnabled(true);
-	// Log.d(TAG, " " + getVerticalScrollbarWidth() + " "
-	// + getHorizontalScrollbarHeight());
-	// if (mZoomButtonsController == null) {
-	// mZoomButtonsController = new ZoomButtonsController(this);
-	//
-	// Log.d(TAG, "" + this.getWindowToken());
-	// mZoomButtonsController.setAutoDismissed(false);
-	// mZoomButtonsController.setVisible(true);
-	// Log.d(TAG, "" + mZoomButtonsController.getContainer() + " "
-	// + mZoomButtonsController.isVisible() + " "
-	// + mZoomButtonsController.isAutoDismissed());
-	// mZoomButtonsController.setOnZoomListener(new OnZoomListener() {
-	//
-	// @Override
-	// public void onZoom(boolean zoomIn) {
-	// if (zoomIn) {
-	// ZoomableViewGroup.this
-	// .zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
-	// } else {
-	// ZoomableViewGroup.this
-	// .zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
-	// }
-	// }
-	//
-	// @Override
-	// public void onVisibilityChanged(boolean visible) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	// });
-	// }
-	// }
-	//
-	// @Override
-	// protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	// super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	// viewWidth = MeasureSpec.getSize(widthMeasureSpec);
-	// viewHeight = MeasureSpec.getSize(heightMeasureSpec);
-	// screenWidth = viewWidth;
-	// screenHeight = viewHeight;
-	// Log.d(TAG, "on measure " + viewWidth + " " + viewHeight);
-	// }
-	//
-	// @Override
-	// public void removeView(View view) {
-	// int id = view.getId();
-	// if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
-	// return;
-	// childrenInfoList.set(id, null);
-	// Log.d(TAG, "remove view id " + id);
-	// super.removeView(view);
-	// }
-	//
-	// @Override
-	// public void removeViewAt(int id) {
-	// if (childrenInfoList.size() < id || childrenInfoList.get(id) == null)
-	// return;
-	// childrenInfoList.set(id, null);
-	// Log.d(TAG, "remove view id " + id);
-	// super.removeViewAt(id);
-	// }
-	//
-	// @Override
-	// public void addView(View child, int id) {
-	// super.addView(child, id);
-	// Log.d(TAG, "id " + id);
-	// if (id == NO_ID)
-	// id = getChildCount();
-	// Log.d(TAG, "add view id " + id);
-	// }
-	//
-	// @Override
-	// public void addView(View child) {
-	// super.addView(child);
-	// int id = child.getId();
-	// Log.d(TAG, "id " + id);
-	// if (id == NO_ID)
-	// id = getChildCount();
-	// Log.d(TAG, "add view id " + id);
-	// }
-	//
-	// @Override
-	// protected void onLayout(boolean changed, int l, int t, int r, int b) {
-	// final int count = getChildCount();
-	// for (int i = 0; i < count; i++) {
-	// final View child = getChildAt(i);
-	// if (child.getVisibility() != View.GONE) {
-	// final int childLeft = child.getLeft();
-	// final int childTop = child.getTop();
-	// final int childWidth = child.getMeasuredWidth();
-	// final int childHeight = child.getMeasuredHeight();
-	// child.layout(childLeft, childTop, childLeft + childWidth,
-	// childTop + childHeight);
-	// viewWidth = viewWidth > child.getRight() ? viewWidth : child
-	// .getRight();
-	// viewHeight = viewHeight > child.getBottom() ? viewHeight
-	// : child.getBottom();
-	// Log.d(TAG, "view width, view height " + viewWidth + " "
-	// + viewHeight + " screen width, screen height "
-	// + screenWidth + " " + screenHeight);
-	// }
-	// }
-	// }
-	//
-	// public void zoom(float deltaScale) {
-	// Log.d(TAG, "zoom with delta scale = " + deltaScale);
-	// float tempScale = deltaScale * this.scale;
-	// if (tempScale < minScale || tempScale > maxScale)
-	// return;
-	// this.deltaScale = deltaScale;
-	// Log.d(TAG, "zoom to scale " + tempScale);
-	//
-	// this.scale = tempScale;
-	// // int maxRight = 0, maxBottom = 0;
-	// for (int i = 0; i < getChildCount(); i++) {
-	// View view = getChildAt(i);
-	// int id = view.getId();
-	// int cw = (int) (view.getWidth() * deltaScale);
-	// int ch = (int) (view.getHeight() * deltaScale);
-	// int cl = (int) (view.getLeft() * deltaScale);
-	// int ct = (int) (view.getTop() * deltaScale);
-	// if (id < 0)
-	// continue;
-	// Log.d(TAG, "on zoom, child " + id + " " + cl + " " + ct + " " + cw
-	// + " " + ch);
-	// view.measure(cw, ch);
-	// view.layout(cl, ct, cl + cw, ct + ch);
-	// view.invalidate(cl, ct, cl + cw, ct + ch);
-	// // if (cl+cw>maxRight) maxRight = cl+cw;
-	// // if (ct+ch>maxBottom) maxBottom = ct+ch;
-	// }
-	// viewWidth = (int) (viewWidth * deltaScale);
-	// viewHeight = (int) (viewHeight * deltaScale);
-	// mScrollX = (int) (mScrollX * deltaScale);
-	// mScrollY = (int) (mScrollY * deltaScale);
-	// scrollTo(mScrollX, mScrollY);
-	// }
-	//
-	// public void zoomToScale(float scale) {
-	// zoom(scale / this.scale);
-	// }
-	//
-	// @Override
-	// protected void onDraw(Canvas canvas) {
-	// canvas.save(Canvas.MATRIX_SAVE_FLAG);
-	// canvas.scale(scale, scale);
-	// canvas.restore();
-	// super.onDraw(canvas);
-	// }
+		@Override
+		public void onScrollBy(int dx, int dy) {
+			titleLayout.scrollBy(dx, 0);
+		}
+	};
+
+	private ZoomableViewGroup.OnZoomListener mOnZoomListener = new ZoomableViewGroup.OnZoomListener() {
+
+		@Override
+		public void onZoomWithScale(float zoomScale) {
+			// zoom out the width of the title row
+			int startId = title.getId();
+			for (int i = 0; i <= Constant.NUM_DAY_IN_WEEK; i++) {
+				int id = startId + i;
+				View view = titleLayout.getChildAt(id);
+				if (view == null)
+					continue;
+				int cw = (int) (view.getWidth() * zoomScale);
+				int ch = (int) view.getHeight();
+				int cl = (int) (view.getLeft() * zoomScale);
+				int ct = (int) (view.getTop());
+
+				if (view == title)
+					Log.d(TAG, "this is title");
+				Log.d(TAG, "on zoom, child " + id + " " + cl + " " + ct + " "
+						+ cw + " " + ch);
+				int ecw = View.MeasureSpec.makeMeasureSpec(cw,
+						View.MeasureSpec.EXACTLY);
+				int ech = View.MeasureSpec.makeMeasureSpec(ch,
+						View.MeasureSpec.EXACTLY);
+				view.measure(ecw, ech);
+				view.layout(cl, ct, cl + cw, ct + ch);
+				view.invalidate(cl, ct, cl + cw, ct + ch);
+			}
+
+			// adjusting the day slot so that they are not misplaced due to
+			// round off error
+			startId = dayTimeSlot[0].getId();
+
+			for (int i = 1; i < Constant.NUM_HOUR; i++) {
+				int id = startId + i;
+				View view = contentLayout.getChildAt(id);
+				View prevView = contentLayout.getChildAt(id - 1);
+				int prevBot = prevView.getBottom();
+				int thisTop = prevBot;
+				int thisWidth = view.getWidth();
+				int thisHeight = view.getHeight();
+				view.layout(0, thisTop, thisWidth, thisTop + thisHeight);
+			}
+
+			int viewHeight = dayTimeSlot[Constant.NUM_HOUR - 1].getBottom();
+			// adjust all the day slot height
+			startId = daysInWeekSlot[0].getId();
+			for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
+				int id = startId + i;
+				View view = contentLayout.getChildAt(id);
+				int exWidth = View.MeasureSpec.makeMeasureSpec(view.getWidth(),
+						View.MeasureSpec.EXACTLY);
+				int exHeight = View.MeasureSpec.makeMeasureSpec(viewHeight,
+						View.MeasureSpec.EXACTLY);
+				view.measure(exWidth, exHeight);
+			}
+			contentLayout.invalidate();
+		}
+
+	};
 
 }

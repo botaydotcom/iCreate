@@ -70,7 +70,7 @@ public final class R {
         public static final int tvType=0x7f080011;
         public static final int tvUsername=0x7f080006;
         public static final int welcome_text=0x7f080004;
-        public static final int zoomcontrol=0x7f080003;
+        public static final int zoomcontrolbutton=0x7f080003;
     }
     public static final class layout {
         public static final int calendardayview=0x7f030000;
