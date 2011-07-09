@@ -42,6 +42,7 @@
 		<activity android:name=".view.CalendarAgendaView"
 			android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-
+		<service android:name=".IvleDataPuller">
+            </service>
 	</application>
 </manifest>
