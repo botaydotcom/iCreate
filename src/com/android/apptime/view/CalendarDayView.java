@@ -92,12 +92,13 @@ public class CalendarDayView extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		// updateView();
+		updateView();
 	}
 
 	private void setDBInterface() {
 		this.mDBinterface = DatabaseInterface
 				.getDatabaseInterface(getApplicationContext());
+		mDBinterface.SetObserver(observer);
 	}
 
 	private void displayAllTimeSlot() {

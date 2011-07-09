@@ -62,9 +62,10 @@ public class Main extends TabActivity {
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTab(0);
-		// DatabaseInterface database =
-		// DatabaseInterface.getDatabaseInterface(getApplicationContext());
-		// database.CreateDatabase(getApplicationContext());
+		
+		DatabaseInterface database =
+		DatabaseInterface.getDatabaseInterface(getApplicationContext());
+		database.CreateDatabase(getApplicationContext());
 
 		/*
 		 * DatabaseInterface db = new DatabaseInterface(this); List<String>
