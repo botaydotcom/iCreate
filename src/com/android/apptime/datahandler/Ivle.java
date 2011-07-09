@@ -29,7 +29,6 @@ public class Ivle extends Activity  {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.login);  
-    	
     	// log in to the IVLE Network
     	loginIVLE();
     }

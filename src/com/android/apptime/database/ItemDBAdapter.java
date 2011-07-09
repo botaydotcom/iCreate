@@ -4,6 +4,7 @@ package com.android.apptime.database;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.android.apptime.EventItem;
 import com.android.apptime.Item;
@@ -22,7 +24,7 @@ public class ItemDBAdapter {
 
  
   private static final String DATABASE_TABLE_ITEM = "Items_Table";
-  private static final String ITEMDB_KEY_ID = "itemdb_item_id";
+  private static final String ITEMDB_KEY_ID = "itemdb_itemid";
   private static final String ITEMDB_KEY_TASK = "itemdb_taskid";
   private static final String ITEMDB_KEY_EVENT = "itemdb_eventid";
 
@@ -215,6 +217,29 @@ public class ItemDBAdapter {
       if (mCursor != null) {
           mCursor.moveToFirst();
       }
+      String t0 = mCursor.getString(0);
+      String t1 = mCursor.getString(1);
+      String t2 = mCursor.getString(2);
+      
+      if (mCursor.getString(1).equals("0"))
+      { 
+    	  EventDBAdapter edb = new EventDBAdapter(this.context);
+    	  edb.open();
+    	  long t = Long.parseLong(t2);
+    	  mCursor = edb.getEventById(t);
+    	  edb.close();
+      }
+      else
+	      if (mCursor.getString(2).equals("0"))
+	      {
+	    	  TaskDBAdapter tdb = new TaskDBAdapter(this.context);
+	    	  tdb.open();
+	    	  long t = Long.parseLong(t1);
+	    	  
+	    	  mCursor = tdb.getTaskById(t);
+	    	  tdb.close();
+	      }
+      
       return mCursor;
   }
  
@@ -240,7 +265,7 @@ public class ItemDBAdapter {
  
  // return an array of 2 arrays, first array includes events, 2nd includes items 
  public ArrayList<Cursor> getItemByDate(Date date) {
-	 
+	 try{
 	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
 	 EventDBAdapter edb = new EventDBAdapter(this.context);
 	 edb.open();
@@ -251,6 +276,11 @@ public class ItemDBAdapter {
 	 arrlist.add(tdb.getTaskByDate(date));
 	 tdb.close();
 	 return arrlist;
+	 }
+	 catch (Exception e){
+		 Log.e("DB", e.getMessage());
+		 return null;
+	 }
  }
  
 }
