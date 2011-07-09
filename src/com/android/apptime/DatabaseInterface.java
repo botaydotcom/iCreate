@@ -34,7 +34,7 @@ public class DatabaseInterface {
 		return theInstance;
 	}
 	
-	public void CreateDatabase(Context newcontext)
+	public void OpenDatabase(Context newcontext)
 	{
 		newdb = new MainDBAdapter(newcontext);
         newdb.open();

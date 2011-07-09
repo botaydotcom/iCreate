@@ -65,7 +65,8 @@ public class Main extends TabActivity {
 		
 		DatabaseInterface database =
 		DatabaseInterface.getDatabaseInterface(getApplicationContext());
-		database.CreateDatabase(getApplicationContext());
+		database.OpenDatabase(getApplicationContext());
+		database.CloseDatabase();
 
 		/*
 		 * DatabaseInterface db = new DatabaseInterface(this); List<String>
