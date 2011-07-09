@@ -2,7 +2,11 @@ package com.android.apptime.view;
 
 import java.util.Date;
 
+import android.util.Log;
+
 public class TimeFormat {
+
+	private static final String TAG = "time format";
 
 	public static String getAPPMTimeFormatWithoutHourPadding(Date time) {
 		String result = "";
@@ -20,8 +24,10 @@ public class TimeFormat {
 	}
 	
 	public static String getAPPMTimeFormatWithHourPadding(Date time) {
+		Log.d(TAG, "getAPPMTimeFormatWithHourPadding "+time);
 		String result = getAPPMTimeFormatWithoutHourPadding(time);
 		if (result.indexOf(":") == 1) result="0"+result;
+		Log.d(TAG,  "result: "+result);
 		return result;
 	}
 	

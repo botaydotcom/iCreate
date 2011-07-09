@@ -43,6 +43,14 @@ public class ZoomableViewGroup extends ViewGroup {
 	 * @author Tran Cong Hoang
 	 * 
 	 */
+
+	public interface OnTouchListener {
+		public void onTouchAt(int dx, int dy);
+	}
+
+	private OnTouchListener mOnTouchListener = null;
+
+	
 	public interface OnScrollListener {
 		public void onScrollBy(int dx, int dy);
 	}
