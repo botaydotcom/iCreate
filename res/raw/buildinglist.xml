@@ -1,0 +1,2403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Horizontal</key>
+		<integer>720</integer>
+		<key>Latitude</key>
+		<real>1.2951820000000001</real>
+		<key>Longitude</key>
+		<real>103.77190400000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS1</string>
+		<key>Vertical</key>
+		<integer>1340</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>630</integer>
+		<key>Latitude</key>
+		<real>1.2951710000000001</real>
+		<key>Longitude</key>
+		<real>103.771276</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS2</string>
+		<key>Vertical</key>
+		<integer>1375</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>635</integer>
+		<key>Latitude</key>
+		<real>1.294737</real>
+		<key>Longitude</key>
+		<real>103.771169</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS3</string>
+		<key>Vertical</key>
+		<integer>1445</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>705</integer>
+		<key>Latitude</key>
+		<real>1.294565</real>
+		<key>Longitude</key>
+		<real>103.77155500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS4</string>
+		<key>Vertical</key>
+		<integer>1445</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>735</integer>
+		<key>Latitude</key>
+		<real>1.29427</real>
+		<key>Longitude</key>
+		<real>103.77168399999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS5</string>
+		<key>Vertical</key>
+		<integer>1485</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>865</integer>
+		<key>Latitude</key>
+		<real>1.295633</real>
+		<key>Longitude</key>
+		<real>103.773015</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS6</string>
+		<key>Vertical</key>
+		<integer>1205</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>615</integer>
+		<key>Latitude</key>
+		<real>1.2944850000000001</real>
+		<key>Longitude</key>
+		<real>103.770869</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>AS7</string>
+		<key>Vertical</key>
+		<integer>1485</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1185</integer>
+		<key>Latitude</key>
+		<real>1.2924469999999999</real>
+		<key>Longitude</key>
+		<real>103.773991</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>BIZ1</string>
+		<key>Vertical</key>
+		<integer>1615</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1310</integer>
+		<key>Latitude</key>
+		<real>1.2933429999999999</real>
+		<key>Longitude</key>
+		<real>103.775155</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>BIZ2</string>
+		<key>Vertical</key>
+		<integer>1425</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1830</integer>
+		<key>Latitude</key>
+		<real>1.290527</real>
+		<key>Longitude</key>
+		<real>103.777553</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Blk A, 29 Heng Mui Keng Terrace</string>
+		<key>Vertical</key>
+		<integer>1720</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>720</integer>
+		<key>Latitude</key>
+		<real>1.2961290000000001</real>
+		<key>Longitude</key>
+		<real>103.772245</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Block ADM</string>
+		<key>Vertical</key>
+		<integer>1175</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>550</integer>
+		<key>Latitude</key>
+		<real>1.318983</real>
+		<key>Longitude</key>
+		<real>103.816751</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Block B, BTC</string>
+		<key>Vertical</key>
+		<integer>265</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1980</integer>
+		<key>Latitude</key>
+		<real>1.2948329999999999</real>
+		<key>Longitude</key>
+		<real>103.780412</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Brenner Centre for Molecular Medicine</string>
+		<key>Vertical</key>
+		<integer>945</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>cl</string>
+		<key>Horizontal</key>
+		<integer>790</integer>
+		<key>Latitude</key>
+		<real>1.296394</real>
+		<key>Longitude</key>
+		<real>103.77283199999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Photo</key>
+		<string>CentralLibrary.png</string>
+		<key>Title</key>
+		<string>Central Library</string>
+		<key>Vertical</key>
+		<integer>1100</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>cla</string>
+		<key>Horizontal</key>
+		<integer>875</integer>
+		<key>Latitude</key>
+		<real>1.297048</real>
+		<key>Longitude</key>
+		<real>103.77363699999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Central Library Annexe</string>
+		<key>Vertical</key>
+		<integer>975</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>yih canteen</string>
+		<key>Horizontal</key>
+		<integer>940</integer>
+		<key>Latitude</key>
+		<real>1.2965439999999999</real>
+		<key>Longitude</key>
+		<real>103.78046000000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Central Square</string>
+		<key>Vertical</key>
+		<integer>695</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>cels</string>
+		<key>Horizontal</key>
+		<integer>2025</integer>
+		<key>Latitude</key>
+		<real>1.2944789999999999</real>
+		<key>Longitude</key>
+		<real>103.780568</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Centre for Life Sciences</string>
+		<key>Vertical</key>
+		<integer>990</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>cms</string>
+		<key>Horizontal</key>
+		<integer>1546</integer>
+		<key>Latitude</key>
+		<real>1.2935890000000001</real>
+		<key>Longitude</key>
+		<real>103.776796</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Centre for Maritime Studies</string>
+		<key>Vertical</key>
+		<integer>1278</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>515</integer>
+		<key>Latitude</key>
+		<real>1.2969949999999999</real>
+		<key>Longitude</key>
+		<real>103.771309</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>CELC</string>
+		<key>Vertical</key>
+		<integer>1100</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>970</integer>
+		<key>Latitude</key>
+		<real>1.2985340000000001</real>
+		<key>Longitude</key>
+		<real>103.774914</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Cheers Convenience Store</string>
+		<key>Vertical</key>
+		<integer>675</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>605</integer>
+		<key>Latitude</key>
+		<real>1.2951280000000001</real>
+		<key>Longitude</key>
+		<real>103.771083</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Coffee Club Express</string>
+		<key>Vertical</key>
+		<integer>1385</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2140</integer>
+		<key>Latitude</key>
+		<real>1.295836</real>
+		<key>Longitude</key>
+		<real>103.78183900000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Coffee Grounds</string>
+		<key>Vertical</key>
+		<integer>710</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1010</integer>
+		<key>Latitude</key>
+		<real>1.2948869999999999</real>
+		<key>Longitude</key>
+		<real>103.77369</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>COM1</string>
+		<key>Vertical</key>
+		<integer>1265</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1070</integer>
+		<key>Latitude</key>
+		<real>1.294324</real>
+		<key>Longitude</key>
+		<real>103.773905</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>COM2</string>
+		<key>Vertical</key>
+		<integer>1360</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>cc</string>
+		<key>Horizontal</key>
+		<integer>660</integer>
+		<key>Latitude</key>
+		<real>1.297606</real>
+		<key>Longitude</key>
+		<real>103.772408</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Photo</key>
+		<string>ComputerCentre.png</string>
+		<key>Title</key>
+		<string>Computer Centre</string>
+		<key>Vertical</key>
+		<integer>950</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>music</string>
+		<key>Horizontal</key>
+		<integer>425</integer>
+		<key>Latitude</key>
+		<real>1.3024009999999999</real>
+		<key>Longitude</key>
+		<real>103.77265</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Conservatory of Music</string>
+		<key>Vertical</key>
+		<integer>215</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>615</integer>
+		<key>Latitude</key>
+		<real>1.299199</real>
+		<key>Longitude</key>
+		<real>103.77292300000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Data Storage Institute</string>
+		<key>Vertical</key>
+		<integer>660</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>430</integer>
+		<key>Latitude</key>
+		<real>1.299269</real>
+		<key>Longitude</key>
+		<real>103.771421</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Dilys Creation (Engineering)</string>
+		<key>Vertical</key>
+		<integer>745</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1880</integer>
+		<key>Latitude</key>
+		<real>1.296759</real>
+		<key>Longitude</key>
+		<real>103.78046000000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Dilys Creation (Science)</string>
+		<key>Vertical</key>
+		<integer>635</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>85</integer>
+		<key>Latitude</key>
+		<real>1.281479</real>
+		<key>Longitude</key>
+		<real>103.833842</real>
+		<key>Map</key>
+		<string>Outram</string>
+		<key>Title</key>
+		<string>Duke-NUS Graduate Medical School</string>
+		<key>Vertical</key>
+		<integer>245</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>375</integer>
+		<key>Latitude</key>
+		<real>1.29877</real>
+		<key>Longitude</key>
+		<real>103.770971</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E1</string>
+		<key>Vertical</key>
+		<integer>850</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>290</integer>
+		<key>Latitude</key>
+		<real>1.2994509999999999</real>
+		<key>Longitude</key>
+		<real>103.77064300000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E1A</string>
+		<key>Vertical</key>
+		<integer>765</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>345</integer>
+		<key>Latitude</key>
+		<real>1.2993380000000001</real>
+		<key>Longitude</key>
+		<real>103.771035</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E2</string>
+		<key>Vertical</key>
+		<integer>745</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>440</integer>
+		<key>Latitude</key>
+		<real>1.2995369999999999</real>
+		<key>Longitude</key>
+		<real>103.771502</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E3</string>
+		<key>Vertical</key>
+		<integer>700</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>340</integer>
+		<key>Latitude</key>
+		<real>1.300341</real>
+		<key>Longitude</key>
+		<real>103.771293</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E3A</string>
+		<key>Vertical</key>
+		<integer>590</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>575</integer>
+		<key>Latitude</key>
+		<real>1.29847</real>
+		<key>Longitude</key>
+		<real>103.77216199999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E4</string>
+		<key>Vertical</key>
+		<integer>825</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>610</integer>
+		<key>Latitude</key>
+		<real>1.298657</real>
+		<key>Longitude</key>
+		<real>103.77247800000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E4A</string>
+		<key>Vertical</key>
+		<integer>780</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>615</integer>
+		<key>Latitude</key>
+		<real>1.298019</real>
+		<key>Longitude</key>
+		<real>103.772339</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>E5</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>230</integer>
+		<key>Latitude</key>
+		<real>1.3003199999999999</real>
+		<key>Longitude</key>
+		<real>103.77052500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>EA</string>
+		<key>Vertical</key>
+		<integer>640</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>390</integer>
+		<key>Latitude</key>
+		<real>1.3183609999999999</real>
+		<key>Longitude</key>
+		<real>103.81671299999999</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Eu Tong Sen, BTC</string>
+		<key>Vertical</key>
+		<integer>450</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>eh</string>
+		<key>Horizontal</key>
+		<integer>550</integer>
+		<key>Latitude</key>
+		<real>1.293755</real>
+		<key>Longitude</key>
+		<real>103.770214</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Eusoff Hall</string>
+		<key>Vertical</key>
+		<integer>1640</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>340</integer>
+		<key>Latitude</key>
+		<real>1.2984800000000001</real>
+		<key>Longitude</key>
+		<real>103.770633</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>EW1</string>
+		<key>Vertical</key>
+		<integer>905</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>565</integer>
+		<key>Latitude</key>
+		<real>1.299183</real>
+		<key>Longitude</key>
+		<real>103.77237599999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>EW2</string>
+		<key>Vertical</key>
+		<integer>700</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2050</integer>
+		<key>Latitude</key>
+		<real>1.2969299999999999</real>
+		<key>Longitude</key>
+		<real>103.781796</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Faculty of Dentistry</string>
+		<key>Vertical</key>
+		<integer>550</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>605</integer>
+		<key>Latitude</key>
+		<real>1.3184149999999999</real>
+		<key>Longitude</key>
+		<real>103.817351</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Federal, BTC</string>
+		<key>Vertical</key>
+		<integer>615</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>science canteen</string>
+		<key>Horizontal</key>
+		<integer>1885</integer>
+		<key>Latitude</key>
+		<real>1.2965439999999999</real>
+		<key>Longitude</key>
+		<real>103.78046000000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Frontier</string>
+		<key>Vertical</key>
+		<integer>680</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>965</integer>
+		<key>Latitude</key>
+		<real>1.2997080000000001</real>
+		<key>Longitude</key>
+		<real>103.77537</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Great Wall Restaurant</string>
+		<key>Vertical</key>
+		<integer>500</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1950</integer>
+		<key>Latitude</key>
+		<real>1.2927310000000001</real>
+		<key>Longitude</key>
+		<real>103.779425</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 3</string>
+		<key>Vertical</key>
+		<integer>1285</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1900</integer>
+		<key>Latitude</key>
+		<real>1.2929459999999999</real>
+		<key>Longitude</key>
+		<real>103.779194</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 4</string>
+		<key>Vertical</key>
+		<integer>1265</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>190</integer>
+		<key>Latitude</key>
+		<real>1.3175749999999999</real>
+		<key>Longitude</key>
+		<real>103.816737</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>House 5, BTC</string>
+		<key>Vertical</key>
+		<integer>710</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1105</integer>
+		<key>Latitude</key>
+		<real>1.2969999999999999</real>
+		<key>Longitude</key>
+		<real>103.775187</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 11</string>
+		<key>Vertical</key>
+		<integer>870</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1715</integer>
+		<key>Latitude</key>
+		<real>1.292897</real>
+		<key>Longitude</key>
+		<real>103.77797700000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 15</string>
+		<key>Vertical</key>
+		<integer>1335</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1910</integer>
+		<key>Latitude</key>
+		<real>1.29257</real>
+		<key>Longitude</key>
+		<real>103.77911400000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 17</string>
+		<key>Vertical</key>
+		<integer>1330</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1970</integer>
+		<key>Latitude</key>
+		<real>1.2923500000000001</real>
+		<key>Longitude</key>
+		<real>103.779409</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>House 18</string>
+		<key>Vertical</key>
+		<integer>1350</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1450</integer>
+		<key>Latitude</key>
+		<real>1.2923659999999999</real>
+		<key>Longitude</key>
+		<real>103.77557299999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>I3</string>
+		<key>Vertical</key>
+		<integer>1540</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1300</integer>
+		<key>Latitude</key>
+		<real>1.294635</real>
+		<key>Longitude</key>
+		<real>103.77555700000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Institute of Materials Research &amp; Engineering</string>
+		<key>Vertical</key>
+		<integer>1200</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1620</integer>
+		<key>Latitude</key>
+		<real>1.292214</real>
+		<key>Longitude</key>
+		<real>103.776456</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Institute of Systems Science</string>
+		<key>Vertical</key>
+		<integer>1510</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>krgh</string>
+		<key>Horizontal</key>
+		<integer>895</integer>
+		<key>Latitude</key>
+		<real>1.2936939999999999</real>
+		<key>Longitude</key>
+		<real>103.772508</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Kent Ridge Guild House</string>
+		<key>Vertical</key>
+		<integer>1510</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>krh</string>
+		<key>Horizontal</key>
+		<integer>1240</integer>
+		<key>Latitude</key>
+		<real>1.2919210000000001</real>
+		<key>Longitude</key>
+		<real>103.774393</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Kent Ridge Hall</string>
+		<key>Vertical</key>
+		<integer>1665</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>kfh</string>
+		<key>Horizontal</key>
+		<integer>655</integer>
+		<key>Latitude</key>
+		<real>1.300368</real>
+		<key>Longitude</key>
+		<real>103.77349700000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Kuok Foundation House</string>
+		<key>Vertical</key>
+		<integer>475</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt1</string>
+		<key>Horizontal</key>
+		<integer>360</integer>
+		<key>Latitude</key>
+		<real>1.299569</real>
+		<key>Longitude</key>
+		<real>103.771137</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Photo</key>
+		<string>LectureTheatre1.png</string>
+		<key>Title</key>
+		<string>Lecture Theatre 1</string>
+		<key>Vertical</key>
+		<integer>715</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt2</string>
+		<key>Horizontal</key>
+		<integer>390</integer>
+		<key>Latitude</key>
+		<real>1.2993870000000001</real>
+		<key>Longitude</key>
+		<real>103.77122300000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 2</string>
+		<key>Vertical</key>
+		<integer>740</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt3</string>
+		<key>Horizontal</key>
+		<integer>770</integer>
+		<key>Latitude</key>
+		<real>1.2976540000000001</real>
+		<key>Longitude</key>
+		<real>103.77316500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 3</string>
+		<key>Vertical</key>
+		<integer>900</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt4</string>
+		<key>Horizontal</key>
+		<integer>800</integer>
+		<key>Latitude</key>
+		<real>1.2976760000000001</real>
+		<key>Longitude</key>
+		<real>103.77340599999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 4</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt5</string>
+		<key>Horizontal</key>
+		<integer>420</integer>
+		<key>Latitude</key>
+		<real>1.298325</real>
+		<key>Longitude</key>
+		<real>103.771191</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 5</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt6</string>
+		<key>Horizontal</key>
+		<integer>500</integer>
+		<key>Latitude</key>
+		<real>1.298807</real>
+		<key>Longitude</key>
+		<real>103.77180799999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 6</string>
+		<key>Vertical</key>
+		<integer>795</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt7</string>
+		<key>Horizontal</key>
+		<integer>295</integer>
+		<key>Latitude</key>
+		<real>1.300154</real>
+		<key>Longitude</key>
+		<real>103.770917</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 7</string>
+		<key>Vertical</key>
+		<integer>640</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt7a</string>
+		<key>Horizontal</key>
+		<integer>255</integer>
+		<key>Latitude</key>
+		<real>1.300513</real>
+		<key>Longitude</key>
+		<real>103.770804</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 7A</string>
+		<key>Vertical</key>
+		<integer>595</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt8</string>
+		<key>Horizontal</key>
+		<integer>770</integer>
+		<key>Latitude</key>
+		<real>1.2941469999999999</real>
+		<key>Longitude</key>
+		<real>103.771877</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 8</string>
+		<key>Vertical</key>
+		<integer>1490</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt9</string>
+		<key>Horizontal</key>
+		<integer>770</integer>
+		<key>Latitude</key>
+		<real>1.295021</real>
+		<key>Longitude</key>
+		<real>103.772097</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 9</string>
+		<key>Vertical</key>
+		<integer>1350</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt10</string>
+		<key>Horizontal</key>
+		<integer>730</integer>
+		<key>Latitude</key>
+		<real>1.2949299999999999</real>
+		<key>Longitude</key>
+		<real>103.771872</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 10</string>
+		<key>Vertical</key>
+		<integer>1370</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt11</string>
+		<key>Horizontal</key>
+		<integer>610</integer>
+		<key>Latitude</key>
+		<real>1.295477</real>
+		<key>Longitude</key>
+		<real>103.771287</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 11</string>
+		<key>Vertical</key>
+		<integer>1325</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt12</string>
+		<key>Horizontal</key>
+		<integer>600</integer>
+		<key>Latitude</key>
+		<real>1.295021</real>
+		<key>Longitude</key>
+		<real>103.771019</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 12</string>
+		<key>Vertical</key>
+		<integer>1415</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt13</string>
+		<key>Horizontal</key>
+		<integer>565</integer>
+		<key>Latitude</key>
+		<real>1.295091</real>
+		<key>Longitude</key>
+		<real>103.770804</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 13</string>
+		<key>Vertical</key>
+		<integer>1415</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt14</string>
+		<key>Horizontal</key>
+		<integer>880</integer>
+		<key>Latitude</key>
+		<real>1.2957510000000001</real>
+		<key>Longitude</key>
+		<real>103.773234</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 14</string>
+		<key>Vertical</key>
+		<integer>1180</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt15</string>
+		<key>Horizontal</key>
+		<integer>905</integer>
+		<key>Latitude</key>
+		<real>1.2955680000000001</real>
+		<key>Longitude</key>
+		<real>103.77328799999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 15</string>
+		<key>Vertical</key>
+		<integer>1200</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt16</string>
+		<key>Horizontal</key>
+		<integer>1070</integer>
+		<key>Latitude</key>
+		<real>1.293949</real>
+		<key>Longitude</key>
+		<real>103.77373900000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 16</string>
+		<key>Vertical</key>
+		<integer>1415</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt17</string>
+		<key>Horizontal</key>
+		<integer>1110</integer>
+		<key>Latitude</key>
+		<real>1.2936380000000001</real>
+		<key>Longitude</key>
+		<real>103.77387299999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 17</string>
+		<key>Vertical</key>
+		<integer>1455</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt18</string>
+		<key>Horizontal</key>
+		<integer>1190</integer>
+		<key>Latitude</key>
+		<real>1.2935680000000001</real>
+		<key>Longitude</key>
+		<real>103.774382</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 18</string>
+		<key>Vertical</key>
+		<integer>1435</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt19</string>
+		<key>Horizontal</key>
+		<integer>1165</integer>
+		<key>Latitude</key>
+		<real>1.2937719999999999</real>
+		<key>Longitude</key>
+		<real>103.77429100000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 19</string>
+		<key>Vertical</key>
+		<integer>1405</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt20</string>
+		<key>Horizontal</key>
+		<integer>1655</integer>
+		<key>Latitude</key>
+		<real>1.295879</real>
+		<key>Longitude</key>
+		<real>103.778674</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 20</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt21</string>
+		<key>Horizontal</key>
+		<integer>1780</integer>
+		<key>Latitude</key>
+		<real>1.295407</real>
+		<key>Longitude</key>
+		<real>103.77934500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 21</string>
+		<key>Vertical</key>
+		<integer>915</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt22</string>
+		<key>Horizontal</key>
+		<integer>1800</integer>
+		<key>Latitude</key>
+		<real>1.295858</real>
+		<key>Longitude</key>
+		<real>103.779656</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 22</string>
+		<key>Vertical</key>
+		<integer>830</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt23</string>
+		<key>Horizontal</key>
+		<integer>1800</integer>
+		<key>Latitude</key>
+		<real>1.296389</real>
+		<key>Longitude</key>
+		<real>103.779849</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 23</string>
+		<key>Vertical</key>
+		<integer>735</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt24</string>
+		<key>Horizontal</key>
+		<integer>1920</integer>
+		<key>Latitude</key>
+		<real>1.295831</real>
+		<key>Longitude</key>
+		<real>103.780466</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 24</string>
+		<key>Vertical</key>
+		<integer>790</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt25</string>
+		<key>Horizontal</key>
+		<integer>1920</integer>
+		<key>Latitude</key>
+		<real>1.2961739999999999</real>
+		<key>Longitude</key>
+		<real>103.780514</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 25</string>
+		<key>Vertical</key>
+		<integer>735</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt26</string>
+		<key>Horizontal</key>
+		<integer>1970</integer>
+		<key>Latitude</key>
+		<real>1.296475</real>
+		<key>Longitude</key>
+		<real>103.780975</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 26</string>
+		<key>Vertical</key>
+		<integer>660</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt27</string>
+		<key>Horizontal</key>
+		<integer>1900</integer>
+		<key>Latitude</key>
+		<real>1.297048</real>
+		<key>Longitude</key>
+		<real>103.780745</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 27</string>
+		<key>Vertical</key>
+		<integer>590</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt28</string>
+		<key>Horizontal</key>
+		<integer>1940</integer>
+		<key>Latitude</key>
+		<real>1.2972410000000001</real>
+		<key>Longitude</key>
+		<real>103.78106699999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 28</string>
+		<key>Vertical</key>
+		<integer>550</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt29</string>
+		<key>Horizontal</key>
+		<integer>1960</integer>
+		<key>Latitude</key>
+		<real>1.29714</real>
+		<key>Longitude</key>
+		<real>103.78118499999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 29</string>
+		<key>Vertical</key>
+		<integer>550</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt31</string>
+		<key>Horizontal</key>
+		<integer>1845</integer>
+		<key>Latitude</key>
+		<real>1.2968930000000001</real>
+		<key>Longitude</key>
+		<real>103.78026699999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 31</string>
+		<key>Vertical</key>
+		<integer>635</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt32</string>
+		<key>Horizontal</key>
+		<integer>1560</integer>
+		<key>Latitude</key>
+		<real>1.2961739999999999</real>
+		<key>Longitude</key>
+		<real>103.778159</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 32</string>
+		<key>Vertical</key>
+		<integer>860</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt33</string>
+		<key>Horizontal</key>
+		<integer>1875</integer>
+		<key>Latitude</key>
+		<real>1.2977829999999999</real>
+		<key>Longitude</key>
+		<real>103.78082499999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 33</string>
+		<key>Vertical</key>
+		<integer>475</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>lt34</string>
+		<key>Horizontal</key>
+		<integer>1845</integer>
+		<key>Latitude</key>
+		<real>1.2977780000000001</real>
+		<key>Longitude</key>
+		<real>103.780648</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Lecture Theatre 34</string>
+		<key>Vertical</key>
+		<integer>485</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>950</integer>
+		<key>Latitude</key>
+		<real>1.3196369999999999</real>
+		<key>Longitude</key>
+		<real>103.817362</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Li Ka Shing, BTC</string>
+		<key>Vertical</key>
+		<integer>220</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>830</integer>
+		<key>Latitude</key>
+		<real>1.319048</real>
+		<key>Longitude</key>
+		<real>103.81748</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Manasseh Meyer, BTC</string>
+		<key>Vertical</key>
+		<integer>450</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1965</integer>
+		<key>Latitude</key>
+		<real>1.2952140000000001</real>
+		<key>Longitude</key>
+		<real>103.780552</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD1</string>
+		<key>Vertical</key>
+		<integer>865</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>430</integer>
+		<key>Latitude</key>
+		<real>1.298046</real>
+		<key>Longitude</key>
+		<real>103.771078</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>McDonald's</string>
+		<key>Vertical</key>
+		<integer>955</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2070</integer>
+		<key>Latitude</key>
+		<real>1.2949809999999999</real>
+		<key>Longitude</key>
+		<real>103.78110700000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD2</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2030</integer>
+		<key>Latitude</key>
+		<real>1.2953589999999999</real>
+		<key>Longitude</key>
+		<real>103.780981</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD3</string>
+		<key>Vertical</key>
+		<integer>835</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1990</integer>
+		<key>Latitude</key>
+		<real>1.2957719999999999</real>
+		<key>Longitude</key>
+		<real>103.78082499999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD4</string>
+		<key>Vertical</key>
+		<integer>775</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1980</integer>
+		<key>Latitude</key>
+		<real>1.295633</real>
+		<key>Longitude</key>
+		<real>103.78072899999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD4A</string>
+		<key>Vertical</key>
+		<integer>800</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2075</integer>
+		<key>Latitude</key>
+		<real>1.2956650000000001</real>
+		<key>Longitude</key>
+		<real>103.781313</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD5</string>
+		<key>Vertical</key>
+		<integer>770</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1995</integer>
+		<key>Latitude</key>
+		<real>1.2961309999999999</real>
+		<key>Longitude</key>
+		<real>103.780959</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD7</string>
+		<key>Vertical</key>
+		<integer>710</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1990</integer>
+		<key>Latitude</key>
+		<real>1.296737</real>
+		<key>Longitude</key>
+		<real>103.781211</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD9</string>
+		<key>Vertical</key>
+		<integer>610</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2075</integer>
+		<key>Latitude</key>
+		<real>1.2965500000000001</real>
+		<key>Longitude</key>
+		<real>103.781683</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD10</string>
+		<key>Vertical</key>
+		<integer>610</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2100</integer>
+		<key>Latitude</key>
+		<real>1.296019</real>
+		<key>Longitude</key>
+		<real>103.78164099999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>MD11</string>
+		<key>Vertical</key>
+		<integer>695</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1840</integer>
+		<key>Latitude</key>
+		<real>1.296635</real>
+		<key>Longitude</key>
+		<real>103.780219</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Megabites Cafe</string>
+		<key>Vertical</key>
+		<integer>680</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>940</integer>
+		<key>Latitude</key>
+		<real>1.2986040000000001</real>
+		<key>Longitude</key>
+		<real>103.774672</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Munchie Monkey</string>
+		<key>Vertical</key>
+		<integer>680</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>445</integer>
+		<key>Latitude</key>
+		<real>1.3014730000000001</real>
+		<key>Longitude</key>
+		<real>103.77249999999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Museum</string>
+		<key>Vertical</key>
+		<integer>365</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>2320</integer>
+		<key>Latitude</key>
+		<real>1.294646</real>
+		<key>Longitude</key>
+		<real>103.782939</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>NUH</string>
+		<key>Vertical</key>
+		<integer>890</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1050</integer>
+		<key>Latitude</key>
+		<real>1.319391</real>
+		<key>Longitude</key>
+		<real>103.817888</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Oei Tiong Ham, BTC</string>
+		<key>Vertical</key>
+		<integer>450</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>605</integer>
+		<key>Latitude</key>
+		<real>1.301628</real>
+		<key>Longitude</key>
+		<real>103.773594</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Office of Estate &amp; Development</string>
+		<key>Vertical</key>
+		<integer>290</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1005</integer>
+		<key>Latitude</key>
+		<real>1.298459</real>
+		<key>Longitude</key>
+		<real>103.775048</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Post Office</string>
+		<key>Vertical</key>
+		<integer>695</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>pgpr</string>
+		<key>Horizontal</key>
+		<integer>2280</integer>
+		<key>Latitude</key>
+		<real>1.290999</real>
+		<key>Longitude</key>
+		<real>103.781024</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Prince George's Park Residences</string>
+		<key>Vertical</key>
+		<integer>1475</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>rh</string>
+		<key>Horizontal</key>
+		<integer>735</integer>
+		<key>Latitude</key>
+		<real>1.2997780000000001</real>
+		<key>Longitude</key>
+		<real>103.773841</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Raffles Hall</string>
+		<key>Vertical</key>
+		<integer>545</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>rvr</string>
+		<key>Horizontal</key>
+		<integer>1125</integer>
+		<key>Latitude</key>
+		<real>1.298689</real>
+		<key>Longitude</key>
+		<real>103.77603999999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Ridge View Residences</string>
+		<key>Vertical</key>
+		<integer>605</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>rvtb</string>
+		<key>Horizontal</key>
+		<integer>1260</integer>
+		<key>Latitude</key>
+		<real>1.297992</real>
+		<key>Longitude</key>
+		<real>103.776641</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Ridge View Tower Block</string>
+		<key>Vertical</key>
+		<integer>670</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1515</integer>
+		<key>Latitude</key>
+		<real>1.295831</real>
+		<key>Longitude</key>
+		<real>103.77775099999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S1</string>
+		<key>Vertical</key>
+		<integer>940</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1570</integer>
+		<key>Latitude</key>
+		<real>1.2955570000000001</real>
+		<key>Longitude</key>
+		<real>103.77798199999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S2</string>
+		<key>Vertical</key>
+		<integer>965</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>890</integer>
+		<key>Latitude</key>
+		<real>1.2976620000000001</real>
+		<key>Longitude</key>
+		<real>103.773943</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S2S</string>
+		<key>Vertical</key>
+		<integer>840</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1645</integer>
+		<key>Latitude</key>
+		<real>1.2956000000000001</real>
+		<key>Longitude</key>
+		<real>103.778486</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S3</string>
+		<key>Vertical</key>
+		<integer>930</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1715</integer>
+		<key>Latitude</key>
+		<real>1.2956749999999999</real>
+		<key>Longitude</key>
+		<real>103.778991</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S4</string>
+		<key>Vertical</key>
+		<integer>840</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1720</integer>
+		<key>Latitude</key>
+		<real>1.295863</real>
+		<key>Longitude</key>
+		<real>103.779082</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S4A</string>
+		<key>Vertical</key>
+		<integer>860</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1810</integer>
+		<key>Latitude</key>
+		<real>1.295531</real>
+		<key>Longitude</key>
+		<real>103.779607</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S5</string>
+		<key>Vertical</key>
+		<integer>885</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1935</integer>
+		<key>Latitude</key>
+		<real>1.2950269999999999</real>
+		<key>Longitude</key>
+		<real>103.780192</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S6</string>
+		<key>Vertical</key>
+		<integer>925</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1640</integer>
+		<key>Latitude</key>
+		<real>1.296362</real>
+		<key>Longitude</key>
+		<real>103.778792</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S7</string>
+		<key>Vertical</key>
+		<integer>800</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1730</integer>
+		<key>Latitude</key>
+		<real>1.2961259999999999</real>
+		<key>Longitude</key>
+		<real>103.779253</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S8</string>
+		<key>Vertical</key>
+		<integer>805</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1820</integer>
+		<key>Latitude</key>
+		<real>1.296062</real>
+		<key>Longitude</key>
+		<real>103.779849</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S9</string>
+		<key>Vertical</key>
+		<integer>785</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1820</integer>
+		<key>Latitude</key>
+		<real>1.295911</real>
+		<key>Longitude</key>
+		<real>103.77987</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S9A</string>
+		<key>Vertical</key>
+		<integer>810</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1765</integer>
+		<key>Latitude</key>
+		<real>1.296351</real>
+		<key>Longitude</key>
+		<real>103.77958599999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S10</string>
+		<key>Vertical</key>
+		<integer>755</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1605</integer>
+		<key>Latitude</key>
+		<real>1.2966839999999999</real>
+		<key>Longitude</key>
+		<real>103.77865300000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S11</string>
+		<key>Vertical</key>
+		<integer>750</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1570</integer>
+		<key>Latitude</key>
+		<real>1.2970269999999999</real>
+		<key>Longitude</key>
+		<real>103.77853500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S12</string>
+		<key>Vertical</key>
+		<integer>710</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1665</integer>
+		<key>Latitude</key>
+		<real>1.296818</real>
+		<key>Longitude</key>
+		<real>103.779087</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S13</string>
+		<key>Vertical</key>
+		<integer>715</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1740</integer>
+		<key>Latitude</key>
+		<real>1.2968770000000001</real>
+		<key>Longitude</key>
+		<real>103.779597</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S14</string>
+		<key>Vertical</key>
+		<integer>675</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1800</integer>
+		<key>Latitude</key>
+		<real>1.297188</real>
+		<key>Longitude</key>
+		<real>103.78015499999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S15</string>
+		<key>Vertical</key>
+		<integer>605</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1830</integer>
+		<key>Latitude</key>
+		<real>1.296807</real>
+		<key>Longitude</key>
+		<real>103.780085</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S16</string>
+		<key>Vertical</key>
+		<integer>660</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1820</integer>
+		<key>Latitude</key>
+		<real>1.2977460000000001</real>
+		<key>Longitude</key>
+		<real>103.780385</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>S17</string>
+		<key>Vertical</key>
+		<integer>505</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>395</integer>
+		<key>Latitude</key>
+		<real>1.2974669999999999</real>
+		<key>Longitude</key>
+		<real>103.770568</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>SDE1</string>
+		<key>Vertical</key>
+		<integer>1065</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>465</integer>
+		<key>Latitude</key>
+		<real>1.2973380000000001</real>
+		<key>Longitude</key>
+		<real>103.77100299999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>SDE2</string>
+		<key>Vertical</key>
+		<integer>1060</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>310</integer>
+		<key>Latitude</key>
+		<real>1.2981959999999999</real>
+		<key>Longitude</key>
+		<real>103.770332</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>SDE3</string>
+		<key>Vertical</key>
+		<integer>970</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1060</integer>
+		<key>Latitude</key>
+		<real>1.2932459999999999</real>
+		<key>Longitude</key>
+		<real>103.773465</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Shaw Foundation Alumni House</string>
+		<key>Vertical</key>
+		<integer>1530</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>sh</string>
+		<key>Horizontal</key>
+		<integer>1440</integer>
+		<key>Latitude</key>
+		<real>1.291471</real>
+		<key>Longitude</key>
+		<real>103.775616</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Sheares Hall</string>
+		<key>Vertical</key>
+		<integer>1660</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>ssls</string>
+		<key>Horizontal</key>
+		<integer>1135</integer>
+		<key>Latitude</key>
+		<real>1.2956510000000001</real>
+		<key>Longitude</key>
+		<real>103.774935</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Singapore Synchrotron Light Source</string>
+		<key>Vertical</key>
+		<integer>1075</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>960</integer>
+		<key>Latitude</key>
+		<real>1.2997620000000001</real>
+		<key>Longitude</key>
+		<real>103.77533699999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Sports and Recreation Centre</string>
+		<key>Vertical</key>
+		<integer>505</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1045</integer>
+		<key>Latitude</key>
+		<real>1.2992710000000001</real>
+		<key>Longitude</key>
+		<real>103.77568100000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Staff Club</string>
+		<key>Vertical</key>
+		<integer>560</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>940</integer>
+		<key>Latitude</key>
+		<real>1.2987059999999999</real>
+		<key>Longitude</key>
+		<real>103.77479599999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Subway</string>
+		<key>Vertical</key>
+		<integer>645</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>1050</integer>
+		<key>Latitude</key>
+		<real>1.2991079999999999</real>
+		<key>Longitude</key>
+		<real>103.77567000000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Sun Asian Bistro</string>
+		<key>Vertical</key>
+		<integer>560</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>490</integer>
+		<key>Latitude</key>
+		<real>1.299682</real>
+		<key>Longitude</key>
+		<real>103.77203299999999</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>T-Lab</string>
+		<key>Vertical</key>
+		<integer>650</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>engineering canteen</string>
+		<key>Horizontal</key>
+		<integer>490</integer>
+		<key>Latitude</key>
+		<real>1.297939</real>
+		<key>Longitude</key>
+		<real>103.77143700000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Techno Edge</string>
+		<key>Vertical</key>
+		<integer>945</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>th</string>
+		<key>Horizontal</key>
+		<integer>765</integer>
+		<key>Latitude</key>
+		<real>1.2928729999999999</real>
+		<key>Longitude</key>
+		<real>103.771236</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Temasek Hall</string>
+		<key>Vertical</key>
+		<integer>1710</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>arts canteen</string>
+		<key>Horizontal</key>
+		<integer>810</integer>
+		<key>Latitude</key>
+		<real>1.2947150000000001</real>
+		<key>Longitude</key>
+		<real>103.772419</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>The Deck</string>
+		<key>Vertical</key>
+		<integer>1370</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>830</integer>
+		<key>Latitude</key>
+		<real>1.2964640000000001</real>
+		<key>Longitude</key>
+		<real>103.773149</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>The Grinning Gecko</string>
+		<key>Vertical</key>
+		<integer>1065</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>305</integer>
+		<key>Latitude</key>
+		<real>1.2997300000000001</real>
+		<key>Longitude</key>
+		<real>103.770847</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>The Olive Cove</string>
+		<key>Vertical</key>
+		<integer>710</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>250</integer>
+		<key>Latitude</key>
+		<real>1.3002769999999999</real>
+		<key>Longitude</key>
+		<real>103.77064300000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>The Pavilion Cafe</string>
+		<key>Vertical</key>
+		<integer>630</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>business canteen</string>
+		<key>Horizontal</key>
+		<integer>1135</integer>
+		<key>Latitude</key>
+		<real>1.29426</real>
+		<key>Longitude</key>
+		<real>103.774281</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>The Terrace</string>
+		<key>Vertical</key>
+		<integer>1335</integer>
+	</dict>
+	<dict>
+		<key>Horizontal</key>
+		<integer>815</integer>
+		<key>Latitude</key>
+		<real>1.319485</real>
+		<key>Longitude</key>
+		<real>103.817075</real>
+		<key>Map</key>
+		<string>Bukit Timah</string>
+		<key>Title</key>
+		<string>Tower Block, BTC</string>
+		<key>Vertical</key>
+		<integer>220</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>ucc</string>
+		<key>Horizontal</key>
+		<integer>340</integer>
+		<key>Latitude</key>
+		<real>1.301671</real>
+		<key>Longitude</key>
+		<real>103.77177500000001</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>University Cultural Centre</string>
+		<key>Vertical</key>
+		<integer>385</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>uh</string>
+		<key>Horizontal</key>
+		<integer>1440</integer>
+		<key>Latitude</key>
+		<real>1.2972360000000001</real>
+		<key>Longitude</key>
+		<real>103.777692</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Photo</key>
+		<string>UniversityHall.png</string>
+		<key>Title</key>
+		<string>University Hall</string>
+		<key>Vertical</key>
+		<integer>715</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>uhc</string>
+		<key>Horizontal</key>
+		<integer>1145</integer>
+		<key>Latitude</key>
+		<real>1.299113</real>
+		<key>Longitude</key>
+		<real>103.776303</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>University Health Centre</string>
+		<key>Vertical</key>
+		<integer>545</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>vl</string>
+		<key>Horizontal</key>
+		<integer>725</integer>
+		<key>Latitude</key>
+		<real>1.2985819999999999</real>
+		<key>Longitude</key>
+		<real>103.773256</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Visitors' Lodge</string>
+		<key>Vertical</key>
+		<integer>770</integer>
+	</dict>
+	<dict>
+		<key>Alias</key>
+		<string>yih</string>
+		<key>Horizontal</key>
+		<integer>940</integer>
+		<key>Latitude</key>
+		<real>1.298657</real>
+		<key>Longitude</key>
+		<real>103.774683</real>
+		<key>Map</key>
+		<string>Kent Ridge</string>
+		<key>Title</key>
+		<string>Yusof Ishak House</string>
+		<key>Vertical</key>
+		<integer>690</integer>
+	</dict>
+</array>
+</plist>

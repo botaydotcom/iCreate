@@ -2,6 +2,9 @@ package com.android.apptime.database;
 
 
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -65,36 +68,69 @@ public class ItemDBAdapter {
   //Insert a new task into the Item table
   public long insertTask(TaskItem _task) {
     // Create a new row of values to insert.
-    ContentValues newTaskValues = new ContentValues();
-    // Assign values for each row.
-    newTaskValues.put(ITEMDB_KEY_TASK, _task.GetId());
-    newTaskValues.put(ITEMDB_KEY_EVENT, 0);
-    
-    TaskDBAdapter taskDBAdapter = new TaskDBAdapter(this.context);
-    taskDBAdapter.open();
-    taskDBAdapter.createTask(_task);
-    taskDBAdapter.close();
-    
-    // Insert the row.
-    return mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+	  	TaskDBAdapter taskDBAdapter = new TaskDBAdapter(this.context);
+	    taskDBAdapter.open();
+	    long taskid = taskDBAdapter.createTask(_task);
+	    taskDBAdapter.close();
+	    
+	    String t0 = "INSERT INTO " + DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_TASK + ", " + ITEMDB_KEY_EVENT + ")" + " VALUES ('" +
+	    taskid + "," +
+	    "0" + "','" + "');";
+	    //1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+	    mDb.execSQL(t0);
+	    String query = "SELECT last_insert_rowid();";
+	    Cursor cursor = mDb.rawQuery(query, null);
+	    int id = 0;     
+	    if (cursor.moveToFirst())
+	    {
+	        do
+	        {           
+	            id = cursor.getInt(0);                  
+	        } while(cursor.moveToNext());           
+	    }
+
+	    
+	    return taskid;
   }
 
   //Insert a new event into the Item table
-  public long insertEvent(EventItem _event) {
+  public long insertEvent(Item _event) {
     // Create a new row of values to insert.
     ContentValues newTaskValues = new ContentValues();
     // Assign values for each row.
-    newTaskValues.put(ITEMDB_KEY_EVENT, _event.GetId());
-    newTaskValues.put(ITEMDB_KEY_TASK, 0);
+    
+    newTaskValues.put(ITEMDB_KEY_EVENT, 1);
+    newTaskValues.put(ITEMDB_KEY_TASK, 1);
     // Insert the row.
     
+    EventDBAdapter eventDBAdapter = new EventDBAdapter(this.context);
+    eventDBAdapter.open();
+    long eventid = eventDBAdapter.createEvent(_event);
+    eventDBAdapter.close();
     
-    return mDb.insert(DATABASE_TABLE_ITEM, null, newTaskValues);
+    String t0 = "INSERT INTO " + DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_TASK + ", " + ITEMDB_KEY_EVENT + ")" + " VALUES ('" +
+    "0" + "','" +    
+    eventid + "');";
+    //1', '2', '3', '4', '5', '6' , '7', '8', '9');";
+    mDb.execSQL(t0);
+    String query = "SELECT last_insert_rowid();";
+    Cursor cursor = mDb.rawQuery(query, null);
+    int id = 0;     
+    if (cursor.moveToFirst())
+    {
+        do
+        {           
+            id = cursor.getInt(0);                  
+        } while(cursor.moveToNext());           
+    }
+
+    
+    return eventid;
   }
 
-  public int createItem(Item _item)  {
+  public long createItem(Item _item)  {
 	  if (_item.GetItemType()=="Event")
-		  insertEvent((EventItem) _item);
+		  return insertEvent( _item);
 	  else
 		  insertTask((TaskItem) _item);
 	  
@@ -109,23 +145,68 @@ public class ItemDBAdapter {
   }
 
   // Update a task
-  public boolean updateTask(long _rowIndex, String _task) {
-    
+  public boolean updateTask(long _rowIndex, TaskItem _task) {
+    TaskDBAdapter taskDBAdapter = new TaskDBAdapter(this.context);
+    taskDBAdapter.open();
+    taskDBAdapter.updateTask(_task);
+    taskDBAdapter.close();
 	return true;  
   }
   
   // Update an event
-  public boolean updateEvent(long _rowIndex, String _event) {
+  public boolean updateEvent(long _rowIndex, EventItem _event) {
+	  EventDBAdapter eventDBAdapter = new EventDBAdapter(this.context);
+	  eventDBAdapter.open();
+	  eventDBAdapter.updateEvent(_event);
+	  eventDBAdapter.close();	  
+	  
+	  Cursor myItem = this.getItemById(_rowIndex);
+	  
+	  ContentValues newEventValues = new ContentValues();
+	  //newTaskValues.put(ITEMDB_KEY_ID, myItem.getInt(0));
+	  newEventValues.put(ITEMDB_KEY_TASK, 0);
+	  newEventValues.put(ITEMDB_KEY_EVENT, _event.GetId());
+	  return (mDb.update(DATABASE_TABLE_ITEM, newEventValues, ITEMDB_KEY_ID + "=" + myItem.getInt(0), null) >0);
+	  //return mDb.update(DATABASE_TABLE_EVENT, newEventValues, EVENTDB_KEY_ID + "=" + _event.GetId(), null);
+  }
+  
+  public boolean updateItem(long _rowIndex, Item _item) {
+	  
+	  Cursor myItem = this.getItemById(_rowIndex);
+	  long _taskIndex = (long) myItem.getLong(1);
+	  long _eventIndex = (long) myItem.getLong(2);
+	  if (_item.GetItemType()=="Event")
+	  {
+		  return updateEvent(_eventIndex, (EventItem) _item);	  
+	  }
+	  else
+		  return updateTask(_taskIndex, (TaskItem) _item);
+	  
+	 
+  }
+  
+  public boolean updateItem(Item _item)
+  {
+	  if (_item.GetItemType()=="Task")
+	  {
+		  Cursor myCursor = getItemByTaskId(Long.valueOf(_item.GetId()));
+		  updateItem(myCursor.getLong(0), _item);
+	  }
+	  else
+	  {
+		  Cursor myCursor = getItemByEventId(Long.valueOf(_item.GetId()));
+		  updateItem(myCursor.getLong(0), _item);
+	  }
+	  
 	  
 	  return true;
   }
-  
   
   public Cursor getAllItems() {
 	  return this.mDb.query(DATABASE_TABLE_ITEM, new String[] {ITEMDB_KEY_ID, ITEMDB_KEY_TASK, ITEMDB_KEY_EVENT}, null, null, null, null, null);
   }
   
-  
+  // get item by item id
   public Cursor getItemById(long rowId) throws SQLException {
 
       Cursor mCursor =
@@ -137,6 +218,39 @@ public class ItemDBAdapter {
       return mCursor;
   }
  
+ public Cursor getItemByTaskId(long taskId) throws SQLException {
+	 
+	 Cursor mCursor  =
+		 this.mDb.query(true, DATABASE_TABLE_ITEM,new String[] { ITEMDB_KEY_ID, ITEMDB_KEY_TASK, ITEMDB_KEY_EVENT}, ITEMDB_KEY_TASK + "=" + taskId, null, null, null, null, null);
+	 if (mCursor != null) {
+         mCursor.moveToFirst();
+     }
+     return mCursor;
+ }
   
+ public Cursor getItemByEventId(long eventId) throws SQLException {
+	 Cursor mCursor  =
+		 this.mDb.query(true, DATABASE_TABLE_ITEM,new String[] { ITEMDB_KEY_ID, ITEMDB_KEY_TASK, ITEMDB_KEY_EVENT}, ITEMDB_KEY_EVENT + "=" + eventId, null, null, null, null, null);
+	 if (mCursor != null) {
+         mCursor.moveToFirst();
+     }
+     return mCursor;
+ }
+ 
+ 
+ // return an array of 2 arrays, first array includes events, 2nd includes items 
+ public ArrayList<Cursor> getItemByDate(Date date) {
+	 
+	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
+	 EventDBAdapter edb = new EventDBAdapter(this.context);
+	 edb.open();
+	 arrlist.add(edb.getEventByDate(date));
+	 edb.close();
+	 TaskDBAdapter tdb = new TaskDBAdapter(this.context);
+	 tdb.open();
+	 arrlist.add(tdb.getTaskByDate(date));
+	 tdb.close();
+	 return arrlist;
+ }
  
 }

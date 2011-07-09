@@ -1,29 +1,37 @@
 package com.android.apptime;
 
-import java.util.*;  // to use Time type
-import android.graphics.Color; // to use Color type
-public abstract class Item {
-	public String _id;
-	public String _title;
-	public String _description;
-	public String _location;
-	public String _priority; // LOW-MED-HIGH?
-	public String _itemType; // TaskItem or EventItem?
-	public String _category;
-	public List<String> _alertType;
-	public String _startTime;
-	public String _endTime;
-	public String _alertTime; // alert time means sth like : alert 15 min before/ 1hr before / 2hr before
-	public String _deadline;	
-	public String _repeat;
-	public String _completed;
-	public Integer _color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import android.content.Context;
+
+import com.android.apptime.database.ItemDBAdapter;
+
+public class Item {
+	private String _id;
+	private String _title;
+	private String _description;
+	private String _location;
+	private String _priority; // LOW-MED-HIGH?
+	private String _itemType; // TaskItem or EventItem?
+	private String _category;
+	private List<String> _alertType;
+	private String _startTime;
+	private String _endTime;
+	private String _alertTime; // alert time means sth like : alert 15 min before/ 1hr before / 2hr before
+	private String _deadline;	
+	private String _repeat;
+	private String _completed;
+	private Integer _color;
 	
 	// Constructor
-	Item (String id, String title, String description, String location, String category, List<String> alerttype, String priority, 
-	String itemtype, String starttime, String endtime, String deadline, String alerttime, String repeat, String completed, Integer color)
+	public Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
+	String itemtype, Date starttime, Date endtime, Date deadline, Date alerttime, String repeat, String completed, Integer color)
 	{
-		_id = id;
+		
 		_title = title;
 		_description = description;
 		_location = location;
@@ -31,15 +39,60 @@ public abstract class Item {
 		_alertType = alerttype;
 		_priority = priority;
 		_itemType = itemtype;
-		_startTime = starttime;
-		_endTime = endtime;
-		_deadline = deadline;
-		_alertTime = alerttime;
+		
+		if (starttime!=null)
+		{
+			_startTime = String.valueOf(starttime.getTime());
+		}
+		if (endtime!=null)
+		{
+			_endTime = String.valueOf(endtime.getTime());
+		}
+		if (deadline!=null)
+		{
+			_deadline = String.valueOf(deadline.getTime());
+		}
+		if (alerttime!=null)
+		{
+			_alertTime = String.valueOf(alerttime.getTime());
+		}
+		
 		_repeat = repeat;
 		_completed = completed;
 		_color = color;		
 	}
-
+	
+	
+	
+	// title, type, start/endtime, location
+	public Item(String title, String type, Date starttime, Date endtime, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_startTime = String.valueOf(starttime.getTime());
+		_endTime = String.valueOf(endtime.getTime());
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 1;
+		
+	}
+	
+	public Item(String title, String type, Date deadline, String location)
+	{
+		_title = title;
+		_itemType = type;
+		_deadline = String.valueOf(deadline.getTime());
+		_priority = "NORMAL";
+		_alertTime = "10";
+		_repeat = "FALSE";
+		_completed = "FALSE";
+		_color = 10;
+		
+	}
+	
+	
 	
 	// Getters
 	public String  GetId()
@@ -70,21 +123,25 @@ public abstract class Item {
 	{
 		return _priority;
 	}
-	public String    GetStartTime()
+	public Date   GetStartTime()
 	{
-		return _startTime;
+		Date startdate = new Date(Long.parseLong(_startTime));	
+		return startdate;
 	}
-	public String   GetEndTime()
+	public Date  GetEndTime()
 	{
-		return _endTime;
+		Date enddate = new Date(Long.parseLong(_endTime));
+		return enddate;
 	}
-	public String   GetDeadline()
+	public Date   GetDeadline()
 	{
-		return _deadline;
+		Date deadlinedate = new Date(Long.parseLong(_deadline));
+		return deadlinedate;
 	}
-	public String GetAlertTime()
+	public Date GetAlertTime()
 	{
-		return _alertTime;
+		Date alertdate = new Date(Long.parseLong(_alertTime));
+		return alertdate;
 	}
 	public String GetRepeat()
 	{
@@ -132,21 +189,21 @@ public abstract class Item {
 	{
 		_priority = newPriority;
 	}
-	public void  SetStartTime(String newStartTime)
+	public void  SetStartTime(Date newStartTime)
 	{
-		_startTime = newStartTime;
+		_startTime = String.valueOf(newStartTime.getTime());
 	}
-	public void  SetEndTime(String newEndTime)
+	public void  SetEndTime(Date newEndTime)
 	{
-		_endTime = newEndTime;
+		_endTime = String.valueOf(newEndTime.getTime());
 	}
-	public void  SetDeadline(String newDeadline)
+	public void  SetDeadline(Date newDeadline)
 	{
-		_deadline = newDeadline;
+		_deadline = String.valueOf(newDeadline.getTime());
 	}
-	public void  SetAlertTime(String newAlertTime)
+	public void  SetAlertTime(Date newAlertTime)
 	{
-		_alertTime = newAlertTime;
+		_alertTime = String.valueOf(newAlertTime.getTime());
 	}
 	public void  SetRepeat(String newRepeat)
 	{
@@ -164,6 +221,10 @@ public abstract class Item {
 	{
 		_itemType = itemType;
 	}
+	
+	
+	
+	
 }
 
 

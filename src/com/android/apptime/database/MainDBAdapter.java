@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainDBAdapter {
-	public static final String DATABASE_NAME = "appTimeDB,.db"; //$NON-NLS-1$
+	public static final String DATABASE_NAME = "appTimeDBB1.db"; //$NON-NLS-1$
 
     public static final int DATABASE_VERSION = 1;
     
     // TASK TABLE
     private static final String DATABASE_TABLE_TASK = "Tasks_Table";
     private static final String TASKDB_KEY_ID = "taskdb_task_id";
+    private static final String TASKDB_TITLE = "taskdb_task_title";
     private static final String TASKDB_DESCRIPTION = "taskdb_description";
     private static final String TASKDB_LOCATION = "taskdb_location";
     private static final String TASKDB_PRIORITY = "taskdb_priority";
@@ -21,10 +22,12 @@ public class MainDBAdapter {
     private static final String TASKDB_COMPLETED = "taskdb_completed";
     private static final String TASKDB_COLOR = "taskdb_color";
     private static final String TASKDB_DEADLINE = "taskdb_deadline";
-    
+    private static final String TASKDB_ALERTTIME = "taskdb_alert_time";
+    private static final String TASKDB_TYPE = "taskdb_type";
     // EVENT TABLE
     private static final String DATABASE_TABLE_EVENT = "Events_Table";
     private static final String EVENTDB_KEY_ID = "eventdb_event_id";
+    private static final String EVENTDB_TITLE = "eventdb_event_title";
     private static final String EVENTDB_DESCRIPTION = "eventdb_description";
     private static final String EVENTDB_LOCATION = "eventdb_location";
     private static final String EVENTDB_PRIORITY = "eventdb_priority";
@@ -34,10 +37,8 @@ public class MainDBAdapter {
     private static final String EVENTDB_COLOR = "eventdb_color";
     private static final String EVENTDB_STARTTIME = "eventdb_start_time";
     private static final String EVENTDB_ENDTIME = "eventdb_end_time";
-    
-        
-    
-    
+    private static final String EVENTDB_ALERTTIME = "eventdb_alert_time";
+    private static final String EVENTDB_TYPE = "eventdb_type"; 
     // ITEM TABLE 
     private static final String DATABASE_TABLE_ITEM = "Items_Table";
     private static final String ITEMDB_KEY_ID = "itemdb_itemid";
@@ -54,52 +55,84 @@ public class MainDBAdapter {
     private static final String ALERTTYPEDB_KEY_ID = "alerttypedb_alerttype_id";
     private static final String ALERTTYPEDB_TITLE = "alerttypedb_title";
     
+ // MAP TABLE
+    private static final String DATABASE_TABLE_MAP = "Map_Table";
+    private static final String MAPDB_KEY_ID = "mapdb_loc_id";
+    private static final String MAPDB_TITLE = "map_title";
+    private static final String MAPDB_HORIZONTAL = "mapdb_horizontal";
+    private static final String MAPDB_VERTICAL = "map_vertical";
+    private static final String MAPDB_LONGITUDE = "mapdb_longitude";
+    private static final String MAPDB_LATITUDE = "map_latitude";
+    private static final String MAPDB_LINK = "map_link";
     
-      
+    /*
+     * Map SQL commands  
+     */
+    
+    // SQL COMMAND TO CREATE MAP TABLE
+    private static final String DATABASE_CREATE_MAP = "create table " + DATABASE_TABLE_MAP
+    + " (" + MAPDB_KEY_ID + " integer primary key autoincrement, " + 
+    MAPDB_TITLE + " text, " +
+    MAPDB_HORIZONTAL + " text not null " +
+    MAPDB_VERTICAL + " text not null " +
+    MAPDB_LONGITUDE + " text not null " +
+    MAPDB_LATITUDE + " text not null, " +
+    MAPDB_LINK + " text" + ");";
+    
+    
     
     
     
     // SQL COMMAND TO CREATE TASK TABLE
     private static final String DATABASE_CREATE_TASK = "create table " + DATABASE_TABLE_TASK
     + " (" + TASKDB_KEY_ID + " integer primary key autoincrement, " + 
-    TASKDB_DESCRIPTION + "text, " +
-    TASKDB_LOCATION + "text, " +
-    TASKDB_PRIORITY + "text, " +
-    TASKDB_REPEAT + "text not null, " +
-    TASKDB_CATEGORY + "text, " +
-    TASKDB_COMPLETED + "text not null, " +
-    TASKDB_COLOR + "integer not null, " +
-    TASKDB_DEADLINE + "string not null);";
+    TASKDB_TITLE + " text, " +
+    TASKDB_DESCRIPTION + " text, " +
+    TASKDB_LOCATION + " text, " +
+    TASKDB_PRIORITY + " text, " +
+    TASKDB_REPEAT + " text not null, " +
+    TASKDB_CATEGORY + " text, " +
+    TASKDB_COMPLETED + " text not null, " +
+    TASKDB_COLOR + " integer not null, " +
+    TASKDB_DEADLINE + " real not null, " +
+    TASKDB_ALERTTIME + " real not null, " +  
+    TASKDB_TYPE + " text not null" + ");";
     
     
     // SQL COMMAND TO CREATE EVENT TABLE
     private static final String DATABASE_CREATE_EVENT = "create table " + DATABASE_TABLE_EVENT
     + " (" + EVENTDB_KEY_ID + " integer primary key autoincrement, " + 
-    EVENTDB_DESCRIPTION + "text, " +
-    EVENTDB_LOCATION + "text, " +
-    EVENTDB_PRIORITY + "text, " +
-    EVENTDB_REPEAT + "text not null, " +
-    EVENTDB_CATEGORY + "text, " +
-    EVENTDB_COMPLETED + "text not null, " +
-    EVENTDB_COLOR + "integer not null, " +
-    EVENTDB_STARTTIME + "text not null, " +
-    EVENTDB_ENDTIME + "text not null);";
+    EVENTDB_TITLE + " text, " +
+    EVENTDB_DESCRIPTION + " text, " +
+    EVENTDB_LOCATION + " text, " +
+    EVENTDB_PRIORITY + " text, " +
+    EVENTDB_REPEAT + " text not null, " +
+    EVENTDB_CATEGORY + " text, " +
+    EVENTDB_COMPLETED + " text not null, " +
+    EVENTDB_COLOR + " integer not null, " +
+    EVENTDB_STARTTIME + " real not null, " +
+    EVENTDB_ENDTIME + " real not null, " +
+    EVENTDB_ALERTTIME + " real not null," + 
+    EVENTDB_TYPE + " text not null" + ");";
     
     
     
     // SQL COMMAND TO CREATE ITEM TABLE
     private static final String DATABASE_CREATE_ITEM = "create table " + 
     DATABASE_TABLE_ITEM + " (" + ITEMDB_KEY_ID + " integer primary key autoincrement, " +
-    ITEMDB_KEY_TASK + " integer not null, " + " FOREIGN KEY ("+ ITEMDB_KEY_TASK +") REFERENCES " + DATABASE_TABLE_TASK + " ("+ TASKDB_KEY_ID +")),"
-    + ITEMDB_KEY_EVENT + " integer not null)" + " FOREIGN KEY ("+ ITEMDB_KEY_EVENT +") REFERENCES " + DATABASE_TABLE_EVENT + " ("+ EVENTDB_KEY_ID +"));";
+    ITEMDB_KEY_TASK + " integer not null, " +  ITEMDB_KEY_EVENT + " integer not null," + " FOREIGN KEY ("+ ITEMDB_KEY_TASK +") REFERENCES " + DATABASE_TABLE_TASK + " ("+ TASKDB_KEY_ID +"), "
+    + " FOREIGN KEY ("+ ITEMDB_KEY_EVENT +") REFERENCES " + DATABASE_TABLE_EVENT + " ("+ EVENTDB_KEY_ID +"));";
 
 
 	// SQL COMMAND TO CREATE CATEGORY TABLE
-    private static final String DATABASE_CREATE_CATEGORY = "create table" +
+    private static final String DATABASE_CREATE_CATEGORY = "create table " +
     DATABASE_TABLE_CATEGORY + " (" + CATEGORYDB_KEY_ID + " integer primary key autoincrement, " +
     CATEGORYDB_TITLE + " text not null);";
     
-    
+ // SQL COMMAND TO CREATE ALERTTYPE TABLE
+    private static final String DATABASE_CREATE_ALERTTYPE = "create table " +
+    DATABASE_TABLE_ALERTTYPE + " (" + ALERTTYPEDB_KEY_ID + " integer primary key autoincrement, " +
+    ALERTTYPEDB_TITLE + " text not null);";
     
 
     private final Context context; 
@@ -126,6 +159,8 @@ public class MainDBAdapter {
             db.execSQL(DATABASE_CREATE_EVENT);
             db.execSQL(DATABASE_CREATE_ITEM);  
             db.execSQL(DATABASE_CREATE_CATEGORY);
+            db.execSQL(DATABASE_CREATE_ALERTTYPE);
+            db.execSQL(DATABASE_CREATE_MAP);
         }
 
         @Override

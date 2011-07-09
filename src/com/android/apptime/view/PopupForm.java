@@ -1,26 +1,27 @@
 package com.android.apptime.view;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.android.apptime.R;
+import java.util.zip.DataFormatException;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -28,9 +29,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.apptime.DatabaseInterface;
+import com.android.apptime.Item;
+import com.android.apptime.R;
+
 public class PopupForm extends Activity {
 	private static final int TASK = 0;
 	private static final int EVENT = 1;
+	private static final int LEFTMARGIN = 30;
+	private static final int TOPMARGIN = 100;
 	public static int nextViewId = 1;
 	private String TAG = "calendarview";
 	private final int CONTEXT_MENU_ADD = 0;
@@ -58,8 +65,10 @@ public class PopupForm extends Activity {
 	private LinearLayout layout = null;
 	private RadioGroup mTypeGroup = null;
 	private String location = "";
-
+	private Resources myResource = null;
 	private int offX, offY, width, height;
+	
+	private Item modifiedItem = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,16 +77,20 @@ public class PopupForm extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.popup);
 		layout = (LinearLayout) findViewById(R.id.linearpopup);
+		myResource = getResources();
+		offX = (int) myResource.getDimension(R.dimen.left_margin_popup);
+		offY = (int) myResource.getDimension(R.dimen.top_margin_popup);
 		Bundle extras = getIntent().getExtras();
 		int type = extras.getInt("popupType");
 		startTime = (Date) extras.get("startTime");
 		endTime = (Date) extras.get("endTime");
+
 		offX = extras.getInt("offX");
 		offY = extras.getInt("offY");
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = offX;
-		params.topMargin = offY;
+		params.leftMargin = LEFTMARGIN;// offX;
+		params.topMargin = TOPMARGIN;// offY;
 		layout.setLayoutParams(params);
 		mEtTitle = (EditText) findViewById(R.id.etTitle);
 		mTvStartTime = (TextView) findViewById(R.id.tvDisplayStartTime);
@@ -233,13 +246,20 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		data.putExtra("detailed", false);
-		data.putExtra("title", title);
-		data.putExtra("type", type);
-		data.putExtra("startTime", startTime);
-		data.putExtra("endTime", endTime);
-		data.putExtra("location", location);
-		this.setResult(RESULT_OK, data);
+		
+		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
+		(getApplicationContext());
+		
+		modifiedItem = database.RetrieveItemFromDatabase(getApplicationContext(), itemId);
+		modifiedItem.SetTitle(title);
+		modifiedItem.SetLocation(location);
+		if (type == EVENT) {
+			modifiedItem.SetStartTime(startTime);
+			modifiedItem.SetEndTime(endTime);			
+		} else {
+			modifiedItem.SetDeadline(endTime);
+		}
+		database.UpdateItemFmomDatabase(getApplicationContext(), modifiedItem);
 		this.finish();
 	}
 
@@ -258,15 +278,21 @@ public class PopupForm extends Activity {
 		else
 			type = TASK;
 		location = mAutoTvLocation.getText().toString();
-		data.putExtra("newItem", true);
-		data.putExtra("title", title);
-		data.putExtra("type", type);
-		data.putExtra("startTime", startTime);
-		data.putExtra("endTime", endTime);
-		data.putExtra("location", location);
+		DatabaseInterface database = DatabaseInterface.getDatabaseInterface
+		(getApplicationContext());
+		Item newItem = null;
+		if (type == EVENT) {
+			newItem = new Item (title, "Event", startTime, endTime, location);
+		} else {
+			newItem = new Item (title, "Task", endTime, location);
+		}
+		newItem = database.AddItemToDatabase(getApplicationContext(), newItem);
+		if (newItem == null){
+			Log.d(TAG, "got problem in inserting to database");
+		} else {
+			Log.d(TAG, "item inserted to database");
+		}
 		Log.d(TAG, "result set");
-		this.setResult(RESULT_OK, data);
-		this.finish();
 	}
 
 	@Override
