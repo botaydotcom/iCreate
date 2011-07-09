@@ -314,7 +314,7 @@ public class PopupForm extends Activity {
 		} else {
 			modifiedItem.SetDeadline(endTime);
 		}
-		database.UpdateItemFmomDatabase(getApplicationContext(), modifiedItem);
+		database.UpdateItemInDatabase(getApplicationContext(), modifiedItem);
 		this.finish();
 	}
 

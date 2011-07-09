@@ -26,8 +26,9 @@ import com.android.apptime.view.MapView;
 import com.android.apptime.view.OrganizerView;
 
 public class Main extends TabActivity {
-<<<<<<< HEAD
+
     /** Called when the activity is first created. */
+	/*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class Main extends TabActivity {
         tabHost.addTab(spec);
 
         tabHost.setCurrentTab(0);
+        */
        // DatabaseInterface database = DatabaseInterface.getDatabaseInterface(getApplicationContext());
        // database.CreateDatabase(getApplicationContext());
         
@@ -79,15 +81,17 @@ public class Main extends TabActivity {
         String titletest = mycs.getString(8);
         */
 
+		/*
         Date newdate = new Date();
         long ttt = newdate.getTime();
+        */
         /*
         Date olddate = new Date("1991-07-11 12:08:12");
         boolean tttt = false;
         if (olddate.getTime() < newdate.getTime()) tttt=true;
         */
         
-        
+        /*
         DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
 			Date a = dfm.parse("2007-02-26 20:15:00");
@@ -97,7 +101,7 @@ public class Main extends TabActivity {
 			e.printStackTrace();
 		}
         
-        
+        */
 
 //        Date newdate = new Date();
 //        long ttt = newdate.getTime();
@@ -124,9 +128,10 @@ public class Main extends TabActivity {
 
     
         
-    }
-    @Override
-=======
+    //}
+
+   // @Override
+
 	private static final String TAG = "Main";
 	public static final String SHARED_PREF_FILE = "shared_pref";
 	public final int LOGIN_SCREEN = 0;
@@ -167,11 +172,29 @@ public class Main extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 		
+		
+		
 		DatabaseInterface database =
 		DatabaseInterface.getDatabaseInterface(getApplicationContext());
 		database.OpenDatabase(getApplicationContext());
+		List<String> alerttype = new ArrayList<String>(); alerttype.add("alert1");
+		Date starttime= new Date(1221423535);
+		Date endtime =   new Date(122142400);
+		Date alerttime = new Date(122142340);
+		Item item = new Item("title test",
+				  "description test", "location test", "category test", alerttype,
+				 "priority test", "Event", starttime,
+				 endtime, null, alerttime, "repeat test",
+				  "completed test", 1);
+		//database.AddItemToDatabase(getApplicationContext(), item);
+		//database.AddItemToDatabase(this.getApplicationContext(),item);
+		
+		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
 		database.CloseDatabase();
 
+		
+		
+		
 		/*
 		 * DatabaseInterface db = new DatabaseInterface(this); List<String>
 		 * alerttype = new ArrayList<String>(); alerttype.add("alert1");
@@ -228,7 +251,7 @@ public class Main extends TabActivity {
 	}
 
 	@Override
->>>>>>> fb593f78ce139013743cabaeccaa729e459a493c
+//>>>>>>> fb593f78ce139013743cabaeccaa729e459a493c
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == LOGIN_SCREEN) {
 			if (resultCode==RESULT_CANCELED){
