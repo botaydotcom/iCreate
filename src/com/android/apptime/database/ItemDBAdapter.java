@@ -12,6 +12,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.android.apptime.EventItem;
 import com.android.apptime.Item;
@@ -240,7 +241,7 @@ public class ItemDBAdapter {
  
  // return an array of 2 arrays, first array includes events, 2nd includes items 
  public ArrayList<Cursor> getItemByDate(Date date) {
-	 
+	 try{
 	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
 	 EventDBAdapter edb = new EventDBAdapter(this.context);
 	 edb.open();
@@ -251,6 +252,11 @@ public class ItemDBAdapter {
 	 arrlist.add(tdb.getTaskByDate(date));
 	 tdb.close();
 	 return arrlist;
+	 }
+	 catch (Exception e){
+		 Log.e("DB", e.getMessage());
+		 return null;
+	 }
  }
  
 }
