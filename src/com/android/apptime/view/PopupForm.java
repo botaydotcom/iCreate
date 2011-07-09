@@ -65,13 +65,15 @@ public class PopupForm extends Activity {
 	private Button mDetailButton = null;
 	private View itemBeingSelected = null;
 	private Date startTime = null, endTime = null;
-	private LinearLayout layout = null;
+	private LinearLayout mLayoutContainer = null;
 	private RadioGroup mTypeGroup = null;
 	private String location = "";
 	private Resources myResource = null;
 	private int offX, offY, width, height;
 
 	private Item modifiedItem = null;
+	private Bundle mExtras;
+	private int mType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,32 +81,95 @@ public class PopupForm extends Activity {
 		// Remove title bar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.popup);
-		layout = (LinearLayout) findViewById(R.id.linearpopup);
-		myResource = getResources();
-		offX = (int) myResource.getDimension(R.dimen.left_margin_popup);
-		offY = (int) myResource.getDimension(R.dimen.top_margin_popup);
-		Bundle extras = getIntent().getExtras();
-		int type = extras.getInt("popupType");
-		startTime = (Date) extras.get("startTime");
-		endTime = (Date) extras.get("endTime");
 
-		Log.d(TAG, "time " + startTime.toString() + " " + endTime.toString());
-
-		offX = extras.getInt("offX");
-		offY = extras.getInt("offY");
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.leftMargin = LEFTMARGIN;// offX;
-		params.topMargin = TOPMARGIN;// offY;
-		layout.setLayoutParams(params);
+		loadResources();
+		setupLayout();
 		try {
-			mEtTitle = (EditText) findViewById(R.id.etTitle);
-			mBtChangeStartTime = (Button) findViewById(R.id.btChangeStartTime);
-			mBtChangeEndTime = (Button) findViewById(R.id.btChangeEndTime);
-			mBtChangeStartDate = (Button) findViewById(R.id.btChangeStartDate);
-			mBtChangeEndDate = (Button) findViewById(R.id.btChangeEndDate);
-			mTypeGroup = (RadioGroup) findViewById(R.id.rgType);
-		
+			setupTimeEditButtonHandler();
+			setupAutoTextViewLocation();
+			setupButtonHandler();
+
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+
+		/*
+		 * auto complete textview - Location
+		 */
+
+		switch (mType) {
+		case (CalendarDayView.POPUP_TIME_SLOT):
+			mModifyButton.setVisibility(View.GONE);
+			mRemoveButton.setVisibility(View.GONE);
+			break;
+		case (CalendarDayView.POPUP_ITEM):
+			mAddButton.setVisibility(View.GONE);
+			itemId = mExtras.getInt("itemId");
+			break;
+		}
+	}
+
+	private void setupButtonHandler() {
+		/*
+		 * Controller buttons
+		 */
+
+		mAddButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addItem();
+				PopupForm.this.finish();
+			}
+		});
+		mModifyButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				modifyItem();
+				PopupForm.this.finish();
+			}
+		});
+		mRemoveButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				removeItem();
+				PopupForm.this.finish();
+			}
+		});
+		mDetailButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				modifyDetails();
+			}
+		});
+	}
+
+	private void setupAutoTextViewLocation() {
+		mAutoTvLocation = (AutoCompleteTextView) findViewById(R.id.autoTvLocation);
+		// Prepares Atv
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, getResources()
+						.getStringArray(R.array.locationArray));
+		mAutoTvLocation.setAdapter(adapter);
+		mAutoTvLocation.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mAutoTvLocation.showDropDown();
+			}
+		});
+		mAutoTvLocation
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						location = getResources().getStringArray(
+								R.array.locationArray)[(int) arg3];
+					}
+				});
+	}
+
+	private void setupTimeEditButtonHandler() {
+		updateDisplay();
 		mBtChangeStartTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -131,80 +196,39 @@ public class PopupForm extends Activity {
 				showDialog(END_DATE_DIALOG_ID);
 			}
 		});
-		
-		} catch (Exception e) {
-			Log.e(TAG, e.getMessage());
-		}
+	}
 
-		/*
-		 * auto complete textview - Location
-		 */
-		mAutoTvLocation = (AutoCompleteTextView) findViewById(R.id.autoTvLocation);
-		// Prepares Atv
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, getResources()
-						.getStringArray(R.array.locationArray));
-		mAutoTvLocation.setAdapter(adapter);
-		mAutoTvLocation.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mAutoTvLocation.showDropDown();
-			}
-		});
-		mAutoTvLocation
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
-						location = getResources().getStringArray(
-								R.array.locationArray)[(int) arg3];
-					}
-				});
+	private void setupLayout() {
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params.leftMargin = LEFTMARGIN;// offX;
+		params.topMargin = TOPMARGIN;// offY;
+		mLayoutContainer.setLayoutParams(params);
 
-		/*
-		 * Controller buttons
-		 */
+	}
+
+	private void loadResources() {
+
+		myResource = getResources();
+		offX = (int) myResource.getDimension(R.dimen.left_margin_popup);
+		offY = (int) myResource.getDimension(R.dimen.top_margin_popup);
+		mExtras = getIntent().getExtras();
+		mType = mExtras.getInt("popupType");
+		startTime = (Date) mExtras.get("startTime");
+		endTime = (Date) mExtras.get("endTime");
+		Log.d(TAG, "time " + startTime.toString() + " " + endTime.toString());
+
+		mLayoutContainer = (LinearLayout) findViewById(R.id.linearpopup);
+		mEtTitle = (EditText) findViewById(R.id.etTitle);
+		mBtChangeStartTime = (Button) findViewById(R.id.btChangeStartTime);
+		mBtChangeEndTime = (Button) findViewById(R.id.btChangeEndTime);
+		mBtChangeStartDate = (Button) findViewById(R.id.btChangeStartDate);
+		mBtChangeEndDate = (Button) findViewById(R.id.btChangeEndDate);
+		mTypeGroup = (RadioGroup) findViewById(R.id.rgType);
 		mAddButton = (Button) findViewById(R.id.btAdd);
 		mModifyButton = (Button) findViewById(R.id.btModify);
 		mRemoveButton = (Button) findViewById(R.id.btRemove);
 		mDetailButton = (Button) findViewById(R.id.btDetail);
-		mAddButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				addItem();
-			}
-		});
-		mModifyButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				modifyItem();
-			}
-		});
-		mRemoveButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				removeItem();
-
-			}
-		});
-		mDetailButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				modifyDetails();
-
-			}
-		});
-		switch (type) {
-		case (CalendarDayView.POPUP_TIME_SLOT):
-			mModifyButton.setVisibility(View.GONE);
-			mRemoveButton.setVisibility(View.GONE);
-			break;
-		case (CalendarDayView.POPUP_ITEM):
-			mAddButton.setVisibility(View.GONE);
-			itemId = extras.getInt("itemId");
-			break;
-		}
 	}
 
 	private void modifyDetails() {
@@ -251,7 +275,7 @@ public class PopupForm extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		updateDisplay();
+		// updateDisplay();
 	}
 
 	private void removeItem() {
@@ -328,8 +352,8 @@ public class PopupForm extends Activity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		width = layout.getWidth();
-		height = layout.getHeight();
+		width = mLayoutContainer.getWidth();
+		height = mLayoutContainer.getHeight();
 		Log.d(TAG, "on touch" + event.getX() + " " + event.getY() + " " + offX
 				+ " " + offY + " " + width + " " + height);
 		float x = event.getX();
@@ -377,7 +401,7 @@ public class PopupForm extends Activity {
 	private DatePickerDialog.OnDateSetListener mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			startTime.setYear(year);
+			startTime.setYear(year-1900);
 			startTime.setMonth(monthOfYear);
 			startTime.setDate(dayOfMonth);
 			updateDisplay();
@@ -386,7 +410,7 @@ public class PopupForm extends Activity {
 	private DatePickerDialog.OnDateSetListener mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			endTime.setYear(year);
+			endTime.setYear(year-1900);
 			endTime.setMonth(monthOfYear);
 			endTime.setDate(dayOfMonth);
 			updateDisplay();
@@ -396,6 +420,7 @@ public class PopupForm extends Activity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		Log.d(TAG, "on create dialog");
+		Log.d(TAG, startTime.getYear() + " "+startTime.getMonth()+" "+startTime.getDate());
 		switch (id) {
 		case START_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mStartTimeSetListener,
@@ -404,12 +429,11 @@ public class PopupForm extends Activity {
 			return new TimePickerDialog(this, mEndTimeSetListener,
 					endTime.getHours(), endTime.getMinutes(), false);
 		case START_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mStartDateSetListener,
-					startTime.getYear(), startTime.getMonth(),
+			return new DatePickerDialog(this, mStartDateSetListener, 1900+startTime.getYear(), startTime.getMonth(),
 					startTime.getDate());
 		case END_DATE_DIALOG_ID:
 			return new DatePickerDialog(this, mEndDateSetListener,
-					endTime.getYear(), endTime.getMonth(), endTime.getDate());
+					1900+endTime.getYear(), endTime.getMonth(), endTime.getDate());
 		}
 		return null;
 	}
