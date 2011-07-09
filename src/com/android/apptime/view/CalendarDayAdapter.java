@@ -39,9 +39,7 @@ public class CalendarDayAdapter extends ArrayAdapter<TimeSlot> {
 		} else
 		{
 			itemView = (LinearLayout)contentView;
-		}
-		
-		
+		}	
 		return itemView;
 		
 	}

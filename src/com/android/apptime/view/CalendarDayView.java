@@ -1,7 +1,10 @@
 package com.android.apptime.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,11 +40,13 @@ public class CalendarDayView extends Activity {
 
 	public static final int POPUP_TIME_SLOT = 0;
 	public static final int POPUP_ITEM = 1;
+	private static final int RIGHT_MARGIN = 50;
 
 	private final int POPUP_FORM = 0;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
 	private RelativeLayout listTimeSlotLayout = null;
 	private int width;
+	private int widthDisplayField;
 	private int timeSlotHeight = 80;
 	private PopupWindow popupWindow = null;
 	private EditText mEtTitle = null;
@@ -78,6 +83,8 @@ public class CalendarDayView extends Activity {
 		setDBInterface();
 
 		thisDate = new Date();
+		thisDate = new Date(thisDate.getYear() - 1900, thisDate.getMonth(),
+				thisDate.getDate());
 		Log.d(TAG, "" + width);
 
 		try {
@@ -102,6 +109,8 @@ public class CalendarDayView extends Activity {
 	}
 
 	private void displayAllTimeSlot() {
+		widthDisplayField = width
+				- (int) getResources().getDimension(R.dimen.timeslot_margin);
 		mScrollView = (ScrollView) findViewById(R.id.tabcontentscrollview);
 		for (int i = 0; i < Constant.NUM_HOUR; i++) {
 			dayTimeSlot[i] = new TimeSlotView(getApplicationContext());
@@ -154,15 +163,66 @@ public class CalendarDayView extends Activity {
 				getApplicationContext(), thisDate);
 		listEvent = listItem.get(0);
 		listTask = listItem.get(1);
-		for (int i = 0; i < listEvent.size(); i++) {
-			Item item = listEvent.get(i);
-			Date startTime = item.GetStartTime();
-			Date endTime = item.GetEndTime();
-			addItemViewToTimeSlot(item, startTime.getHours(),
-					startTime.getMinutes(), endTime.getHours(),
-					endTime.getMinutes(), 50, 200);
+		ArrayList<ArrayList<Item>> layeredListEvent = sortIntoLayer(listEvent);
+		int numberLayer = layeredListEvent.size();
+		int widthEachLayer = (widthDisplayField - RIGHT_MARGIN) / numberLayer;
+		for (int i = 0; i < layeredListEvent.size(); i++) {
+			ArrayList<Item> thisLayeredList = layeredListEvent.get(i);
+			for (int j = 0; j < thisLayeredList.size(); j++) {
+				Item item = thisLayeredList.get(i);
+				Date startTime = item.GetStartTime();
+				Date endTime = item.GetEndTime();
+
+				addItemViewToTimeSlot(item, startTime.getHours(),
+						startTime.getMinutes(), endTime.getHours(),
+						endTime.getMinutes(), (int)getResources().getDimension(R.dimen.timeslot_margin)+i*widthEachLayer, widthEachLayer);
+			}
 		}
 
+	}
+
+	private ArrayList<ArrayList<Item>> sortIntoLayer(ArrayList<Item> listEvent) {
+		ArrayList<ArrayList<Item>> result = new ArrayList<ArrayList<Item>>();
+		List<Item> listToSort = listEvent;
+		Collections.sort(listToSort, new Comparator<Item>() {
+			@Override
+			public int compare(Item arg0, Item arg1) {
+				if (arg0.GetStartTime().compareTo(arg1.GetStartTime()) == 0)
+					return arg0.GetEndTime().compareTo(arg1.GetEndTime());
+				else
+					return arg0.GetStartTime().compareTo(arg1.GetStartTime());
+			}
+
+		});
+		boolean[] checked = new boolean[listToSort.size()];
+		for (int i = 0; i < listToSort.size(); i++)
+			checked[i] = false;
+		int numList = 0;
+		for (int i = 0; i < listToSort.size(); i++) {
+			Item thisItem = listToSort.get(i);
+			long minDistance = Long.MAX_VALUE;
+			int bestList = -1;
+			for (int j = 0; j < numList; j++) {
+				ArrayList<Item> layeredList = result.get(j);
+				Item lastItem = layeredList.get(layeredList.size());
+				if (lastItem.GetEndTime().compareTo(thisItem.GetStartTime()) < 0) {
+					long distance = thisItem.GetStartTime().getTime()
+							- lastItem.GetEndTime().getTime();
+					if (distance < minDistance) {
+						minDistance = distance;
+						bestList = j;
+					}
+				}
+			}
+			if (bestList == -1) {
+				result.add(new ArrayList<Item>());
+				result.get(numList).add(thisItem);
+				numList++;
+			} else {
+				result.get(bestList).add(thisItem);
+			}
+		}
+		return result;
 	}
 
 	private void showPopUpWindow() {
@@ -173,7 +233,8 @@ public class CalendarDayView extends Activity {
 			createPopup.putExtra("popupType", POPUP_TIME_SLOT);
 			createPopup.putExtra("startTime", timeSlotView.getTime());
 			Log.d(TAG, timeSlotView.getTime().toString());
-			createPopup.putExtra("endTime", new Date(timeSlotView.getTime().getTime()+Constant.NUM_MILI_SEC_IN_HOUR));
+			createPopup.putExtra("endTime", new Date(timeSlotView.getTime()
+					.getTime() + Constant.NUM_MILI_SEC_IN_HOUR));
 			createPopup.putExtra("offX", itemBeingSelected.getLeft());
 			createPopup.putExtra("offY", itemBeingSelected.getBottom());
 			startActivityForResult(createPopup, POPUP_FORM);
@@ -181,7 +242,8 @@ public class CalendarDayView extends Activity {
 			DayItemView itemView = (DayItemView) itemBeingSelected;
 			Intent createPopup = new Intent(getApplicationContext(),
 					PopupForm.class);
-			createPopup.putExtra("startTime", itemView.getItem().GetStartTime());
+			createPopup
+					.putExtra("startTime", itemView.getItem().GetStartTime());
 			createPopup.putExtra("endTime", itemView.getItem().GetEndTime());
 			createPopup.putExtra("popupType", POPUP_ITEM);
 			createPopup.putExtra("itemId", itemView.getItem().GetId());
