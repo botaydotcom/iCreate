@@ -20,6 +20,8 @@ import com.android.apptime.database.ItemDBAdapter;
 import com.android.apptime.database.MainDBAdapter;
 import com.android.apptime.datahandler.Ivle;
 import com.android.apptime.datahandler.IvleTimetableData;
+import com.android.apptime.service.IvleDataPuller;
+import com.android.apptime.service.IvleDataPullerController;
 import com.android.apptime.view.CalendarView;
 import com.android.apptime.view.LoginScreen;
 import com.android.apptime.view.MapView;
@@ -173,23 +175,26 @@ public class Main extends TabActivity {
 		tabHost.setCurrentTab(0);
 		
 		
-		
+		startService(new Intent(Main.this,IvleDataPuller.class));
+        stopService(new Intent(Main.this,IvleDataPuller.class));		
 		DatabaseInterface database =
 		DatabaseInterface.getDatabaseInterface(getApplicationContext());
 		database.OpenDatabase(getApplicationContext());
-		List<String> alerttype = new ArrayList<String>(); alerttype.add("alert1");
-		Date starttime= new Date(1221423535);
-		Date endtime =   new Date(122142400);
-		Date alerttime = new Date(122142340);
-		Item item = new Item("title test",
-				  "description test", "location test", "category test", alerttype,
-				 "priority test", "Event", starttime,
-				 endtime, null, alerttime, "repeat test",
-				  "completed test", 1);
-		//database.AddItemToDatabase(getApplicationContext(), item);
-		//database.AddItemToDatabase(this.getApplicationContext(),item);
+//		List<String> alerttype = new ArrayList<String>(); alerttype.add("alert1");
+//		Date starttime= new Date(1221423535);
+//		Date endtime =   new Date(122142400);
+//		Date alerttime = new Date(122142340);
+//		Item item = new Item("title test",
+//				  "description test", "location test", "category test", alerttype,
+//				 "priority test", "Event", starttime,
+//				 endtime, null, alerttime, "repeat test",
+//				  "completed test", 1);
+//		//database.AddItemToDatabase(getApplicationContext(), item);
+//		//database.AddItemToDatabase(this.getApplicationContext(),item);
+//		
+//		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
 		
-		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
+		
 		database.CloseDatabase();
 
 		
