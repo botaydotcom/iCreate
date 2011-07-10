@@ -20,6 +20,8 @@ import com.android.apptime.database.ItemDBAdapter;
 import com.android.apptime.database.MainDBAdapter;
 import com.android.apptime.datahandler.Ivle;
 import com.android.apptime.datahandler.IvleTimetableData;
+import com.android.apptime.service.IvleDataPuller;
+import com.android.apptime.service.IvleDataPullerController;
 import com.android.apptime.view.CalendarView;
 import com.android.apptime.view.LoginScreen;
 import com.android.apptime.view.MapView;
@@ -173,7 +175,8 @@ public class Main extends TabActivity {
 		tabHost.setCurrentTab(0);
 		
 		
-		
+		startService(new Intent(Main.this,IvleDataPuller.class));
+        stopService(new Intent(Main.this,IvleDataPuller.class));		
 		DatabaseInterface database =
 		DatabaseInterface.getDatabaseInterface(getApplicationContext());
 		database.OpenDatabase(getApplicationContext());
@@ -190,6 +193,8 @@ public class Main extends TabActivity {
 //		//database.AddItemToDatabase(this.getApplicationContext(),item);
 //		
 //		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
+		
+		
 		database.CloseDatabase();
 
 		

@@ -154,4 +154,19 @@ public class TaskDBAdapter {
         }
         return mCursor;
     }
+    
+    public Cursor getTaskByDateRange(Date fromdate, Date todate) throws SQLException {
+
+    	int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
+    	long fromtime = fromdate.getTime();
+    	long totime = todate.getTime();
+        Cursor mCursor =
+
+        this.mDb.query(true, DATABASE_TABLE_TASK, new String[] {  TASKDB_KEY_ID,TASKDB_TITLE, TASKDB_DESCRIPTION, TASKDB_LOCATION, TASKDB_PRIORITY, TASKDB_REPEAT, TASKDB_CATEGORY, TASKDB_COMPLETED, TASKDB_COLOR, TASKDB_DEADLINE, TASKDB_ALERTTIME, TASKDB_TYPE    }, TASKDB_DEADLINE + " >= " + fromtime + " AND " + TASKDB_DEADLINE + " < " + totime , null, null, null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
 }
