@@ -169,5 +169,26 @@ public class EventDBAdapter {
 		}
 		return mCursor;
 	}
+	
+	public Cursor getEventByDateRange(Date fromdate, Date todate) throws SQLException {
+		
+		long fromtime = fromdate.getTime();
+		long totime = todate.getTime();
+		
+		Cursor mCursor = 
+		this.mDb.query(true, DATABASE_TABLE_EVENT, new String[] {
+				EVENTDB_KEY_ID, EVENTDB_TITLE, EVENTDB_DESCRIPTION,
+				EVENTDB_LOCATION, EVENTDB_PRIORITY, EVENTDB_REPEAT,
+				EVENTDB_CATEGORY, EVENTDB_COMPLETED, EVENTDB_COLOR,
+				EVENTDB_STARTTIME, EVENTDB_ENDTIME, EVENTDB_ALERTTIME, EVENTDB_TYPE },
+				EVENTDB_STARTTIME + " >= " + fromtime + " AND " + EVENTDB_STARTTIME
+						+ " < " + totime, null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+		
+	}
+	
 
 }
