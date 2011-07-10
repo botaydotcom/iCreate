@@ -18,6 +18,18 @@ import com.android.apptime.R;
 
 public class Ivle extends Activity  {
 	private String IVLE_Token;
+	private List<IvleAcadSemesterInfoData> ivleAcadSemesterInfoList;
+	private List<IvleEventData> ivleEventList;
+	private List<IvleSpecialDayData> ivleSpecialDayList;
+	private List<IvleTimetableData> ivleTimetableList;
+	
+	public Ivle(){
+		IVLE_Token=null;
+		ivleAcadSemesterInfoList = new ArrayList();
+		ivleEventList = new ArrayList();
+		ivleSpecialDayList = new ArrayList();
+		ivleTimetableList = new ArrayList();
+	}
 	
 	// return token
 	public String GetIVLEToken(){
@@ -95,7 +107,7 @@ public class Ivle extends Activity  {
     }
     
     // input start and end date as a string in the following format: dd/mm/yyyy
-    public List<IvleEventData> getEvents(String start_date, String end_date){
+    private void getEvents(String start_date, String end_date){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
@@ -112,7 +124,12 @@ public class Ivle extends Activity  {
     	
     	IvleEventGetAndroidSaxFeedParser newParser = new IvleEventGetAndroidSaxFeedParser(feedURL);
     	
-    	return newParser.parse();
+    	ivleEventList = newParser.parse();
+    }
+    
+    public List<IvleEventData> getEventList(String start_date, String end_date){
+    	this.getEvents(start_date, end_date);
+    	return ivleEventList;
     }
     
     // posting a new personal event to ivle
@@ -287,7 +304,7 @@ public class Ivle extends Activity  {
     WeekCode: Week Code. Refer to [CodeTable_WeekTypes] function for the full list.
     WeekText: Week description. Refer to [CodeTable_WeekTypes] function for the full list.
     LessonType: Type of lesson. Example: Lecture, Tutorial and so on.*/
-    public List<IvleTimetableData> getTimetable(String acad_year, String semester){
+    private void getTimetable(String acad_year, String semester){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
@@ -304,14 +321,19 @@ public class Ivle extends Activity  {
     	
     	IvleTimetableGetAndroidSaxFeedParser newParser = new IvleTimetableGetAndroidSaxFeedParser(feedURL);
     	
-    	return newParser.parse();
+    	ivleTimetableList = newParser.parse();
+    }
+    
+    public List<IvleTimetableData> getTimetableList(String acad_year, String semester){
+    	this.getTimetable(acad_year, semester);
+    	return ivleTimetableList;
     }
     
     /*StartDate: Starting date. Format: dd-mmm-yyyy
     EndDate: Ending date. Format: dd-mmm-yyyy
     If StartDate or EndDate is empty, it default to today's date.*/    
     
-    public List<IvleSpecialDayData> getSpecialDays(String start_date, String end_date){
+    private void getSpecialDays(String start_date, String end_date){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
@@ -328,13 +350,18 @@ public class Ivle extends Activity  {
     	
     	IvleSpecialDayGetAndroidSaxFeedParser newParser = new IvleSpecialDayGetAndroidSaxFeedParser(feedURL);
     	
-    	return newParser.parse();
+    	ivleSpecialDayList = newParser.parse();
+    }
+    
+    public List<IvleSpecialDayData> getSpecialDayList(String start_date, String end_date){
+    	this.getSpecialDays(start_date, end_date);
+    	return ivleSpecialDayList;
     }
     
     /*AcadYear: Academic Year. Eg. 2010/2011
     Semester: Academic Semester. Eg. 1, 2, 3 or 4*/
     
-    public List<IvleAcadSemesterInfoData> getAcadSemesterInfo(String acad_year, String semester){
+    private void getAcadSemesterInfo(String acad_year, String semester){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
@@ -351,6 +378,11 @@ public class Ivle extends Activity  {
     	
     	IvleAcadSemesterInfoGetAndroidSaxFeedParser newParser = new IvleAcadSemesterInfoGetAndroidSaxFeedParser(feedURL);
     	
-    	return newParser.parse();
+    	ivleAcadSemesterInfoList = newParser.parse();
+    }
+    
+    public List<IvleAcadSemesterInfoData> getAcadSemesterInfoList(String acad_year, String semester){
+    	this.getAcadSemesterInfo(acad_year, semester);
+    	return ivleAcadSemesterInfoList;
     }
 }

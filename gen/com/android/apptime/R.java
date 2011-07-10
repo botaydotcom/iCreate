@@ -28,12 +28,13 @@ public final class R {
         public static final int top_margin_popup=0x7f060004;
     }
     public static final class drawable {
-        public static final int ic_tab_artists_grey=0x7f020000;
-        public static final int ic_tab_artists_white=0x7f020001;
-        public static final int ic_tab_calendar=0x7f020002;
-        public static final int ic_tab_map=0x7f020003;
-        public static final int ic_tab_organizer=0x7f020004;
-        public static final int icon=0x7f020005;
+        public static final int android=0x7f020000;
+        public static final int ic_tab_artists_grey=0x7f020001;
+        public static final int ic_tab_artists_white=0x7f020002;
+        public static final int ic_tab_calendar=0x7f020003;
+        public static final int ic_tab_map=0x7f020004;
+        public static final int ic_tab_organizer=0x7f020005;
+        public static final int icon=0x7f020006;
     }
     public static final class id {
         public static final int WebViewLogin=0x7f090005;
@@ -106,6 +107,9 @@ public final class R {
         public static final int evenoddweek=0x7f07001e;
         public static final int eventdatetime=0x7f070014;
         public static final int eventid=0x7f07001a;
+        /**  	Notification 
+         */
+        public static final int eventreminder=0x7f070026;
         public static final int eventtitle=0x7f070012;
         public static final int hello=0x7f070000;
         public static final int lecturestartdate=0x7f07001f;
@@ -134,8 +138,9 @@ public final class R {
         public static final int startdatefield=0x7f070010;
         /**  	Popup window - add/modify item 
          */
-        public static final int strAnnounceNotEnoughDetail=0x7f070026;
+        public static final int strAnnounceNotEnoughDetail=0x7f070028;
         public static final int strdays=0x7f070018;
+        public static final int taskreminder=0x7f070027;
         public static final int tutorialstartdate=0x7f070022;
         public static final int typename=0x7f070023;
         public static final int venue=0x7f070013;
