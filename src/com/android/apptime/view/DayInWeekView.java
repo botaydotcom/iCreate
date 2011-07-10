@@ -1,12 +1,13 @@
 package com.android.apptime.view;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ public class DayInWeekView extends View {
 	private int w, h;
 	private String content = "";
 	private Item item = null;
+	private Date date = null;
 
 	public DayInWeekView(Context context, AttributeSet ats, int ds) {
 		super(context, ats, ds);
@@ -61,11 +63,18 @@ public class DayInWeekView extends View {
 		textPaint.setTextSize(30);
 		bgColor = Color.TRANSPARENT;
 		// Get the paper background color and the margin width.
-
+		date = new Date();
 		margin = myResources.getDimension(R.dimen.timeslot_margin);
 	}
 
 	
+	public Date getDate(){
+		return date;
+	}
+	public void setDate(Date date)
+	{
+		this.date = date;
+	}
 
 	@Override
 	public void onDraw(Canvas canvas) {

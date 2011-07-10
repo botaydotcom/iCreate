@@ -45,17 +45,17 @@ public class DatabaseInterface {
 	}
 
 	public Item AddItemToDatabase(Context context, Item _item) {
-		try {
+		//try {
 			itemdb.open();
 			long id = itemdb.createItem(_item);
 			itemdb.close();
 			_item.SetId(String.valueOf(id));
-			dbsetchange.Update();
+			//dbsetchange.Update();
 			return _item;
-		} catch (Exception e) {
-			Log.e("DB", e.getMessage());
-			return null;
-		}
+		//} catch (Exception e) {
+		//	Log.e("DB", e.getMessage());
+		//	return null;
+		//}
 	}
 
 	public void RemoveItemFromDatabase(Context context, Item _item) {
@@ -66,7 +66,7 @@ public class DatabaseInterface {
 		dbsetchange.Update();
 	}
 
-	public void UpdateItemFmomDatabase(Context context, Item _item) {
+	public void UpdateItemInDatabase(Context context, Item _item) {
 		itemdb.open();
 		itemdb.updateItem(_item);
 		itemdb.close();
@@ -76,6 +76,7 @@ public class DatabaseInterface {
 	public Item RetrieveItemFromDatabase(Context context, long id) {
 		itemdb.open();
 		Cursor mycs = itemdb.getItemById(id);
+		String t = mycs.getString(12);
 		if (mycs.getString(12).equalsIgnoreCase("Event")) {
 			// return event
 			Cursor eventcursor = mycs;
@@ -127,6 +128,7 @@ public class DatabaseInterface {
 	}
 
 	// retrieve item by ITEM id
+	
 	public ArrayList<ArrayList<Item>> RetrieveItemFromDatabase(Context context,
 			Date datetime) {
 		ArrayList<ArrayList<Item>> myitem = new ArrayList<ArrayList<Item>>();
