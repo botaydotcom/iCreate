@@ -3,15 +3,13 @@ package com.android.apptime.service;
 
 
 
-import com.android.apptime.R;
-
-
-import android.app.Activity;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
-public class IvleDataPullerController extends Activity{
+import com.android.apptime.R;
+
+public class IvleDataPullerController extends TabActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

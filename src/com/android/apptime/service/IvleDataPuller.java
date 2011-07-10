@@ -1,9 +1,14 @@
 package com.android.apptime.service;
 
+import java.util.List;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
+
+import com.android.apptime.datahandler.Ivle;
+import com.android.apptime.datahandler.IvleTimetableData;
 
 public class IvleDataPuller extends Service{
 
@@ -17,8 +22,10 @@ public class IvleDataPuller extends Service{
 	public void onCreate() {
 		super.onCreate();
 		
+		Ivle ivledata = new Ivle();
+		List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
 		
-		Toast.makeText(this,"Service created ...", Toast.LENGTH_LONG).show();
+		Toast.makeText(this,"IVLE serv created", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override

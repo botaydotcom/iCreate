@@ -50,6 +50,10 @@
 	<string name="weektypeenddate">WeekTypeEndDate</string>
 	<string name="weektypestartdate">WeekTypeStartDate</string>
 	
+<!-- 	Notification -->
+	<string name="eventreminder">Event Reminder</string>
+	<string name="taskreminder">Task Reminder</string>
+	
 <!-- 	Popup window - add/modify item -->
 	<string name="strAnnounceNotEnoughDetail">Please fill in the title</string>
 	
