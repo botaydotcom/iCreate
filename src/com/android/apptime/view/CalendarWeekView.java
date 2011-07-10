@@ -1,6 +1,10 @@
 package com.android.apptime.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
+import com.android.apptime.DatabaseInterface;
 import com.android.apptime.Item;
 import com.android.apptime.R;
 
@@ -33,6 +38,7 @@ public class CalendarWeekView extends Activity {
 
 	public static final int POPUP_TIME_SLOT = 0;
 	public static final int POPUP_ITEM = 1;
+	private static final int RIGHT_MARGIN = 50;
 
 	private final int POPUP_FORM = 0;
 	private TimeSlotView[] dayTimeSlot = new TimeSlotView[Constant.NUM_HOUR];
@@ -40,8 +46,7 @@ public class CalendarWeekView extends Activity {
 	private TextView title = null;
 	private TextView[] daysInWeekTitle = new TextView[Constant.NUM_DAY_IN_WEEK];
 	private ArrayList<WeekItemView> itemsInWeek = null;
-	
-	
+
 	private RelativeLayout containerLayout = null;
 	private ZoomableViewGroup titleLayout = null;
 	private ZoomableViewGroup contentLayout = null;
@@ -65,9 +70,20 @@ public class CalendarWeekView extends Activity {
 	private int daySlotWidth = 50;
 	private int screenWidth = 0, screenHeight = 0;
 	private Handler mHandler = null;
-	
-	
-	
+
+	private Date thisWeek = null;
+
+	private ArrayList<ArrayList<Item>> listItem = null;
+	private ArrayList<Item> listTask = null, listEvent = null;
+
+	private DatabaseInterface.DbSetChange observer = new DatabaseInterface.DbSetChange() {
+
+		@Override
+		public void Update() {
+			updateView();
+		}
+	};
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,21 +97,47 @@ public class CalendarWeekView extends Activity {
 		screenWidth = metrics.widthPixels;
 		screenHeight = metrics.heightPixels;
 		mHandler = new Handler();
+		thisWeek = new Date();
+		thisWeek = new Date(thisWeek.getYear(), thisWeek.getMonth(),
+				thisWeek.getDate());
+		int dayInWeek = thisWeek.getDay();
+		Log.d(TAG, "start date: " + thisWeek.getDay());
+		int numDayFromStart = dayInWeek - 0;
+		long timeNow = thisWeek.getTime();
+		long timeFromStartOfTheWeek = numDayFromStart
+				* Constant.NUM_MILI_SEC_IN_DAY;
+		thisWeek.setTime(timeNow - timeFromStartOfTheWeek);
+		Log.d(TAG,
+				"start date move to beginning of week: " + thisWeek.toString());
+
+		setDBInterface();
 		try {
 			displayAllTimeSlot();
 			// addZoomButtons(containerLayout);
-			addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
-			addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
+			//addItemViewToTimeSlot(null, 0, 5, 35, 10, 30, 15, 35);
+			// addItemViewToTimeSlot(null, 1, 6, 30, 7, 30, 15, 35);
 		} catch (Exception e) {
 			Log.d(TAG, e.getMessage());
 		}
 		itemsInWeek = new ArrayList<WeekItemView>();
 		addZoomButtons();
 	}
-	
+
+	private void setDBInterface() {
+		this.mDBinterface = DatabaseInterface
+				.getDatabaseInterface(getApplicationContext());
+		mDBinterface.SetObserver(observer);
+	}
+
 	@Override
-	public boolean dispatchTouchEvent (MotionEvent ev){
-		if (ev.getAction() == MotionEvent.ACTION_DOWN){
+	public void onResume() {
+		super.onResume();
+		updateView();
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
 			showZoomButtons();
 			Log.d(TAG, "dispatch touch event");
 		}
@@ -103,19 +145,20 @@ public class CalendarWeekView extends Activity {
 	}
 
 	/*
-	 * Adding zoom controls
-	 * This part adds the zoom buttons to the view
+	 * Adding zoom controls This part adds the zoom buttons to the view
 	 */
 
 	private ZoomControls mZoomButtonsController = null;
-	
-	private void showZoomButtons(){
-		if (!mZoomButtonsController.isShown()){
+	private DatabaseInterface mDBinterface;
+	private int widthDisplayField;
+
+	private void showZoomButtons() {
+		if (!mZoomButtonsController.isShown()) {
 			makeZoomButtonAutoDismiss();
 			mZoomButtonsController.bringToFront();
 		}
 	}
-	
+
 	private void addZoomButtons() {
 		if (mZoomButtonsController == null) {
 			mZoomButtonsController = (ZoomControls) findViewById(R.id.zoomcontrolbutton);
@@ -125,32 +168,34 @@ public class CalendarWeekView extends Activity {
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
 			}
-			mZoomButtonsController.setOnZoomInClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					contentLayout
-					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
-				}
-			});
-			mZoomButtonsController.setOnZoomOutClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					contentLayout
-					.zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
-				}
-			});
+			mZoomButtonsController
+					.setOnZoomInClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							contentLayout
+									.zoom(ZoomableViewGroup.DEFAULT_ZOOM_IN_RATE);
+						}
+					});
+			mZoomButtonsController
+					.setOnZoomOutClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							contentLayout
+									.zoom(ZoomableViewGroup.DEFAULT_ZOOM_OUT_RATE);
+						}
+					});
 		}
 	}
-	
+
 	private void makeZoomButtonAutoDismiss() {
 		mZoomButtonsController.show();
 		Runnable hideZoom = new Runnable() {
 			@Override
 			public void run() {
-				mZoomButtonsController.hide();				
+				mZoomButtonsController.hide();
 			}
 		};
 		mHandler.removeCallbacks(hideZoom);
@@ -161,7 +206,6 @@ public class CalendarWeekView extends Activity {
 	 * 
 	 * @see android.app.Activity#onResume()
 	 */
-	
 
 	private void displayAllTimeSlot() {
 		Resources myResources = getResources();
@@ -277,7 +321,8 @@ public class CalendarWeekView extends Activity {
 		for (int i = 0; i < Constant.NUM_DAY_IN_WEEK; i++) {
 			Log.d(TAG, "adding day in week slot");
 			daysInWeekSlot[i] = new DayInWeekView(getApplicationContext());
-
+			daysInWeekSlot[i].setDate(new Date(thisWeek.getTime() + i
+					* Constant.NUM_MILI_SEC_IN_DAY));
 			exWidth = View.MeasureSpec.makeMeasureSpec(daySlotWidth,
 					View.MeasureSpec.EXACTLY);
 			exHeight = View.MeasureSpec.makeMeasureSpec(Constant.NUM_HOUR
@@ -322,8 +367,82 @@ public class CalendarWeekView extends Activity {
 		return false;
 	}
 
-	private void updateView() {
+	private ArrayList<ArrayList<Item>> sortIntoLayer(ArrayList<Item> listEvent) {
+		ArrayList<ArrayList<Item>> result = new ArrayList<ArrayList<Item>>();
+		List<Item> listToSort = listEvent;
+		Collections.sort(listToSort, new Comparator<Item>() {
+			@Override
+			public int compare(Item arg0, Item arg1) {
+				if (arg0.GetStartTime().compareTo(arg1.GetStartTime()) == 0)
+					return arg0.GetEndTime().compareTo(arg1.GetEndTime());
+				else
+					return arg0.GetStartTime().compareTo(arg1.GetStartTime());
+			}
 
+		});
+		boolean[] checked = new boolean[listToSort.size()];
+		for (int i = 0; i < listToSort.size(); i++)
+			checked[i] = false;
+		int numList = 0;
+		for (int i = 0; i < listToSort.size(); i++) {
+			Item thisItem = listToSort.get(i);
+			long minDistance = Long.MAX_VALUE;
+			int bestList = -1;
+			for (int j = 0; j < numList; j++) {
+				ArrayList<Item> layeredList = result.get(j);
+				Item lastItem = layeredList.get(layeredList.size() - 1);
+				if (lastItem.GetEndTime().compareTo(thisItem.GetStartTime()) < 0) {
+					long distance = thisItem.GetStartTime().getTime()
+							- lastItem.GetEndTime().getTime();
+					if (distance < minDistance) {
+						minDistance = distance;
+						bestList = j;
+					}
+				}
+			}
+			if (bestList == -1) {
+				result.add(new ArrayList<Item>());
+				result.get(numList).add(thisItem);
+				numList++;
+			} else {
+				result.get(bestList).add(thisItem);
+			}
+		}
+		return result;
+	}
+
+	private void updateView() {
+		for (int i = contentLayout.getChildCount() - 1; i >= 0; i--) {
+			if (contentLayout.getChildAt(i).getClass()
+					.equals(WeekItemView.class)) {
+				contentLayout.removeViewAt(i);
+			}
+		}
+		for (int t = 0; t < Constant.NUM_DAY_IN_WEEK; t++) {
+			Date thisDate = daysInWeekSlot[t].getDate();
+			listItem = mDBinterface.RetrieveItemFromDatabase(
+					getApplicationContext(), thisDate);
+			listEvent = listItem.get(0);
+			listTask = listItem.get(1);
+			if (listEvent.size() != 0) {
+				ArrayList<ArrayList<Item>> layeredListEvent = sortIntoLayer(listEvent);
+				int numberLayer = layeredListEvent.size();
+				int widthEachLayer = (daySlotWidth) / numberLayer;
+				for (int i = 0; i < layeredListEvent.size(); i++) {
+					ArrayList<Item> thisLayeredList = layeredListEvent.get(i);
+					for (int j = 0; j < thisLayeredList.size(); j++) {
+						Item item = thisLayeredList.get(j);
+						Date startTime = item.GetStartTime();
+						Date endTime = item.GetEndTime();
+
+						addItemViewToTimeSlot(item, t, startTime.getHours(),
+								startTime.getMinutes(), endTime.getHours(),
+								endTime.getMinutes(), i * widthEachLayer,
+								widthEachLayer);
+					}
+				}
+			}
+		}
 	}
 
 	private void showPopUpWindow() {
@@ -358,14 +477,16 @@ public class CalendarWeekView extends Activity {
 		 * need to read from database
 		 */
 		// newItem.setItem(object);
-		newItem.setText("place holder text");		
+		newItem.setText("place holder text");
 		contentLayout.addView(newItem);
-		adjustPositionWeekItemView(newItem, day, fromHour, fromMin, toHour, toMin, leftMargin, width);
+		adjustPositionWeekItemView(newItem, day, fromHour, fromMin, toHour,
+				toMin, leftMargin, width);
 		return newItem;
 	}
-	
-	private void adjustPositionWeekItemView(WeekItemView newItem, int day, int fromHour,
-			int fromMin, int toHour, int toMin, int leftMargin, int width){
+
+	private void adjustPositionWeekItemView(WeekItemView newItem, int day,
+			int fromHour, int fromMin, int toHour, int toMin, int leftMargin,
+			int width) {
 		int height = getHeightForItemInTimeSlot(fromHour, fromMin, toHour,
 				toMin);
 		int exWidth = View.MeasureSpec.makeMeasureSpec(width,
@@ -373,10 +494,11 @@ public class CalendarWeekView extends Activity {
 		int exHeight = View.MeasureSpec.makeMeasureSpec(height,
 				View.MeasureSpec.EXACTLY);
 		newItem.measure(exWidth, exHeight);
-		int left = daysInWeekSlot[day].getLeft()+leftMargin;
-		int top  = dayTimeSlot[fromHour].getTop()+ getMarginCorrespondingToPeriod(fromMin);
-		int right = left+newItem.getMeasuredWidth();
-		int bottom = top+newItem.getMeasuredHeight();
+		int left = daysInWeekSlot[day].getLeft() + leftMargin;
+		int top = dayTimeSlot[fromHour].getTop()
+				+ getMarginCorrespondingToPeriod(fromMin);
+		int right = left + newItem.getMeasuredWidth();
+		int bottom = top + newItem.getMeasuredHeight();
 		newItem.layout(left, top, right, bottom);
 		newItem.setId(contentLayout.getChildCount());
 	}
@@ -398,13 +520,11 @@ public class CalendarWeekView extends Activity {
 
 	}
 
-	
 	/*
-	 * Zooming and scrolling part
-	 * Since the content view is a viewgroup that already supported zooming and scrolling,
-	 * this part only helps that view to adjust the controls that are added.
-	 * It helps by re-adjust the subviews so that they are not misplaced due to round-off
-	 * error. 
+	 * Zooming and scrolling part Since the content view is a viewgroup that
+	 * already supported zooming and scrolling, this part only helps that view
+	 * to adjust the controls that are added. It helps by re-adjust the subviews
+	 * so that they are not misplaced due to round-off error.
 	 */
 	private ZoomableViewGroup.OnScrollListener mOnScrollListener = new ZoomableViewGroup.OnScrollListener() {
 

@@ -9,6 +9,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -83,7 +84,7 @@ public class CalendarDayView extends Activity {
 		setDBInterface();
 
 		thisDate = new Date();
-		thisDate = new Date(thisDate.getYear() - 1900, thisDate.getMonth(),
+		thisDate = new Date(thisDate.getYear(), thisDate.getMonth(),
 				thisDate.getDate());
 		Log.d(TAG, "" + width);
 
@@ -109,7 +110,9 @@ public class CalendarDayView extends Activity {
 	}
 
 	private void displayAllTimeSlot() {
-		widthDisplayField = width
+		DisplayMetrics metrics = new DisplayMetrics();
+		 getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		widthDisplayField = metrics.widthPixels
 				- (int) getResources().getDimension(R.dimen.timeslot_margin);
 		mScrollView = (ScrollView) findViewById(R.id.tabcontentscrollview);
 		for (int i = 0; i < Constant.NUM_HOUR; i++) {
@@ -159,26 +162,37 @@ public class CalendarDayView extends Activity {
 	}
 
 	private void updateView() {
+		for (int i = listTimeSlotLayout.getChildCount()-1;i>=0; i--){
+			if (listTimeSlotLayout.getChildAt(i).getClass().equals(DayItemView.class))
+			{
+				listTimeSlotLayout.removeViewAt(i);
+			}
+		}
 		listItem = mDBinterface.RetrieveItemFromDatabase(
 				getApplicationContext(), thisDate);
 		listEvent = listItem.get(0);
 		listTask = listItem.get(1);
-		ArrayList<ArrayList<Item>> layeredListEvent = sortIntoLayer(listEvent);
-		int numberLayer = layeredListEvent.size();
-		int widthEachLayer = (widthDisplayField - RIGHT_MARGIN) / numberLayer;
-		for (int i = 0; i < layeredListEvent.size(); i++) {
-			ArrayList<Item> thisLayeredList = layeredListEvent.get(i);
-			for (int j = 0; j < thisLayeredList.size(); j++) {
-				Item item = thisLayeredList.get(i);
-				Date startTime = item.GetStartTime();
-				Date endTime = item.GetEndTime();
+		if (listEvent.size() != 0) {
+			ArrayList<ArrayList<Item>> layeredListEvent = sortIntoLayer(listEvent);
+			int numberLayer = layeredListEvent.size();
+			int widthEachLayer = (widthDisplayField - RIGHT_MARGIN)
+					/ numberLayer;
+			for (int i = 0; i < layeredListEvent.size(); i++) {
+				ArrayList<Item> thisLayeredList = layeredListEvent.get(i);
+				for (int j = 0; j < thisLayeredList.size(); j++) {
+					Item item = thisLayeredList.get(j);
+					Date startTime = item.GetStartTime();
+					Date endTime = item.GetEndTime();
 
-				addItemViewToTimeSlot(item, startTime.getHours(),
-						startTime.getMinutes(), endTime.getHours(),
-						endTime.getMinutes(), (int)getResources().getDimension(R.dimen.timeslot_margin)+i*widthEachLayer, widthEachLayer);
+					addItemViewToTimeSlot(item, startTime.getHours(),
+							startTime.getMinutes(), endTime.getHours(),
+							endTime.getMinutes(), (int) getResources()
+									.getDimension(R.dimen.timeslot_margin)
+									+ i
+									* widthEachLayer, widthEachLayer);
+				}
 			}
 		}
-
 	}
 
 	private ArrayList<ArrayList<Item>> sortIntoLayer(ArrayList<Item> listEvent) {
@@ -204,7 +218,7 @@ public class CalendarDayView extends Activity {
 			int bestList = -1;
 			for (int j = 0; j < numList; j++) {
 				ArrayList<Item> layeredList = result.get(j);
-				Item lastItem = layeredList.get(layeredList.size());
+				Item lastItem = layeredList.get(layeredList.size()-1);
 				if (lastItem.GetEndTime().compareTo(thisItem.GetStartTime()) < 0) {
 					long distance = thisItem.GetStartTime().getTime()
 							- lastItem.GetEndTime().getTime();
