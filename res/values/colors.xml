@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="timeslot_background">#AAFFFF99</color>
+  <color name="timeslot_background">#D6FFD6</color>
   <color name="timeslot_lines">#FF0000FF</color>
   <color name="timeslot_margin">#90FF0000</color>
 </resources>
