@@ -210,8 +210,6 @@ public class PopupForm extends Activity {
 	private void loadResources() {
 
 		myResource = getResources();
-		offX = (int) myResource.getDimension(R.dimen.left_margin_popup);
-		offY = (int) myResource.getDimension(R.dimen.top_margin_popup);
 		mExtras = getIntent().getExtras();
 		mType = mExtras.getInt("popupType");
 		startTime = (Date) mExtras.get("startTime");
@@ -368,11 +366,11 @@ public class PopupForm extends Activity {
 
 	private void updateDisplay() {
 		mBtChangeStartTime.setText(TimeFormat
-				.getAPPMTimeFormatWithHourPadding(startTime));
+				.getAMPMTimeFormatWithHourPadding(startTime));
 		mBtChangeStartDate.setText(DateFormat.format("MMM/dd/yyyy", startTime)
 				.toString());
 		mBtChangeEndTime.setText(TimeFormat
-				.getAPPMTimeFormatWithHourPadding(endTime));
+				.getAMPMTimeFormatWithHourPadding(endTime));
 		mBtChangeEndDate.setText(DateFormat.format("MMM/dd/yyyy", endTime)
 				.toString());
 	}

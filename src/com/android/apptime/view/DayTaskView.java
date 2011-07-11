@@ -17,7 +17,10 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.TextView;
 
-public class DayItemView extends TextView {
+public class DayTaskView extends TextView {
+	// where the title is displayed, with respect to the line
+	public static final int STYLE_NORMAL = 1;
+	public static final int STYLE_BELOW = 2;
 	private Context context;
 	private Paint marginPaint = null;
 	private Paint borderPaint = null;
@@ -29,20 +32,21 @@ public class DayItemView extends TextView {
 	private String time = "1pm-3pm";
 	private String content = "";
 	private Item item = null;
+	private int style = 1;
 
-	public DayItemView(Context context, AttributeSet ats, int ds) {
+	public DayTaskView(Context context, AttributeSet ats, int ds) {
 		super(context, ats, ds);
 		this.context = context;
 		init();
 	}
 
-	public DayItemView(Context context) {
+	public DayTaskView(Context context) {
 		super(context);
 		this.context = context;
 		init();
 	}
 
-	public DayItemView(Context context, AttributeSet attrs) {
+	public DayTaskView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 		init();
@@ -57,38 +61,37 @@ public class DayItemView extends TextView {
 		borderPaint.setStyle(Style.STROKE);
 		borderPaint.setStrokeWidth(10);
 		marginPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		marginPaint.setColor(Color.RED);
+		marginPaint.setColor(Color.YELLOW);
 		marginPaint.setStyle(Style.STROKE);
-		marginPaint.setStrokeWidth(5);
+		marginPaint.setStrokeWidth(15);
 		linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		linePaint.setColor(myResources.getColor(R.color.timeslot_lines));
 		linePaint.setStyle(Style.STROKE);
 		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 		textPaint.setColor(Color.WHITE);
-		textPaint.setTextSize(20);
+		textPaint.setTextSize(30);
 		bgColor = Color.TRANSPARENT;
 		// Get the paper background color and the margin width.
 
 		margin = myResources.getDimension(R.dimen.timeslot_margin);
 	}
 
-	
-
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawColor(Color.argb(100, 0, 0, 0));
+		canvas.drawColor(Color.argb(0, 0, 0, 0));
 		// Draw border:
-		canvas.drawLine(0, 40, getMeasuredWidth(), 40, marginPaint);
-		
-		canvas.drawRoundRect(new RectF(0, 0, getMeasuredWidth(),
-				getMeasuredHeight()), 20, 20, borderPaint);
-
-		canvas.drawText(time, 20, 35, textPaint);
-
-		
-
-		canvas.drawText(this.getText().toString(), 20,
-				40 + linePaint.getTextSize() + 10, linePaint);
+		if (style == STYLE_NORMAL) {
+			canvas.drawLine(0, getMeasuredHeight(), getMeasuredWidth(),
+					getMeasuredHeight(), marginPaint);
+			canvas.drawText(this.getText().toString(), 20,
+					getMeasuredHeight() - 20, linePaint);
+			
+		} else {
+			canvas.drawLine(0, 0, getMeasuredWidth(),
+					0, marginPaint);
+			canvas.drawText(this.getText().toString(), 20,
+					20+getTextSize(), linePaint);			
+		}
 	}
 
 	protected void createContextMenuListener(ContextMenu menu, View v,
@@ -108,8 +111,6 @@ public class DayItemView extends TextView {
 
 	public void setItem(Item object) {
 		item = object;
-		time = TimeFormat.getTimeFormatWithoutHourPadding(item.GetStartTime())+"-"+
-				TimeFormat.getTimeFormatWithoutHourPadding(item.GetEndTime());
 	}
 
 	/**
@@ -130,6 +131,14 @@ public class DayItemView extends TextView {
 
 	public void setBGColor(int color) {
 		this.bgColor = color;
+	}
+
+	public void setStyle(int style) {
+		this.style = style;
+	}
+
+	public int getStyle() {
+		return this.style;
 	}
 
 }

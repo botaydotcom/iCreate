@@ -29,7 +29,8 @@ import com.android.apptime.view.OrganizerView;
 
 public class Main extends TabActivity {
 
-    /** Called when the activity is first created. */
+    public static final String IVLE_TOKEN_FIELD = "IVLE_Token";
+	/** Called when the activity is first created. */
 	/*
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -245,14 +246,16 @@ public class Main extends TabActivity {
 		super.onResume();
 		String IVLE_Token = "";
 		SharedPreferences settings = getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
-		IVLE_Token = settings.getString("IVLE_Token", "");
+		IVLE_Token = settings.getString(IVLE_TOKEN_FIELD, "");
 		Log.d(TAG, "token is+ "+ IVLE_Token);
 		if (IVLE_Token.equals("")) {
 			Intent intent = new Intent(getApplicationContext(),
 					LoginScreen.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivityForResult(intent, LOGIN_SCREEN);
-		} else ;//logged in
+		} else {
+			Ivle ivle = Ivle.createInstance(getApplicationContext());//logged in
+		}
 	}
 
 	@Override

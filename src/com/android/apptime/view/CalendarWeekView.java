@@ -300,7 +300,7 @@ public class CalendarWeekView extends Activity {
 			dayTimeSlot[i].getTime().setHours(i);
 			dayTimeSlot[i].getTime().setMinutes(0);
 			dayTimeSlot[i].setText(TimeFormat
-					.getAPPMHourFormatWithoutHourPadding(dayTimeSlot[i]
+					.getAMPMHourFormatWithoutHourPadding(dayTimeSlot[i]
 							.getTime()));
 			exWidth = View.MeasureSpec.makeMeasureSpec(screenWidth,
 					View.MeasureSpec.EXACTLY);
