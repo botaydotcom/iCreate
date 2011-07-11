@@ -16,9 +16,6 @@ public class IvleDataPullerController extends TabActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         startService(new Intent(IvleDataPullerController.this,IvleDataPuller.class));
-        stopService(new Intent(IvleDataPullerController.this,IvleDataPuller.class));
-        
-       
-        
+        stopService(new Intent(IvleDataPullerController.this,IvleDataPuller.class));        
    }
 }
