@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/container" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:layout_width="fill_parent">
+	<RelativeLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:id="@+id/timeSection">
+		<ImageView android:src="@drawable/arrow_previous"
+			android:layout_width="30dp" android:layout_height="20dp"
+			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
+			android:layout_marginTop="10dp" android:layout_marginLeft="5dp"
+			android:id="@+id/btPrevious"></ImageView>
+		<ImageView android:src="@drawable/arrow_next"
+			android:layout_width="30dp" android:layout_height="20dp"
+			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+			android:layout_marginTop="10dp" android:layout_marginRight="5dp"
+			android:id="@+id/btNext"></ImageView>
+		<TextView
+			android:layout_toRightOf="@id/btPrevious"
+			android:layout_toLeftOf="@id/btNext" 
+			android:layout_width="fill_parent"
+			android:layout_height="35dp" android:background="#98456723"
+			android:layout_alignParentTop="true" android:text="time time time"
+			android:id="@+id/tvTime" />
+	</RelativeLayout>
+	<RelativeLayout android:layout_below="@+id/timeSection"
+		android:id="@+id/container" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
 		<ZoomControls android:id="@+id/zoomcontrolbutton"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:visibility="visible" 
-			android:layout_alignParentBottom="true"
-			android:layout_alignParentRight="true"/>
+			android:visibility="visible" android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true" />
+	</RelativeLayout>
 </RelativeLayout>

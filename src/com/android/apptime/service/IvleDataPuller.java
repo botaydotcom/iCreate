@@ -22,9 +22,19 @@ public class IvleDataPuller extends Service{
 	public void onCreate() {
 		super.onCreate();
 		
-		Ivle ivledata = new Ivle();
-		List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
+
+		Ivle ivledata = Ivle.getInstance();
 		
+
+		List<IvleTimetableData>  timetable = ivledata.getTimetableList("2011-2012", "1");
+//=======
+		//List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
+//>>>>>>> 1e2ad1b016fbb91de43ca56011297260e9613e2f
+		
+
+	//	Ivle ivledata = new Ivle();
+	//	List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
+
 		Toast.makeText(this,"IVLE serv created", Toast.LENGTH_LONG).show();
 	}
 	

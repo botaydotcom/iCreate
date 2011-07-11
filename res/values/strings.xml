@@ -50,6 +50,10 @@
 	<string name="weektypeenddate">WeekTypeEndDate</string>
 	<string name="weektypestartdate">WeekTypeStartDate</string>
 	
+<!-- 	Notification -->
+	<string name="eventreminder">Event Reminder</string>
+	<string name="taskreminder">Task Reminder</string>
+	
 <!-- 	Popup window - add/modify item -->
 	<string name="strAnnounceNotEnoughDetail">Please fill in the title</string>
 	
@@ -59,6 +63,14 @@
 		<item>Location B</item>
 		<item>Location C</item>
 		<item>Location D</item>
+	</string-array>
+	
+<!-- 	AlertTime Array -->
+	<string-array name="alerttimeArray">
+		<item>10 min before</item>
+		<item>30 min before</item>
+		<item>1 hour before</item>
+		<item>1 day before</item>
 	</string-array>
 
 </resources>

@@ -127,7 +127,7 @@ public class DatabaseInterface {
 
 	}
 
-	// retrieve item by ITEM id
+	// retrieve item by ITEM date, yyyy-mm-dd hh:mm:ss to +24hrs later 
 	
 	public ArrayList<ArrayList<Item>> RetrieveItemFromDatabase(Context context,
 			Date datetime) {
@@ -196,7 +196,39 @@ public class DatabaseInterface {
 		return myitem;
 
 	}
-
+	
+	
+	// retrieve a list of ArrayList<ArrayList<Item>> <-- list item by date
+	// parameters : fromdate is the beginning date
+	// todate : is the BEGINNING of the last date
+	// so should be like fromdate =2011-07-11 00:00:00 and todate = 2011-07-17 00:00:00  
+	public ArrayList<ArrayList<ArrayList<Item>>> RetrieveItemFromDateRange(Context context,
+			Date fromdate, Date todate) {
+		ArrayList<ArrayList<ArrayList<Item>>> resultlist = null;
+		
+		long MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
+		long starttime = fromdate.getTime();
+		long endtime = todate.getTime() + MILLIS_IN_DAY;
+		long current = fromdate.getTime(); 
+			
+		while(current < endtime)
+		{
+			Date currdate = new Date(current);
+			ArrayList<ArrayList<Item>> currentlist = this.RetrieveItemFromDatabase(context, currdate);
+			resultlist.add(currentlist);
+			current+= MILLIS_IN_DAY;
+		
+		
+		}
+		
+		
+		
+		return resultlist;
+		
+	}
+	
+	
+	
 	public void SetObserver(DbSetChange dbsetchange) {
 		this.dbsetchange = dbsetchange;
 

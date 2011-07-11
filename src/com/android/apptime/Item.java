@@ -29,7 +29,7 @@ public class Item {
 	
 	// Constructor
 	public Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
-	String itemtype, Date starttime, Date endtime, Date deadline, Date alerttime, String repeat, String completed, Integer color)
+	String itemtype, Date starttime, Date endtime, Date deadline, String alerttime, String repeat, String completed, Integer color)
 	{
 		
 		_title = title;
@@ -52,9 +52,21 @@ public class Item {
 		{
 			_deadline = String.valueOf(deadline.getTime());
 		}
+		
+		
+		
+		long day1 = 1000 * 60 * 60 * 24;
+		long hour1 = day1/24;
+		long min30 = hour1/2;
+		long min10 = min30/3;
+		if (alerttime.equalsIgnoreCase("10 minutes before"))
+		{
+			_alertTime = String.valueOf(starttime.getTime() - min10); 
+		}
+		
 		if (alerttime!=null)
 		{
-			_alertTime = String.valueOf(alerttime.getTime());
+			//_alertTime = String.valueOf(alerttime.getTime());
 		}
 		
 		_repeat = repeat;
@@ -62,17 +74,59 @@ public class Item {
 		_color = color;		
 	}
 	
+	public Item (String title, String description, String location, String category, List<String> alerttype, String priority, 
+			String itemtype, Date starttime, Date endtime, Date deadline, Date alerttime, String repeat, String completed, Integer color)
+			{
+				
+				_title = title;
+				_description = description;
+				_location = location;
+				_category = category;
+				_alertType = alerttype;
+				_priority = priority;
+				_itemType = itemtype;
+				
+				if (starttime!=null)
+				{
+					_startTime = String.valueOf(starttime.getTime());
+				}
+				if (endtime!=null)
+				{
+					_endTime = String.valueOf(endtime.getTime());
+				}
+				if (deadline!=null)
+				{
+					_deadline = String.valueOf(deadline.getTime());
+				}
+				
+				
+				
+				
+				
+				if (alerttime!=null)
+				{
+					_alertTime = String.valueOf(alerttime.getTime());
+				}
+				
+				_repeat = repeat;
+				_completed = completed;
+				_color = color;		
+			}
 	
 	
 	// title, type, start/endtime, location
 	public Item(String title, String type, Date starttime, Date endtime, String location)
 	{
+		long day1 = 1000 * 60 * 60 * 24;
+		long hour1 = day1/24;
+		long min30 = hour1/2;
+		long min10 = min30/3;
 		_title = title;
 		_itemType = type;
 		_startTime = String.valueOf(starttime.getTime());
 		_endTime = String.valueOf(endtime.getTime());
 		_priority = "NORMAL";
-		_alertTime = "10";
+		_alertTime = String.valueOf(starttime.getTime()- min10);
 		_repeat = "FALSE";
 		_completed = "FALSE";
 		_color = 1;

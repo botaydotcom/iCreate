@@ -3,6 +3,7 @@
   <dimen name="timeslot_margin">50dp</dimen>
   <dimen name="title_height">40dp</dimen>
   <dimen name="timeslot_height">60dp</dimen>
+  <dimen name="taskview_height">60dp</dimen>
   <dimen name="left_margin_popup">30dp</dimen>
   <dimen name="top_margin_popup">50dp</dimen>  
 </resources>

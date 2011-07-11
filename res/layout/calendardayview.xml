@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/tabcontentscrollview" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<RelativeLayout android:id="@+id/timeslotlistlayout"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
-</ScrollView>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent">
+	<RelativeLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:id="@+id/timeSection">
+		<ImageView android:src="@drawable/arrow_previous"
+			android:layout_width="30dp" android:layout_height="20dp"
+			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
+			android:layout_marginTop="10dp" android:layout_marginLeft="5dp"
+			android:id="@+id/btPrevious"></ImageView>
+		<ImageView android:src="@drawable/arrow_next"
+			android:layout_width="30dp" android:layout_height="20dp"
+			android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+			android:layout_marginTop="10dp" android:layout_marginRight="5dp"
+			android:id="@+id/btNext"></ImageView>
+		<TextView
+			android:layout_toRightOf="@id/btPrevious"
+			android:layout_toLeftOf="@id/btNext" 
+			android:layout_width="fill_parent"
+			android:layout_height="35dp" android:background="#98456723"
+			android:layout_alignParentTop="true" android:text="time time time"
+			android:id="@+id/tvTime" />
+	</RelativeLayout>
+	<ScrollView android:layout_below="@+id/timeSection" android:id="@+id/tabcontentscrollview"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<RelativeLayout android:id="@+id/timeslotlistlayout"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" />
+	</ScrollView>
+</RelativeLayout>

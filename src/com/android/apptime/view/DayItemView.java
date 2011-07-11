@@ -65,7 +65,7 @@ public class DayItemView extends TextView {
 		linePaint.setStyle(Style.STROKE);
 		textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
 		textPaint.setColor(Color.WHITE);
-		textPaint.setTextSize(30);
+		textPaint.setTextSize(20);
 		bgColor = Color.TRANSPARENT;
 		// Get the paper background color and the margin width.
 
@@ -78,12 +78,14 @@ public class DayItemView extends TextView {
 	public void onDraw(Canvas canvas) {
 		canvas.drawColor(Color.argb(100, 0, 0, 0));
 		// Draw border:
+		canvas.drawLine(0, 40, getMeasuredWidth(), 40, marginPaint);
+		
 		canvas.drawRoundRect(new RectF(0, 0, getMeasuredWidth(),
 				getMeasuredHeight()), 20, 20, borderPaint);
 
 		canvas.drawText(time, 20, 35, textPaint);
 
-		canvas.drawLine(0, 40, getMeasuredWidth(), 40, marginPaint);
+		
 
 		canvas.drawText(this.getText().toString(), 20,
 				40 + linePaint.getTextSize() + 10, linePaint);
@@ -106,6 +108,8 @@ public class DayItemView extends TextView {
 
 	public void setItem(Item object) {
 		item = object;
+		time = TimeFormat.getTimeFormatWithoutHourPadding(item.GetStartTime())+"-"+
+				TimeFormat.getTimeFormatWithoutHourPadding(item.GetEndTime());
 	}
 
 	/**

@@ -29,7 +29,8 @@ import com.android.apptime.view.OrganizerView;
 
 public class Main extends TabActivity {
 
-    /** Called when the activity is first created. */
+    public static final String IVLE_TOKEN_FIELD = "IVLE_Token";
+	/** Called when the activity is first created. */
 	/*
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,7 @@ public class Main extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 		
-		
+		String s = getResources().getString(R.string.apikeyfield);
 		startService(new Intent(Main.this,IvleDataPuller.class));
         stopService(new Intent(Main.this,IvleDataPuller.class));		
 		DatabaseInterface database =
@@ -193,8 +194,16 @@ public class Main extends TabActivity {
 //		//database.AddItemToDatabase(this.getApplicationContext(),item);
 //		
 //		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
-		
-		
+		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 try {
+		 Date a = dfm.parse("1970-01-02 09:55:42"); //Fri, 02 Jan 1970 09:55:42 GMT
+		 a = new Date(1221423535);
+		 //database.RetrieveItemFromDatabase(getApplicationContext(), a);
+		 int yu= 0;
+		 } catch (ParseException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
 		database.CloseDatabase();
 
 		
@@ -245,14 +254,16 @@ public class Main extends TabActivity {
 		super.onResume();
 		String IVLE_Token = "";
 		SharedPreferences settings = getSharedPreferences(SHARED_PREF_FILE, MODE_PRIVATE);
-		IVLE_Token = settings.getString("IVLE_Token", "");
+		IVLE_Token = settings.getString(IVLE_TOKEN_FIELD, "");
 		Log.d(TAG, "token is+ "+ IVLE_Token);
 		if (IVLE_Token.equals("")) {
 			Intent intent = new Intent(getApplicationContext(),
 					LoginScreen.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivityForResult(intent, LOGIN_SCREEN);
-		} else ;//logged in
+		} else {
+			Ivle ivle = Ivle.createInstance(getApplicationContext());//logged in
+		}
 	}
 
 	@Override

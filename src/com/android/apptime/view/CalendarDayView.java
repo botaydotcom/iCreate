@@ -111,7 +111,7 @@ public class CalendarDayView extends Activity {
 
 	private void displayAllTimeSlot() {
 		DisplayMetrics metrics = new DisplayMetrics();
-		 getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		widthDisplayField = metrics.widthPixels
 				- (int) getResources().getDimension(R.dimen.timeslot_margin);
 		mScrollView = (ScrollView) findViewById(R.id.tabcontentscrollview);
@@ -120,7 +120,7 @@ public class CalendarDayView extends Activity {
 			dayTimeSlot[i].getTime().setHours(i);
 			dayTimeSlot[i].getTime().setMinutes(0);
 			dayTimeSlot[i].setText(TimeFormat
-					.getAPPMHourFormatWithoutHourPadding(dayTimeSlot[i]
+					.getAMPMHourFormatWithoutHourPadding(dayTimeSlot[i]
 							.getTime()));
 			RelativeLayout.LayoutParams layoutParams = null;
 			layoutParams = new RelativeLayout.LayoutParams(
@@ -162,9 +162,9 @@ public class CalendarDayView extends Activity {
 	}
 
 	private void updateView() {
-		for (int i = listTimeSlotLayout.getChildCount()-1;i>=0; i--){
-			if (listTimeSlotLayout.getChildAt(i).getClass().equals(DayItemView.class))
-			{
+		for (int i = listTimeSlotLayout.getChildCount() - 1; i >= 0; i--) {
+			if (listTimeSlotLayout.getChildAt(i).getClass()
+					.equals(DayItemView.class)) {
 				listTimeSlotLayout.removeViewAt(i);
 			}
 		}
@@ -184,13 +184,21 @@ public class CalendarDayView extends Activity {
 					Date startTime = item.GetStartTime();
 					Date endTime = item.GetEndTime();
 
-					addItemViewToTimeSlot(item, startTime.getHours(),
+					addEventViewToTimeSlot(item, startTime.getHours(),
 							startTime.getMinutes(), endTime.getHours(),
 							endTime.getMinutes(), (int) getResources()
 									.getDimension(R.dimen.timeslot_margin)
 									+ i
 									* widthEachLayer, widthEachLayer);
 				}
+			}
+		}
+
+		if (listTask.size() != 0) {
+			for (int i = 0; i < listTask.size(); i++) {
+				Item item = listTask.get(i);
+				Date deadLine = item.GetDeadline();
+				addTaskViewToTimeSlot(item, deadLine);
 			}
 		}
 	}
@@ -218,7 +226,7 @@ public class CalendarDayView extends Activity {
 			int bestList = -1;
 			for (int j = 0; j < numList; j++) {
 				ArrayList<Item> layeredList = result.get(j);
-				Item lastItem = layeredList.get(layeredList.size()-1);
+				Item lastItem = layeredList.get(layeredList.size() - 1);
 				if (lastItem.GetEndTime().compareTo(thisItem.GetStartTime()) < 0) {
 					long distance = thisItem.GetStartTime().getTime()
 							- lastItem.GetEndTime().getTime();
@@ -267,10 +275,64 @@ public class CalendarDayView extends Activity {
 		}
 	}
 
-	public DayItemView addItemViewToTimeSlot(Item item, int fromHour,
+	private void addTaskViewToTimeSlot(Item item, Date deadLine) {
+		DayTaskView newItem = new DayTaskView(getApplicationContext());
+		newItem.setText("Place holder text");
+		// need to read from database
+		// newItem.setItem(object);
+		int toHour = deadLine.getHours();
+		int toMin = deadLine.getMinutes();
+		if (toHour >= 1) {
+			// display a line with title above (style 1)
+			RelativeLayout.LayoutParams layoutParams = null;
+			int height = (int) getResources().getDimension(
+					R.dimen.taskview_height);
+			layoutParams = new RelativeLayout.LayoutParams(widthDisplayField,
+					height);
+			if (toMin == 0) {
+				layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM,
+						dayTimeSlot[toHour].getId());
+				layoutParams.setMargins(
+						(int) getResources().getDimension(
+								R.dimen.timeslot_margin), 0, 0, 0);
+			} else {
+				layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM,
+						dayTimeSlot[toHour + 1].getId());
+				layoutParams.setMargins(
+						(int) getResources().getDimension(
+								R.dimen.timeslot_margin), 0, 0,
+						getMarginCorrespondingToPeriod(60 - toMin));
+			}
+			newItem.setLayoutParams(layoutParams);
+			newItem.setId(nextViewId++);
+			listTimeSlotLayout.addView(newItem);
+		} else {
+			// display a line with title below (style 2)
+			newItem.setStyle(DayTaskView.STYLE_BELOW);
+			RelativeLayout.LayoutParams layoutParams = null;
+			int height = (int) getResources().getDimension(
+					R.dimen.taskview_height);
+			layoutParams = new RelativeLayout.LayoutParams(widthDisplayField,
+					height);
+			if (toMin == 0) {
+				layoutParams.addRule(RelativeLayout.ALIGN_TOP,
+						dayTimeSlot[toHour].getId());
+				layoutParams.setMargins(
+						(int) getResources().getDimension(R.dimen.timeslot_margin),
+						getMarginCorrespondingToPeriod(toMin), 0, 0);
+			}
+			newItem.setLayoutParams(layoutParams);
+			newItem.setId(nextViewId++);
+			listTimeSlotLayout.addView(newItem);
+		}
+
+	}
+
+	public DayItemView addEventViewToTimeSlot(Item item, int fromHour,
 			int fromMin, int toHour, int toMin, int leftMargin, int width) {
 		DayItemView newItem = new DayItemView(getApplicationContext());
-		newItem.setText("Place holder text");
+		newItem.setText(item.GetTitle());
+		newItem.setItem(item);
 		// need to read from database
 		// newItem.setItem(object);
 		RelativeLayout.LayoutParams layoutParams = null;
@@ -338,48 +400,5 @@ public class CalendarDayView extends Activity {
 	}
 
 	// will not get called
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(TAG, "on activity result");
-		switch (resultCode) {
-		case (RESULT_CANCELED):
-			break;
-		case (RESULT_OK):
-			if (!data.hasExtra("removed")) {
-				if (!data.hasExtra("detailed")) {
-
-				} else {
-
-				}
-
-				Date startTime = (Date) data.getSerializableExtra("startTime");
-				Date endTime = (Date) data.getSerializableExtra("endTime");
-				Log.d(TAG,
-						"on activity result, startHour "
-								+ startTime.toGMTString() + " end hour "
-								+ endTime.toGMTString());
-				if (data.getBooleanExtra("newItem", false) == true)
-					addItemViewToTimeSlot(null, startTime.getHours(),
-							startTime.getMinutes(), endTime.getHours(),
-							endTime.getMinutes(), 50, 50);
-			} else {
-				if (data.getBooleanExtra("removed", false))
-					return;
-				int itemId = data.getIntExtra("itemId", -1);
-				if (itemId != -1) {
-					removeItem(itemId);
-					return;
-				}
-			}
-			break;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
-	private void removeItem(int itemId) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
