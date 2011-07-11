@@ -1,20 +1,15 @@
 package com.android.apptime.view;
 
-import java.io.File;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.FloatMath;
+import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.ZoomButtonsController;
 
 public class InteractiveImageView extends ImageView {
 
@@ -89,7 +84,6 @@ public class InteractiveImageView extends ImageView {
 		return (int) -rect.top;
 	}
 
-
 	private int overScrollTop() {
 		if (computeVerticalScrollOffset() > 0)
 			return computeVerticalScrollOffset() - 0;
@@ -137,7 +131,6 @@ public class InteractiveImageView extends ImageView {
 	private Matrix originalMatrix = new Matrix();
 	private Matrix savedMatrix = new Matrix();
 	private Bitmap image;
-	private File imageFile;
 
 	// We can be in one of these 3 states
 	static final int NONE = 0;
@@ -150,15 +143,34 @@ public class InteractiveImageView extends ImageView {
 	private float minScale = 1.0f;
 	private int savedwidth, savedheight, width, height, vWidth, vHeight;
 
-	// Remember some things for zooming
-	// below modification by naveen. remember initial scale for x and y
-
 	private PointF start = new PointF();
 	private PointF mid = new PointF();
 	private Context context;
 	private float oldScale = 1f, netScale = 1f;
 	private float oldDist = 1f;
 	private float deltaX = 0, deltaY = 0;
+
+	public void zoomOut(float deltaScale) {
+		if (netScale * deltaScale <= maxScale
+				&& netScale * deltaScale >= minScale) {
+			savedMatrix.postScale(deltaScale, deltaScale);
+			netScale = netScale * deltaScale;
+			width = (int) (savedwidth * netScale);
+			height = (int) (savedheight * netScale);
+		}
+		updateView();
+	}
+
+	public void zoomIn(float deltaScale) {
+		if (netScale * deltaScale <= maxScale
+				&& netScale * deltaScale >= minScale) {
+			savedMatrix.postScale(deltaScale, deltaScale);
+			netScale = netScale * deltaScale;
+			width = (int) (savedwidth * netScale);
+			height = (int) (savedheight * netScale);
+		}
+		updateView();
+	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -241,95 +253,36 @@ public class InteractiveImageView extends ImageView {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			// Log.d(TAG,
-			// "update view: scale = " + scale + " "
-			// + savedMatrix.toShortString());
+			Log.d(TAG,
+					"update view: scale = " + scale + " "
+							+ savedMatrix.toShortString());
 			Matrix matrix = getImageMatrix();
 			matrix.set(savedMatrix);
 			setCenter();
-			// Log.d(TAG, "after checking " + getImageMatrix().toShortString());
+			Log.d(TAG, "after checking " + getImageMatrix().toShortString());
 			invalidate();
 		}
 	};
 
 	private void updateView() {
+		Log.d(TAG, "update view " + savedMatrix.toString());
 		mHandler.removeCallbacks(updateUI);
 		mHandler.post(updateUI);
 
 	}
 
-	public void setImage2() {
-		super.setImageBitmap(image);
-		center();
-	}
-
 	protected boolean fullSizeLoaded = false;
 
-	public void setImage(Bitmap newBitmap, boolean isFullSize) {
+	public void setImage(Bitmap newBitmap) {
 		// //Log.d(TAG, "loaded");
-		if (!isFullSize) {
-			// if the full sized image is available - return;
-			if (fullSizeLoaded)
-				return;
+		fullSizeLoaded = true;
+		if (image == null) {
 			image = newBitmap;
 			rect = new RectF(0, 0, image.getWidth(), image.getHeight());
 			super.setImageBitmap(newBitmap);
 			center();
-		} else {
-			fullSizeLoaded = true;
-			if (image == null) {
-				image = newBitmap;
-				rect = new RectF(0, 0, image.getWidth(), image.getHeight());
-				super.setImageBitmap(newBitmap);
-				center();
-			} else {
-				// Log.d("BACKGROUND", "try to set the full image ");
-				// Log.d("Touch", "current matrix:"
-				// +getImageMatrix().toString());
-				rect = new RectF(0, 0, image.getWidth(), image.getHeight());
-				Matrix matrix = getImageMatrix();
-				matrix.mapRect(rect);
-				// Log.d("Touch", "current rectanlge :" + rect.toString());
-				image = newBitmap;
-
-				this.setImageBitmap(image);
-				matrix = new Matrix();
-				matrix.postScale((float) (rect.width() / image.getWidth()),
-						(float) (rect.height() / image.getHeight()), 0, 0);
-				matrix.postTranslate(rect.left, rect.top);
-				width = (int) rect.width();
-				height = (int) rect.height();
-				// Log.d("Touch", "set to:" +matrix);
-				this.setImageMatrix(matrix);
-				savedMatrix.set(matrix);
-				// Log.d("Touch", "now it is: "+getImageMatrix().toString());
-				rect = new RectF(0, 0, image.getWidth(), image.getHeight());
-				matrix.mapRect(rect);
-				// Log.d("Touch", "which will create the rect:" +
-				// rect.toString());
-				updateView();
-			}
 		}
-	}
 
-	public boolean setImage(int pageNo) {
-		// image = Viewer.getImgFromFile(file);
-		// picture.setImageBitmap(myBitmap);
-		// this.imageFile = file;
-		this.imageFile = new File(
-				"/mnt/sdcard/Images/high_quality_150dpi_part/1_Page_010.jpg");
-		if (imageFile.exists()) {
-			image = BitmapFactory
-					.decodeFile("/mnt/sdcard/Images/high_quality_150dpi_part/1_Page_010.jpg");
-			super.setImageBitmap(image);
-			center();
-			return true;
-		} else
-			return false;
-	}
-
-	public File getFile() {
-		return imageFile;
 	}
 
 	@Override
@@ -340,9 +293,18 @@ public class InteractiveImageView extends ImageView {
 		center();
 	}
 
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		vWidth = MeasureSpec.getSize(widthMeasureSpec);
+		vHeight = MeasureSpec.getSize(widthMeasureSpec);
+	}
+
 	private void center() {
 		width = image.getWidth();
 		height = image.getHeight();
+		Log.d(TAG, "on center size of view:" + vWidth + " " + vHeight
+				+ " size of image: " + width + " " + height);
 		float sc = 1f;
 		if (vWidth != 0 && vHeight != 0) {
 			if (1.0 * vWidth / width < 1.0 * vHeight / height) {
@@ -361,7 +323,7 @@ public class InteractiveImageView extends ImageView {
 				maxScale = 3.0f;
 				minScale = 1f;
 			}
-			// ////Log.d(TAG, "translate the view, to scale: "+sc);
+			Log.d(TAG, "translate the view, to scale: " + sc);
 			originalMatrix.postScale(sc, sc);
 			originalMatrix.postTranslate((vWidth - width) / 2f,
 					(vHeight - height) / 2f);
@@ -370,9 +332,14 @@ public class InteractiveImageView extends ImageView {
 			savedheight = height;
 
 		}
-		// Log.d(TAG, "size of view:" + vWidth + " " + vHeight
-		// + " size of image: " + width + " " + height);
+		Log.d(TAG, "size of view:" + vWidth + " " + vHeight
+				+ " size of image: " + width + " " + height);
 		updateView();
+	}
+
+	public void setHandler(Handler handler) {
+		mHandler = handler;
+
 	}
 
 }
