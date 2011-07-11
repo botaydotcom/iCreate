@@ -1,7 +1,6 @@
 package com.android.apptime.view;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -66,6 +65,8 @@ public class CalendarMonthView extends Activity {
 	private int screenWidth = 0, screenHeight = 0;
 	private Handler mHandler = null;
 
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +92,48 @@ public class CalendarMonthView extends Activity {
 		addZoomButtons();
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+		updateView();
+	}
+	
+	private void updateView() {
+//		
+//		for (int i = contentLayout.getChildCount() - 1; i >= 0; i--) {
+//			if (contentLayout.getChildAt(i).getClass()
+//					.equals(DayInMonthView.class)) {
+//				contentLayout.removeViewAt(i);
+//			}
+//		}
+//		for (int t = 0; t < numDisplayedDay; t++) {
+//			Date thisDate = daysInWeekSlot[t].getDate();
+//			listItem = mDBinterface.RetrieveItemFromDatabase(
+//					getApplicationContext(), thisDate);
+//			listEvent = listItem.get(0);
+//			listTask = listItem.get(1);
+//			if (listEvent.size() != 0) {
+//				ArrayList<ArrayList<Item>> layeredListEvent = sortIntoLayer(listEvent);
+//				int numberLayer = layeredListEvent.size();
+//				int widthEachLayer = (daySlotWidth) / numberLayer;
+//				for (int i = 0; i < layeredListEvent.size(); i++) {
+//					ArrayList<Item> thisLayeredList = layeredListEvent.get(i);
+//					for (int j = 0; j < thisLayeredList.size(); j++) {
+//						Item item = thisLayeredList.get(j);
+//						Date startTime = item.GetStartTime();
+//						Date endTime = item.GetEndTime();
+//
+//						addItemViewToTimeSlot(item, t, startTime.getHours(),
+//								startTime.getMinutes(), endTime.getHours(),
+//								endTime.getMinutes(), i * widthEachLayer,
+//								widthEachLayer);
+//					}
+//				}
+//			}
+//		}
+	}
+
+	
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -296,10 +339,6 @@ public class CalendarMonthView extends Activity {
 			return true;
 		}
 		return false;
-	}
-
-	private void updateView() {
-
 	}
 
 	private void showPopUpWindow() {

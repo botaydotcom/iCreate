@@ -11,6 +11,15 @@ import android.util.Xml;
 
 public class MapGetAndroidSaxFeedParser extends MapGetBaseFeedParser {
 
+	
+	/*
+	 To use this, call:
+	 Uri pathUri = Uri.parse("android.resource://"
+				+ getApplicationContext().getPackageName() + "/"
+				+ R.raw.buildinglist);
+	 String path = pathUri.toString();
+	 */
+	
 	static final String RSS = "plist";
 	public MapGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);

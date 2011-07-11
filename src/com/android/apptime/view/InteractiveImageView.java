@@ -2,8 +2,11 @@ package com.android.apptime.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -13,8 +16,37 @@ import android.widget.ImageView;
 
 public class InteractiveImageView extends ImageView {
 
+	private static final float ZOOM_SPEED = 1.0f;
+	private static final String TAG = "Touch";
+	// These matrices will be used to move and zoom image
+	private Matrix originalMatrix = new Matrix();
+	private Matrix savedMatrix = new Matrix();
+	private Bitmap image;
+
+	// We can be in one of these 3 states
+	static final int NONE = 0;
+	static final int DRAG = 1;
+	static final int ZOOM = 2;
+	int mode = NONE;
+
+	private float scale = 1.0f;
+	private float maxScale = 3.0f;
+	private float minScale = 1.0f;
+	private int savedwidth, savedheight, viewPortWidth, viewPortHeight, vWidth, vHeight;
+
+	private PointF start = new PointF();
+	private PointF mid = new PointF();
+	private Context context;
+	private float oldScale = 1f, netScale = 1f;
+	private float oldDist = 1f;
+	private float deltaX = 0, deltaY = 0;
+	private int centerX = 0, centerY = 0;
+	
 	private Handler mHandler = null;
 	private RectF rect = null;
+	private Rect viewPort = null;
+	private Rect frame;
+	private Paint paint;
 
 	public InteractiveImageView(Context context) {
 
@@ -49,7 +81,7 @@ public class InteractiveImageView extends ImageView {
 	@Override
 	public int computeHorizontalScrollRange() {
 		// Log.d("compute", "horizontal scroll range "+width);
-		return width;
+		return viewPortWidth;
 	}
 
 	// width of the view depending of you set in the layout
@@ -63,7 +95,7 @@ public class InteractiveImageView extends ImageView {
 	@Override
 	public int computeVerticalScrollRange() {
 		// Log.d("compute", "vertical scroll range"+height);
-		return height;
+		return viewPortHeight;
 	}
 
 	// position of the left side of the horizontal scrollbar
@@ -123,40 +155,19 @@ public class InteractiveImageView extends ImageView {
 		super.setClickable(true);
 		this.context = context;
 		setScaleType(ScaleType.MATRIX);
+		viewPort = new Rect();
+		frame = new Rect();
 	}
-
-	private static final float ZOOM_SPEED = 1.0f;
-	private static final String TAG = "Touch";
-	// These matrices will be used to move and zoom image
-	private Matrix originalMatrix = new Matrix();
-	private Matrix savedMatrix = new Matrix();
-	private Bitmap image;
-
-	// We can be in one of these 3 states
-	static final int NONE = 0;
-	static final int DRAG = 1;
-	static final int ZOOM = 2;
-	int mode = NONE;
-
-	private float scale = 1.0f;
-	private float maxScale = 3.0f;
-	private float minScale = 1.0f;
-	private int savedwidth, savedheight, width, height, vWidth, vHeight;
-
-	private PointF start = new PointF();
-	private PointF mid = new PointF();
-	private Context context;
-	private float oldScale = 1f, netScale = 1f;
-	private float oldDist = 1f;
-	private float deltaX = 0, deltaY = 0;
 
 	public void zoomOut(float deltaScale) {
 		if (netScale * deltaScale <= maxScale
 				&& netScale * deltaScale >= minScale) {
 			savedMatrix.postScale(deltaScale, deltaScale);
 			netScale = netScale * deltaScale;
-			width = (int) (savedwidth * netScale);
-			height = (int) (savedheight * netScale);
+			//viewPortWidth = (int) (savedwidth * netScale);
+			//viewPortHeight = (int) (savedheight * netScale);
+			viewPortWidth = (int) (viewPortWidth * netScale);
+			viewPortHeight = (int) (viewPortHeight * netScale);
 		}
 		updateView();
 	}
@@ -166,8 +177,10 @@ public class InteractiveImageView extends ImageView {
 				&& netScale * deltaScale >= minScale) {
 			savedMatrix.postScale(deltaScale, deltaScale);
 			netScale = netScale * deltaScale;
-			width = (int) (savedwidth * netScale);
-			height = (int) (savedheight * netScale);
+//			viewPortWidth = (int) (savedwidth * netScale);
+//			viewPortHeight = (int) (savedheight * netScale);
+			viewPortWidth = (int) (viewPortWidth * netScale);
+			viewPortHeight = (int) (viewPortHeight * netScale);
 		}
 		updateView();
 	}
@@ -205,6 +218,8 @@ public class InteractiveImageView extends ImageView {
 				// computeVerticalScrollRange())
 				// deltaY = 0;
 				// Log.d(TAG, "drag " + deltaX + " " + deltaY);
+				centerX+=deltaX;
+				centerY+=deltaY;
 				savedMatrix.postTranslate(deltaX, deltaY);
 				start.set(event.getX(), event.getY());
 			}
@@ -223,11 +238,17 @@ public class InteractiveImageView extends ImageView {
 		rect = new RectF(0, 0, image.getWidth(), image.getHeight());
 		// Log.d("Rect", rect.toString());
 		m.mapRect(rect);
-
+		
+		centerX = image.getWidth()/2;
+		centerY = image.getHeight()/2;
+		
 		float height = rect.height();
 		float width = rect.width();
+		
 		float deltaX = 0, deltaY = 0;
-
+		
+		
+		
 		if (height < vHeight) {
 			deltaY = (vHeight - height) / 2 - rect.top;
 		} else if (rect.top > 0) {
@@ -279,6 +300,7 @@ public class InteractiveImageView extends ImageView {
 		if (image == null) {
 			image = newBitmap;
 			rect = new RectF(0, 0, image.getWidth(), image.getHeight());
+			
 			super.setImageBitmap(newBitmap);
 			center();
 		}
@@ -298,23 +320,24 @@ public class InteractiveImageView extends ImageView {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		vWidth = MeasureSpec.getSize(widthMeasureSpec);
 		vHeight = MeasureSpec.getSize(widthMeasureSpec);
+		frame = new Rect(0, 0, vWidth, vHeight);
 	}
 
 	private void center() {
-		width = image.getWidth();
-		height = image.getHeight();
+		viewPortWidth = image.getWidth();
+		viewPortHeight = image.getHeight();
 		Log.d(TAG, "on center size of view:" + vWidth + " " + vHeight
-				+ " size of image: " + width + " " + height);
+				+ " size of image: " + viewPortWidth + " " + viewPortHeight);
 		float sc = 1f;
 		if (vWidth != 0 && vHeight != 0) {
-			if (1.0 * vWidth / width < 1.0 * vHeight / height) {
-				sc = 1f * vWidth / width;
-				height = (int) (height * sc);
-				width = vWidth;
+			if (1.0 * vWidth / viewPortWidth < 1.0 * vHeight / viewPortHeight) {
+				sc = 1f * vWidth / viewPortWidth;
+				viewPortHeight = (int) (viewPortHeight * sc);
+				viewPortWidth = vWidth;
 			} else {
-				sc = 1f * vHeight / height;
-				width = (int) (width * sc);
-				height = vHeight;
+				sc = 1f * vHeight / viewPortHeight;
+				viewPortWidth = (int) (viewPortWidth * sc);
+				viewPortHeight = vHeight;
 			}
 			if (1 / sc > 1) {
 				maxScale = 3.0f;
@@ -325,21 +348,31 @@ public class InteractiveImageView extends ImageView {
 			}
 			Log.d(TAG, "translate the view, to scale: " + sc);
 			originalMatrix.postScale(sc, sc);
-			originalMatrix.postTranslate((vWidth - width) / 2f,
-					(vHeight - height) / 2f);
+			originalMatrix.postTranslate((vWidth - viewPortWidth) / 2f,
+					(vHeight - viewPortHeight) / 2f);
 			savedMatrix = originalMatrix;
-			savedwidth = width;
-			savedheight = height;
+			savedwidth = viewPortWidth;
+			savedheight = viewPortHeight;
 
 		}
 		Log.d(TAG, "size of view:" + vWidth + " " + vHeight
-				+ " size of image: " + width + " " + height);
+				+ " size of image: " + viewPortWidth + " " + viewPortHeight);
 		updateView();
 	}
 
 	public void setHandler(Handler handler) {
 		mHandler = handler;
 
+	}
+
+	@Override
+	public void onDraw(Canvas canvas) {
+		if (image!=null && frame!=null)
+		{
+			int left = centerX-viewPortWidth/2;
+			int top = centerY -viewPortHeight/2;
+			canvas.drawBitmap(image, new Rect(left, top, left+viewPortWidth, top+viewPortHeight), frame, paint);
+		}
 	}
 
 }
