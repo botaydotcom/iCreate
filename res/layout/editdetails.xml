@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/editdetails" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:id="@+id/editdetails" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-	<LinearLayout android:id="@+id/linearpopup2"
-		android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
 		<LinearLayout android:orientation="vertical"
-			android:background="#FF006033" android:layout_height="fill_parent" 
-			android:gravity="center_horizontal" android:layout_gravity="bottom" android:layout_marginBottom="0dp" 
+			android:background="#5D72B2" android:gravity="center_horizontal" android:layout_marginBottom="0dp" 
 			android:layout_marginLeft="0dp" android:layout_marginRight="0dp" 
-			android:saveEnabled="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_width="fill_parent">
+			android:saveEnabled="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_height="fill_parent" android:layout_gravity="fill_vertical|fill_horizontal|fill" android:layout_width="fill_parent">
 
 			<TextView android:layout_height="wrap_content" android:id="@+id/editFormTitle"
 				android:layout_width="wrap_content" android:text="Edit Event Detail?"></TextView>
@@ -103,5 +99,4 @@
 				<Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Update" android:id="@+id/btEditUpdate"></Button>
 			</LinearLayout>
 		</LinearLayout>
-	</LinearLayout>
 </ScrollView>
