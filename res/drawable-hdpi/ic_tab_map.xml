@@ -5,4 +5,14 @@
           android:state_selected="true" />
     <!-- When not selected, use white-->
     <item android:drawable="@drawable/ic_tab_artists_white" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    <ImageView 
+   android:id="@+id/test_image"
+   android:src="@drawable/test"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   />
+   </RelativeLayout>
 </selector>

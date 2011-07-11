@@ -23,7 +23,7 @@ public class IvleDataPuller extends Service{
 		super.onCreate();
 		
 		Ivle ivledata = new Ivle();
-		List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
+		//List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
 		
 		Toast.makeText(this,"IVLE serv created", Toast.LENGTH_LONG).show();
 	}
