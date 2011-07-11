@@ -73,4 +73,21 @@
 		<item>1 day before</item>
 	</string-array>
 
+<!-- Priority array -->
+	<string name="priority">Choose priority</string>
+    <string-array name="priority_array">
+        <item>High</item>
+        <item>Normal</item>
+        <item>Low</item>
+    </string-array>
+
+<!-- Alert Time array -->
+	<string name="alerttime">Choose alert time</string>
+    <string-array name="alerttime_array">
+        <item>05 min</item>
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>30 min</item>
+    </string-array>
+
 </resources>

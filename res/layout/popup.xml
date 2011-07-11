@@ -6,7 +6,7 @@
 	<LinearLayout android:id="@+id/linearpopup"
 		android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<LinearLayout android:orientation="vertical"
-			android:layout_width="300dp" android:background="#FF006033"
+			android:layout_width="300dp" android:background="#5D72B2"
 			android:layout_height="350dp" android:gravity="center_horizontal">
 
 			<TextView android:layout_height="wrap_content" android:id="@+id/tvFormTitle"
