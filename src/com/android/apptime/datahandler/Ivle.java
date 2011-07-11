@@ -307,6 +307,12 @@ public class Ivle extends Activity  {
     private void getTimetable(String acad_year, String semester){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
+    	int t = R.string.apikeyfield;
+    	String s = getResources().getString(R.string.apikeyfield);
+
+    		//getString(t);
+    	int t1 = R.string.apikey;
+    	String s1 = getString(t1);
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
     	listParams.add(new BasicNameValuePair(getString(R.string.authfield), IVLE_Token));
     	listParams.add(new BasicNameValuePair(getString(R.string.acadyear), acad_year));
@@ -364,6 +370,7 @@ public class Ivle extends Activity  {
     private void getAcadSemesterInfo(String acad_year, String semester){
     	ArrayList<NameValuePair> listParams = new ArrayList<NameValuePair>();
     	
+    	int t = R.string.apikeyfield;
     	listParams.add(new BasicNameValuePair(getString(R.string.apikeyfield), getString(R.string.apikey)));
     	listParams.add(new BasicNameValuePair(getString(R.string.authfield), IVLE_Token));
     	listParams.add(new BasicNameValuePair(getString(R.string.acadyear), acad_year));
