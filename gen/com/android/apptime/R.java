@@ -9,6 +9,9 @@ package com.android.apptime;
 
 public final class R {
     public static final class array {
+        /**  	AlertTime Array 
+         */
+        public static final int alerttimeArray=0x7f080001;
         /**  	Location Array 
          */
         public static final int locationArray=0x7f080000;

@@ -12,6 +12,7 @@ import com.android.apptime.Main;
 import com.android.apptime.R;
 
 public class Ivle {
+
 	private static Ivle theInstance = null;
 	private static String IVLE_Token;
 	private List<IvleAcadSemesterInfoData> ivleAcadSemesterInfoList;
@@ -25,6 +26,7 @@ public class Ivle {
 		ivleSpecialDayList = new ArrayList();
 		ivleTimetableList = new ArrayList();
 	}
+
 
 	public static Ivle createInstance(Context context) {
 		if (theInstance == null) {

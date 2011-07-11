@@ -175,7 +175,7 @@ public class Main extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 		
-		
+		String s = getResources().getString(R.string.apikeyfield);
 		startService(new Intent(Main.this,IvleDataPuller.class));
         stopService(new Intent(Main.this,IvleDataPuller.class));		
 		DatabaseInterface database =
@@ -194,8 +194,16 @@ public class Main extends TabActivity {
 //		//database.AddItemToDatabase(this.getApplicationContext(),item);
 //		
 //		database.RetrieveItemFromDatabase(getApplicationContext(), 5);
-		
-		
+		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 try {
+		 Date a = dfm.parse("1970-01-02 09:55:42"); //Fri, 02 Jan 1970 09:55:42 GMT
+		 a = new Date(1221423535);
+		 //database.RetrieveItemFromDatabase(getApplicationContext(), a);
+		 int yu= 0;
+		 } catch (ParseException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
 		database.CloseDatabase();
 
 		

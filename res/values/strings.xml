@@ -64,5 +64,13 @@
 		<item>Location C</item>
 		<item>Location D</item>
 	</string-array>
+	
+<!-- 	AlertTime Array -->
+	<string-array name="alerttimeArray">
+		<item>10 min before</item>
+		<item>30 min before</item>
+		<item>1 hour before</item>
+		<item>1 day before</item>
+	</string-array>
 
 </resources>

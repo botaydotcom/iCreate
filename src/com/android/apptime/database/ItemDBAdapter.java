@@ -265,22 +265,33 @@ public class ItemDBAdapter {
  
  // return an array of 2 arrays, first array includes events, 2nd includes items 
  public ArrayList<Cursor> getItemByDate(Date date) {
-	 try{
+	 
 	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
 	 EventDBAdapter edb = new EventDBAdapter(this.context);
 	 edb.open();
-	 arrlist.add(edb.getEventByDate(date));
+	 try { arrlist.add(edb.getEventByDate(date)); } catch (Exception e){}
 	 edb.close();
 	 TaskDBAdapter tdb = new TaskDBAdapter(this.context);
 	 tdb.open();
-	 arrlist.add(tdb.getTaskByDate(date));
+	 try { arrlist.add(tdb.getTaskByDate(date)); } catch (Exception e){}
 	 tdb.close();
 	 return arrlist;
-	 }
-	 catch (Exception e){
-		 Log.e("DB", e.getMessage());
-		 return null;
-	 }
+	 
+	
+ }
+ 
+ public ArrayList<Cursor> getItemByDateRange(Date fromdate, Date todate) {
+ 
+	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
+	 EventDBAdapter edb = new EventDBAdapter(this.context);
+	 edb.open();
+	 try { arrlist.add(edb.getEventByDateRange(fromdate, todate)); } catch (Exception e){}
+	 edb.close();
+	 TaskDBAdapter tdb = new TaskDBAdapter(this.context);
+	 tdb.open();
+	 try { arrlist.add(tdb.getTaskByDateRange(fromdate, todate)); } catch (Exception e){}
+	 tdb.close();
+	 return arrlist;
  }
  
 }
