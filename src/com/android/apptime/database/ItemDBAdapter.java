@@ -280,4 +280,18 @@ public class ItemDBAdapter {
 	
  }
  
+ public ArrayList<Cursor> getItemByDateRange(Date fromdate, Date todate) {
+ 
+	 ArrayList<Cursor> arrlist = new ArrayList<Cursor>();
+	 EventDBAdapter edb = new EventDBAdapter(this.context);
+	 edb.open();
+	 try { arrlist.add(edb.getEventByDateRange(fromdate, todate)); } catch (Exception e){}
+	 edb.close();
+	 TaskDBAdapter tdb = new TaskDBAdapter(this.context);
+	 tdb.open();
+	 try { arrlist.add(tdb.getTaskByDateRange(fromdate, todate)); } catch (Exception e){}
+	 tdb.close();
+	 return arrlist;
+ }
+ 
 }

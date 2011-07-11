@@ -16,7 +16,7 @@ import android.webkit.WebViewClient;
 import com.android.apptime.Main;
 import com.android.apptime.R;
 
-public class Ivle extends Activity  {
+public class Ivle {
 	private String IVLE_Token;
 	private List<IvleAcadSemesterInfoData> ivleAcadSemesterInfoList;
 	private List<IvleEventData> ivleEventList;
@@ -36,15 +36,7 @@ public class Ivle extends Activity  {
     	return IVLE_Token;
     }
 	
-    /* Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
-    	setContentView(R.layout.login);  
-    	// log in to the IVLE Network
-    	loginIVLE();
-    }
-    
+   
     // Displays a new WebView to accept IVLE credentials and update the auth Token
     public void loginIVLE(){
         WebView wv = (WebView) findViewById(R.id.WebViewLogin);                  
