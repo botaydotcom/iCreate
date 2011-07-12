@@ -7,12 +7,14 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.apptime.Main;
 import com.android.apptime.R;
 
 public class Ivle {
 
+	private static final String TAG = "Ivle";
 	private static Ivle theInstance = null;
 	private static String IVLE_Token;
 	private List<IvleAcadSemesterInfoData> ivleAcadSemesterInfoList;
@@ -67,7 +69,10 @@ public class Ivle {
 				context.getString(R.string.my_organizer_uri));
 
 		sb.append("?");
-		sb.append(listParams);
+		for (int i = 0; i<listParams.size(); i++) {
+			if (i!=0) sb.append("&");
+			sb.append(listParams.get(i).getName()).append("=").append(listParams.get(i).getValue());
+		}
 
 		String feedURL = sb.toString();
 
@@ -382,7 +387,10 @@ public class Ivle {
 				context.getString(R.string.my_organizer_get_timetable_student_uri));
 
 		sb.append("?");
-		sb.append(listParams);
+		for (int i = 0; i<listParams.size(); i++) {
+			if (i!=0) sb.append("&");
+			sb.append(listParams.get(i).getName()).append("=").append(listParams.get(i).getValue());
+		}
 
 		String feedURL = sb.toString();
 
@@ -390,6 +398,7 @@ public class Ivle {
 				feedURL);
 
 		ivleTimetableList = newParser.parse();
+		Log.d(TAG, "comehere");
 	}
 
 	public List<IvleTimetableData> getTimetableList(String acad_year,
@@ -421,7 +430,11 @@ public class Ivle {
 				context.getString(R.string.my_organizer_get_special_days_uri));
 
 		sb.append("?");
-		sb.append(listParams);
+		for (int i = 0; i<listParams.size(); i++) {
+			if (i!=0) sb.append("&");
+			sb.append(listParams.get(i).getName()).append("=").append(listParams.get(i).getValue());
+		}
+
 
 		String feedURL = sb.toString();
 
@@ -459,7 +472,10 @@ public class Ivle {
 				context.getString(R.string.my_organizer_get_acad_semester_info_uri));
 
 		sb.append("?");
-		sb.append(listParams);
+		for (int i = 0; i<listParams.size(); i++) {
+			if (i!=0) sb.append("&");
+			sb.append(listParams.get(i).getName()).append("=").append(listParams.get(i).getValue());
+		}
 
 		String feedURL = sb.toString();
 

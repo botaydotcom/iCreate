@@ -26,7 +26,7 @@ public class IvleDataPuller extends Service{
 		Ivle ivledata = Ivle.getInstance();
 		
 
-		List<IvleTimetableData>  timetable = ivledata.getTimetableList("2011-2012", "1");
+		List<IvleTimetableData>  timetable = ivledata.getTimetableList("2011/2012", "1");
 //=======
 		//List<IvleTimetableData>  timetable = ivledata.getTimetable("2011/2012","1" );
 //>>>>>>> 1e2ad1b016fbb91de43ca56011297260e9613e2f

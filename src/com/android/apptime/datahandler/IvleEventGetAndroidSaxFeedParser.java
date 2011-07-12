@@ -12,13 +12,14 @@ import android.util.Xml;
 public class IvleEventGetAndroidSaxFeedParser extends IvleEventGetBaseFeedParser {
 
 	static final String RSS = "APIDataOfData_Organizer_EventsMTRdQN6P";
+	static final String NAME_SPACE = "http://schemas.datacontract.org/2004/07/";
 	public IvleEventGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
 
 	public List<IvleEventData> parse() {
 		final IvleEventData currentMessage = new IvleEventData();
-		RootElement root = new RootElement(RSS);
+		RootElement root = new RootElement(NAME_SPACE, RSS);
 		final List<IvleEventData> messages = new ArrayList<IvleEventData>();
 		
 		Element results = root.getChild(RESULTS);

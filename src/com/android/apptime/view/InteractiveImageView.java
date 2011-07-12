@@ -68,6 +68,7 @@ public class InteractiveImageView extends ImageView {
 	public void init() {
 		mHandler = new Handler();
 		rect = new RectF();
+		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	}
 
 	// width of the view depending of you set in the layout
@@ -218,8 +219,9 @@ public class InteractiveImageView extends ImageView {
 				// computeVerticalScrollRange())
 				// deltaY = 0;
 				// Log.d(TAG, "drag " + deltaX + " " + deltaY);
-				centerX+=deltaX;
-				centerY+=deltaY;
+				centerX-=deltaX;
+				centerY-=deltaY;
+				Log.d(TAG, centerX + " " + centerY);
 				savedMatrix.postTranslate(deltaX, deltaY);
 				start.set(event.getX(), event.getY());
 			}
@@ -234,39 +236,8 @@ public class InteractiveImageView extends ImageView {
 		if (image == null) {
 			return;
 		}
-		Matrix m = getImageMatrix();
-		rect = new RectF(0, 0, image.getWidth(), image.getHeight());
-		// Log.d("Rect", rect.toString());
-		m.mapRect(rect);
-		
 		centerX = image.getWidth()/2;
 		centerY = image.getHeight()/2;
-		
-		float height = rect.height();
-		float width = rect.width();
-		
-		float deltaX = 0, deltaY = 0;
-		
-		
-		
-		if (height < vHeight) {
-			deltaY = (vHeight - height) / 2 - rect.top;
-		} else if (rect.top > 0) {
-			deltaY = -rect.top;
-		} else if (rect.bottom < vHeight) {
-			deltaY = getHeight() - rect.bottom;
-		}
-
-		if (width < vWidth) {
-			deltaX = (vWidth - width) / 2 - rect.left;
-		} else if (rect.left > 0) {
-			deltaX = -rect.left;
-		} else if (rect.right < vWidth) {
-			deltaX = vWidth - rect.right;
-		}
-
-		m.postTranslate(deltaX, deltaY);
-		savedMatrix.set(m);
 	}
 
 	private Runnable updateUI = new Runnable() {
@@ -277,9 +248,9 @@ public class InteractiveImageView extends ImageView {
 			Log.d(TAG,
 					"update view: scale = " + scale + " "
 							+ savedMatrix.toShortString());
-			Matrix matrix = getImageMatrix();
-			matrix.set(savedMatrix);
-			setCenter();
+//			Matrix matrix = getImageMatrix();
+//			matrix.set(savedMatrix);
+//			setCenter();
 			Log.d(TAG, "after checking " + getImageMatrix().toShortString());
 			invalidate();
 		}
@@ -296,13 +267,12 @@ public class InteractiveImageView extends ImageView {
 
 	public void setImage(Bitmap newBitmap) {
 		// //Log.d(TAG, "loaded");
-		fullSizeLoaded = true;
 		if (image == null) {
 			image = newBitmap;
 			rect = new RectF(0, 0, image.getWidth(), image.getHeight());
 			
 			super.setImageBitmap(newBitmap);
-			center();
+			setCenter();
 		}
 
 	}
@@ -355,6 +325,7 @@ public class InteractiveImageView extends ImageView {
 			savedheight = viewPortHeight;
 
 		}
+		
 		Log.d(TAG, "size of view:" + vWidth + " " + vHeight
 				+ " size of image: " + viewPortWidth + " " + viewPortHeight);
 		updateView();

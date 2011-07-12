@@ -1,5 +1,6 @@
 package com.android.apptime.datahandler;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,17 +8,20 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.util.Log;
 import android.util.Xml;
 
 public class IvleTimetableGetAndroidSaxFeedParser extends IvleTimetableGetBaseFeedParser{
 	static final String RSS = "APIDataOfData_Timetable_StudentMTRdQN6P";
+	static final String NAME_SPACE = "http://schemas.datacontract.org/2004/07/";
+	private static final String TAG = "timetableparser";
 	public IvleTimetableGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
 
 	public List<IvleTimetableData> parse() {
 		final IvleTimetableData currentMessage = new IvleTimetableData();
-		RootElement root = new RootElement(RSS);
+		RootElement root = new RootElement(NAME_SPACE, RSS);
 		final List<IvleTimetableData> messages = new ArrayList<IvleTimetableData>();
 		
 		Element results = root.getChild(RESULTS);
@@ -87,8 +91,16 @@ public class IvleTimetableGetAndroidSaxFeedParser extends IvleTimetableGetBaseFe
 			}
 		});
 		try {
+//			byte [] data = new byte[2048];
+//			InputStream is = this.getInputStream();
+//			String s = "";
+//			while (is.read(data)>0){
+//				s = s+new String(data);
+//			}
+//			Log.d(TAG, s);
 			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
 		} catch (Exception e) {
+			Log.d(TAG, e.getMessage());
 			throw new RuntimeException(e);
 		}
 		return messages;

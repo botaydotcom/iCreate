@@ -11,6 +11,7 @@ import android.util.Xml;
 
 public class IvleAcadSemesterInfoGetAndroidSaxFeedParser extends IvleAcadSemesterInfoGetBaseFeedParser{
 	static final String RSS = "APIDataOfData_AcadSemesterInfoMTRdQN6P";
+	static final String NAME_SPACE = "http://schemas.datacontract.org/2004/07/";
 	public IvleAcadSemesterInfoGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
@@ -20,7 +21,7 @@ public class IvleAcadSemesterInfoGetAndroidSaxFeedParser extends IvleAcadSemeste
 		RootElement root = new RootElement(RSS);
 		final List<IvleAcadSemesterInfoData> messages = new ArrayList<IvleAcadSemesterInfoData>();
 		
-		Element results = root.getChild(RESULTS);
+		Element results = root.getChild(NAME_SPACE, RESULTS);
 		Element data_acad_semester_info = results.getChild(DATA_ACAD_SEMESTER_INFO);
 		
 		data_acad_semester_info.setEndElementListener(new EndElementListener(){

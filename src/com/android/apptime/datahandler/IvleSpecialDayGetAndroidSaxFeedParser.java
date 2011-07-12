@@ -11,13 +11,14 @@ import android.util.Xml;
 
 public class IvleSpecialDayGetAndroidSaxFeedParser extends IvleSpecialDayGetBaseFeedParser{
 	static final String RSS = "APIDataOfData_SpecialDaysMTRdQN6P";
+	static final String NAME_SPACE = "http://schemas.datacontract.org/2004/07/";
 	public IvleSpecialDayGetAndroidSaxFeedParser(String feedUrl) {
 		super(feedUrl);
 	}
 
 	public List<IvleSpecialDayData> parse() {
 		final IvleSpecialDayData currentMessage = new IvleSpecialDayData();
-		RootElement root = new RootElement(RSS);
+		RootElement root = new RootElement(NAME_SPACE, RSS);
 		final List<IvleSpecialDayData> messages = new ArrayList<IvleSpecialDayData>();
 		
 		Element results = root.getChild(RESULTS);
