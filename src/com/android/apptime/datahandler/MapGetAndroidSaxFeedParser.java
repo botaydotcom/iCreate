@@ -1,5 +1,6 @@
 package com.android.apptime.datahandler;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +22,16 @@ public class MapGetAndroidSaxFeedParser extends MapGetBaseFeedParser {
 	 */
 	
 	static final String RSS = "plist";
-	public MapGetAndroidSaxFeedParser(String feedUrl) {
+	public MapGetAndroidSaxFeedParser(InputStream feedUrl) {
 		super(feedUrl);
 	}
 
 	public List<MapData> parse() {
 		final MapData currentMessage = new MapData();
+		final String[] currentElement = new String[1];
 		RootElement root = new RootElement(RSS);
 		final List<MapData> messages = new ArrayList<MapData>();
+		
 		
 		Element array = root.getChild(ARRAY);
 		Element dict = array.getChild(DICT);
@@ -38,38 +41,39 @@ public class MapGetAndroidSaxFeedParser extends MapGetBaseFeedParser {
 				messages.add(currentMessage.copy());
 			}
 		});
-		dict.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
+		dict.getChild(KEY).setEndTextElementListener(new EndTextElementListener(){
 			public void end(String body) {
-				currentMessage.setTitle(body);
+				currentElement[0] = body;
 			}
 		});
 		
-		dict.getChild(HORIZONTAL).setEndTextElementListener(new EndTextElementListener(){
+		dict.getChild(INTEGER).setEndTextElementListener(new EndTextElementListener(){
 			public void end(String body) {
-				currentMessage.setHorizontal(body);
+				if (HORIZONTAL.equals(currentElement[0])) {
+					currentMessage.setHorizontal(body);
+				} else if (VERTICAL.equals(currentElement[0])) {
+					currentMessage.setVertical(body);
+				} 
 			}
 		});
-		dict.getChild(VERTICAL).setEndTextElementListener(new EndTextElementListener(){
+		dict.getChild(REAL).setEndTextElementListener(new EndTextElementListener(){
 			public void end(String body) {
-				currentMessage.setTitle(body);
+				if (LATITUDE.equals(currentElement[0])) {
+					currentMessage.setLatitude(body);
+				} else if (LONGITUDE.equals(currentElement[0])) {
+					currentMessage.setLongitude(body);
+				} 
 			}
 		});
-		dict.getChild(LONGITUDE).setEndTextElementListener(new EndTextElementListener(){
+		dict.getChild(STRING).setEndTextElementListener(new EndTextElementListener(){
 			public void end(String body) {
-				currentMessage.setTitle(body);
+				if (TITLE.equals(currentElement[0])) {
+					currentMessage.setTitle(body);
+				} else if (LINK.equals(currentElement[0])) {
+					currentMessage.setLink(body);
+				} 
 			}
-		});
-		dict.getChild(LATITUDE).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				currentMessage.setTitle(body);
-			}
-		});
-		dict.getChild(LINK).setEndTextElementListener(new EndTextElementListener(){
-			public void end(String body) {
-				currentMessage.setTitle(body);
-			}
-		});
-		
+		});		
 		
 		try {
 			Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
