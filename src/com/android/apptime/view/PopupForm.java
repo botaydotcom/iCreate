@@ -232,12 +232,6 @@ public class PopupForm extends Activity {
 	private void modifyDetails() {
 		String title = mEtTitle.getText().toString();
 		Intent data = new Intent();
-		if (title.equals("")) {
-			Toast.makeText(getApplicationContext(),
-					getString(R.string.strAnnounceNotEnoughDetail),
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
 		int type = mTypeGroup.getCheckedRadioButtonId();
 		if (type == R.id.radio_event)
 			type = EVENT;
@@ -251,7 +245,7 @@ public class PopupForm extends Activity {
 		data.putExtra("endTime", endTime);
 		data.putExtra("location", location);
 		Intent detailFormActivity = new Intent(getApplicationContext(),
-				getClass());
+				DetailForm.class);
 		startActivityForResult(detailFormActivity, 0);
 	}
 
