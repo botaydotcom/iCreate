@@ -12,32 +12,33 @@ import com.android.apptime.R;
 public abstract class MapGetBaseFeedParser implements MapFeedParser {
 
 	// names of the XML tags
-	static final String TITLE = "Title";
+	static final String KEY = "key";
+	static final String INTEGER = "integer";
+	static final String REAL = "real";
+	static final String STRING = "string";
 	static final String HORIZONTAL = "Horizontal";
 	static final  String VERTICAL = "Vertical";
 	static final  String LONGITUDE = "Longitude";
 	static final  String LATITUDE = "Latitude";
+	static final  String TITLE = "Title";
 	static final  String LINK = "Link";
 	static final  String ARRAY = "array";
 	static final String DICT = "dict";
 	//static final String TITLE = "Title";
 	
-	private final String fileName;
+	private final InputStream inStream;
 
-	protected MapGetBaseFeedParser(String feedUri){
+	protected MapGetBaseFeedParser(InputStream inputStream){
 		try {
-			this.fileName = feedUri;
+			this.inStream = inputStream;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	protected InputStream getInputStream() {
-		try {
-			return new FileInputStream(new File(fileName)); 
+			return inStream; 
 			//feedUri.openConnection().getInputStream();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+
 	}
 }

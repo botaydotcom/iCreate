@@ -30,9 +30,10 @@ public class InteractiveImageView extends ImageView {
 	int mode = NONE;
 
 	private float scale = 1.0f;
-	private float maxScale = 3.0f;
-	private float minScale = 1.0f;
-	private int savedwidth, savedheight, viewPortWidth, viewPortHeight, vWidth, vHeight;
+	private float maxScale = 1.5f;
+	private float minScale = 0.3f;
+	private int savedwidth, savedheight, viewPortWidth, viewPortHeight, vWidth,
+			vHeight;
 
 	private PointF start = new PointF();
 	private PointF mid = new PointF();
@@ -41,7 +42,7 @@ public class InteractiveImageView extends ImageView {
 	private float oldDist = 1f;
 	private float deltaX = 0, deltaY = 0;
 	private int centerX = 0, centerY = 0;
-	
+
 	private Handler mHandler = null;
 	private RectF rect = null;
 	private Rect viewPort = null;
@@ -161,28 +162,28 @@ public class InteractiveImageView extends ImageView {
 	}
 
 	public void zoomOut(float deltaScale) {
-		if (netScale * deltaScale <= maxScale
-				&& netScale * deltaScale >= minScale) {
-			savedMatrix.postScale(deltaScale, deltaScale);
-			netScale = netScale * deltaScale;
-			//viewPortWidth = (int) (savedwidth * netScale);
-			//viewPortHeight = (int) (savedheight * netScale);
-			viewPortWidth = (int) (viewPortWidth * netScale);
-			viewPortHeight = (int) (viewPortHeight * netScale);
+		Log.d(TAG, "comhere");
+		float newNetScale = netScale / deltaScale;
+		if (newNetScale <= minScale){
+			deltaScale = netScale/minScale;
+			newNetScale = minScale;
 		}
+		netScale = newNetScale;
+		viewPortWidth = (int) (viewPortWidth * deltaScale);
+		viewPortHeight = (int) (viewPortHeight * deltaScale);
 		updateView();
 	}
 
 	public void zoomIn(float deltaScale) {
-		if (netScale * deltaScale <= maxScale
-				&& netScale * deltaScale >= minScale) {
-			savedMatrix.postScale(deltaScale, deltaScale);
-			netScale = netScale * deltaScale;
-//			viewPortWidth = (int) (savedwidth * netScale);
-//			viewPortHeight = (int) (savedheight * netScale);
-			viewPortWidth = (int) (viewPortWidth * netScale);
-			viewPortHeight = (int) (viewPortHeight * netScale);
+		Log.d(TAG, "comhere");
+		float newNetScale = netScale * deltaScale;
+		if (newNetScale >= maxScale) {
+			deltaScale = maxScale/netScale;
+			newNetScale = maxScale;
 		}
+		netScale = newNetScale;
+		viewPortWidth = (int) (viewPortWidth / deltaScale);
+		viewPortHeight = (int) (viewPortHeight / deltaScale);
 		updateView();
 	}
 
@@ -212,15 +213,8 @@ public class InteractiveImageView extends ImageView {
 			if (mode == DRAG) {
 				deltaX = event.getX() - start.x;
 				deltaY = event.getY() - start.y;
-				// if (computeHorizontalScrollExtent() >=
-				// computeHorizontalScrollRange())
-				// deltaX = 0;
-				// if (computeVerticalScrollExtent() >=
-				// computeVerticalScrollRange())
-				// deltaY = 0;
-				// Log.d(TAG, "drag " + deltaX + " " + deltaY);
-				centerX-=deltaX;
-				centerY-=deltaY;
+				centerX -= deltaX;
+				centerY -= deltaY;
 				Log.d(TAG, centerX + " " + centerY);
 				savedMatrix.postTranslate(deltaX, deltaY);
 				start.set(event.getX(), event.getY());
@@ -236,8 +230,8 @@ public class InteractiveImageView extends ImageView {
 		if (image == null) {
 			return;
 		}
-		centerX = image.getWidth()/2;
-		centerY = image.getHeight()/2;
+		centerX = image.getWidth() / 2;
+		centerY = image.getHeight() / 2;
 	}
 
 	private Runnable updateUI = new Runnable() {
@@ -245,19 +239,29 @@ public class InteractiveImageView extends ImageView {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			Log.d(TAG,
-					"update view: scale = " + scale + " "
-							+ savedMatrix.toShortString());
-//			Matrix matrix = getImageMatrix();
-//			matrix.set(savedMatrix);
-//			setCenter();
-			Log.d(TAG, "after checking " + getImageMatrix().toShortString());
+			// Log.d(TAG,
+			// "update view: scale = " + scale + " "
+			// + savedMatrix.toShortString());
+			// Matrix matrix = getImageMatrix();
+			// matrix.set(savedMatrix);
+			// setCenter();
+			// Log.d(TAG, "after checking " + getImageMatrix().toShortString());
 			invalidate();
 		}
 	};
 
 	private void updateView() {
-		Log.d(TAG, "update view " + savedMatrix.toString());
+		// adjust the view
+		if (centerX - viewPortWidth / 2 < 0)
+			centerX = viewPortWidth / 2;
+		if (centerX + viewPortWidth / 2 > image.getWidth())
+			centerX = image.getWidth() - viewPortWidth / 2;
+		if (centerY - viewPortHeight / 2 < 0)
+			centerY = viewPortHeight / 2;
+		if (centerY + viewPortHeight / 2 > image.getHeight())
+			centerY = image.getHeight() - viewPortHeight / 2;
+		Log.d(TAG, centerX + " " + centerY + " " + viewPortWidth + " "
+				+ viewPortHeight + " " + frame.toString());
 		mHandler.removeCallbacks(updateUI);
 		mHandler.post(updateUI);
 
@@ -270,7 +274,7 @@ public class InteractiveImageView extends ImageView {
 		if (image == null) {
 			image = newBitmap;
 			rect = new RectF(0, 0, image.getWidth(), image.getHeight());
-			
+
 			super.setImageBitmap(newBitmap);
 			setCenter();
 		}
@@ -309,13 +313,13 @@ public class InteractiveImageView extends ImageView {
 				viewPortWidth = (int) (viewPortWidth * sc);
 				viewPortHeight = vHeight;
 			}
-			if (1 / sc > 1) {
-				maxScale = 3.0f;
-				minScale = 1f;
-			} else {
-				maxScale = 3.0f;
-				minScale = 1f;
-			}
+			// if (1 / sc > 1) {
+			// maxScale = 3.0f;
+			// minScale = 1f;
+			// } else {
+			// maxScale = 3.0f;
+			// minScale = 1f;
+			// }
 			Log.d(TAG, "translate the view, to scale: " + sc);
 			originalMatrix.postScale(sc, sc);
 			originalMatrix.postTranslate((vWidth - viewPortWidth) / 2f,
@@ -325,7 +329,7 @@ public class InteractiveImageView extends ImageView {
 			savedheight = viewPortHeight;
 
 		}
-		
+
 		Log.d(TAG, "size of view:" + vWidth + " " + vHeight
 				+ " size of image: " + viewPortWidth + " " + viewPortHeight);
 		updateView();
@@ -335,14 +339,20 @@ public class InteractiveImageView extends ImageView {
 		mHandler = handler;
 
 	}
+	
+	public void scrollToPosition(int x, int y){
+		centerX = x;
+		centerY = y;
+		updateView();
+	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		if (image!=null && frame!=null)
-		{
-			int left = centerX-viewPortWidth/2;
-			int top = centerY -viewPortHeight/2;
-			canvas.drawBitmap(image, new Rect(left, top, left+viewPortWidth, top+viewPortHeight), frame, paint);
+		if (image != null && frame != null) {
+			int left = centerX - viewPortWidth / 2;
+			int top = centerY - viewPortHeight / 2;
+			canvas.drawBitmap(image, new Rect(left, top, left + viewPortWidth,
+					top + viewPortHeight), frame, paint);
 		}
 	}
 
