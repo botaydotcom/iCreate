@@ -22,6 +22,8 @@ public final class R {
     }
     public static final class color {
         public static final int timeslot_background=0x7f050000;
+        /**  #EDEDFF 
+         */
         public static final int timeslot_lines=0x7f050001;
         public static final int timeslot_margin=0x7f050002;
     }

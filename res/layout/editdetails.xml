@@ -6,7 +6,7 @@
 		<LinearLayout android:orientation="vertical"
 			android:background="#5D72B2" android:gravity="center_horizontal" android:layout_marginBottom="0dp" 
 			android:layout_marginLeft="0dp" android:layout_marginRight="0dp" 
-			android:saveEnabled="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_height="fill_parent" android:layout_gravity="fill_vertical|fill_horizontal|fill" android:layout_width="fill_parent">
+			android:saveEnabled="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_gravity="fill_vertical|fill_horizontal|fill" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 			<TextView android:layout_height="wrap_content" android:id="@+id/editFormTitle"
 				android:layout_width="wrap_content" android:text="Edit Event Detail?"></TextView>

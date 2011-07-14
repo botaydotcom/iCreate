@@ -3,7 +3,8 @@
 	android:layout_height="fill_parent" android:layout_width="fill_parent">
 	<RelativeLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:id="@+id/timeSection">
+		android:id="@+id/timeSection" android:background="#4D4D94">
+		
 		<ImageView android:src="@drawable/arrow_previous"
 			android:layout_width="30dp" android:layout_height="20dp"
 			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
@@ -18,7 +19,7 @@
 			android:layout_toRightOf="@id/btPrevious"
 			android:layout_toLeftOf="@id/btNext" 
 			android:layout_width="fill_parent"
-			android:layout_height="35dp" android:background="#98456723"
+			android:layout_height="35dp" android:background="#4D4D94"
 			android:layout_alignParentTop="true" android:text="time time time"
 			android:id="@+id/tvTime" />
 	</RelativeLayout>
