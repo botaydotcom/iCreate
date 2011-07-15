@@ -8,7 +8,7 @@ public class MapData{
 	private String latitude;
 	private String link;
 
-	public String title(){
+	public String getTitle(){
 		return title;
 	}
 	
@@ -48,6 +48,16 @@ public class MapData{
 		this.latitude = _latitude.trim();
 	}
 	
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String _Link) {
+		this.link = _Link.trim();
+	}
+	
+	
 	public MapData copy(){
 		MapData copy = new MapData();
 		
@@ -59,6 +69,11 @@ public class MapData{
 		copy.link = link;
 		
 		return copy;
+	}
+	
+	@Override
+	public String toString(){
+		return this.title;
 	}
 	
 	

@@ -4,10 +4,12 @@
 	android:layout_height="fill_parent" android:id="@+id/container">
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-		android:text="Kent Ridge campus" android:textSize="30sp" android:id="@+id/mapName"></TextView>
+		android:text="Kent Ridge campus" android:textSize="30sp" android:id="@+id/mapName"
+		></TextView>
 	<RelativeLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_below="@id/mapName" android:id="@+id/timeSection">
+		android:layout_below="@id/mapName" android:id="@+id/timeSection"
+		android:background="#757595">
 		<ImageView android:src="@drawable/arrow_previous"
 			android:layout_width="30dp" android:layout_height="20dp"
 			android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
@@ -20,7 +22,7 @@
 			android:id="@+id/btNext"></ImageView>
 		<TextView android:layout_toRightOf="@id/btPrevious"
 			android:layout_toLeftOf="@id/btNext" android:layout_width="fill_parent"
-			android:layout_height="35dp" android:background="#98456723"
+			android:layout_height="35dp"
 			android:layout_alignParentTop="true" android:text="time time time"
 			android:id="@+id/tvTime" />
 	</RelativeLayout>
@@ -31,8 +33,9 @@
 			android:layout_height="wrap_content" android:text="Select location: "
 			android:layout_below="@id/timeSection" android:id="@+id/label"></TextView>
 		<AutoCompleteTextView android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_toRightOf="@id/label">
-			</AutoCompleteTextView>
+			android:layout_height="wrap_content" android:layout_toRightOf="@id/label"
+			android:id="@+id/autoTvLocation">
+		</AutoCompleteTextView>
 	</RelativeLayout>
 
 
@@ -44,15 +47,25 @@
 			android:text="YIH"></TextView>
 		<TextView android:id="@+id/description" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-			android:text="YIH"></TextView>
+			android:text=""></TextView>
 		<TextView android:id="@+id/bookingLink" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-			android:text="YIH"></TextView>
+			android:text=""
+			android:layout_below="@id/title"></TextView>
 
 	</RelativeLayout>
 
-	<com.android.apptime.view.InteractiveImageView
-		android:layout_below="@id/infoPanel" android:layout_height="fill_parent"
-		android:layout_width="fill_parent" android:id="@+id/imageView">
-	</com.android.apptime.view.InteractiveImageView>
+	<RelativeLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@id/infoPanel">
+		<com.android.apptime.view.InteractiveImageView
+			android:layout_height="fill_parent" android:layout_width="fill_parent"
+			android:id="@+id/imageView">
+		</com.android.apptime.view.InteractiveImageView>
+		<ZoomControls android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true"
+			android:id="@+id/zoomButton">
+		</ZoomControls>
+	</RelativeLayout>
 </RelativeLayout>

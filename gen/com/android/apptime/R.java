@@ -22,6 +22,8 @@ public final class R {
     }
     public static final class color {
         public static final int timeslot_background=0x7f050000;
+        /**  #EDEDFF 
+         */
         public static final int timeslot_lines=0x7f050001;
         public static final int timeslot_margin=0x7f050002;
     }
@@ -47,6 +49,7 @@ public final class R {
         public static final int test=0x7f02000a;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int RelativeEditPart=0x7f09001e;
         public static final int RelativePopUpPart=0x7f09000b;
         public static final int WebViewLogin=0x7f090028;
@@ -69,6 +72,29 @@ public final class R {
         public static final int btNext=0x7f090002;
         public static final int btPrevious=0x7f090001;
         public static final int btRemove=0x7f090049;
+=======
+        public static final int RelativePopUpPart=0x7f09000a;
+        public static final int WebViewLogin=0x7f090026;
+        public static final int autoTvLocation=0x7f090018;
+        public static final int bookingLink=0x7f090032;
+        public static final int btAdd=0x7f090044;
+        public static final int btChangeEndDate=0x7f090043;
+        public static final int btChangeEndDate3=0x7f090016;
+        public static final int btChangeEndTime=0x7f090042;
+        public static final int btChangeEndTime3=0x7f090015;
+        public static final int btChangePriority=0x7f090020;
+        public static final int btChangeStartDate=0x7f090040;
+        public static final int btChangeStartDate3=0x7f090013;
+        public static final int btChangeStartTime=0x7f09003f;
+        public static final int btChangeStartTime3=0x7f090012;
+        public static final int btDetail=0x7f090046;
+        public static final int btEditUpdate=0x7f090024;
+        public static final int btLogin=0x7f09002b;
+        public static final int btModify=0x7f090045;
+        public static final int btNext=0x7f090002;
+        public static final int btPrevious=0x7f090001;
+        public static final int btRemove=0x7f090047;
+>>>>>>> 91038900d729320aefa2ed70433070d9e84e6ea7
         public static final int container=0x7f090006;
         public static final int description=0x7f090033;
         public static final int editAlertTime=0x7f090023;
@@ -79,6 +105,7 @@ public final class R {
         public static final int editLinearLayout=0x7f090025;
         public static final int editPriority=0x7f090021;
         public static final int editdetails=0x7f090008;
+<<<<<<< HEAD
         public static final int etPassword=0x7f09002c;
         public static final int etTitle=0x7f09003a;
         public static final int etTitle3=0x7f09000d;
@@ -124,6 +151,53 @@ public final class R {
         public static final int tvType3=0x7f09000e;
         public static final int tvUsername=0x7f090029;
         public static final int welcome_text=0x7f090027;
+=======
+        public static final int etPassword=0x7f09002a;
+        public static final int etTitle=0x7f090039;
+        public static final int etTitle3=0x7f09000c;
+        public static final int etUsername=0x7f090028;
+        public static final int imageView=0x7f090033;
+        public static final int infoPanel=0x7f09002f;
+        public static final int label=0x7f09002e;
+        public static final int layoutSlot=0x7f090048;
+        public static final int linearLayout=0x7f090023;
+        public static final int linearpopup=0x7f090036;
+        public static final int mapName=0x7f09002c;
+        public static final int popup=0x7f090035;
+        public static final int radio_event=0x7f09003c;
+        public static final int radio_event3=0x7f09000f;
+        public static final int radio_event_completed=0x7f09001b;
+        public static final int radio_event_notcompleted=0x7f09001c;
+        public static final int radio_task=0x7f09003d;
+        public static final int radio_task3=0x7f090010;
+        public static final int rgType=0x7f09003b;
+        public static final int rgType2=0x7f09001a;
+        public static final int rgType3=0x7f09000e;
+        public static final int selectLocationPanel=0x7f09002d;
+        public static final int snAlertTime=0x7f090022;
+        public static final int tabcontentscrollview=0x7f090004;
+        public static final int test_image=0x7f09004b;
+        public static final int timeSection=0x7f090000;
+        public static final int timeslotlistlayout=0x7f090005;
+        public static final int title=0x7f090030;
+        public static final int tvEndTime=0x7f090041;
+        public static final int tvEndTime3=0x7f090014;
+        public static final int tvFormTitle=0x7f090037;
+        public static final int tvInfo =0x7f09004a;
+        public static final int tvLocation=0x7f090017;
+        public static final int tvPassword=0x7f090029;
+        public static final int tvStartTime=0x7f09003e;
+        public static final int tvStartTime3=0x7f090011;
+        public static final int tvTime=0x7f090003;
+        public static final int tvTimeLabel=0x7f090049;
+        public static final int tvTitle=0x7f090038;
+        public static final int tvTitle3=0x7f09000b;
+        public static final int tvType=0x7f09003a;
+        public static final int tvType3=0x7f09000d;
+        public static final int tvUsername=0x7f090027;
+        public static final int welcome_text=0x7f090025;
+        public static final int zoomButton=0x7f090034;
+>>>>>>> 91038900d729320aefa2ed70433070d9e84e6ea7
         public static final int zoomcontrolbutton=0x7f090007;
     }
     public static final class layout {

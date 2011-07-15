@@ -4,6 +4,7 @@
 	android:id="@+id/editdetails"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
+<<<<<<< HEAD
 		<LinearLayout
 			android:orientation="vertical"
 			android:background="#5D72B2"
@@ -17,6 +18,12 @@
 			android:layout_gravity="fill_vertical|fill_horizontal|fill"
 			android:layout_width="fill_parent"
 			android:id="@+id/mLinearLayout">
+=======
+		<LinearLayout android:orientation="vertical"
+			android:background="#5D72B2" android:gravity="center_horizontal" android:layout_marginBottom="0dp" 
+			android:layout_marginLeft="0dp" android:layout_marginRight="0dp" 
+			android:saveEnabled="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:layout_gravity="fill_vertical|fill_horizontal|fill" android:layout_width="fill_parent" android:layout_height="fill_parent">
+>>>>>>> 91038900d729320aefa2ed70433070d9e84e6ea7
 
 			<TextView
 				android:layout_height="wrap_content"

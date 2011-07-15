@@ -176,8 +176,8 @@ public class Main extends TabActivity {
 		tabHost.setCurrentTab(0);
 		
 		String s = getResources().getString(R.string.apikeyfield);
-		startService(new Intent(Main.this,IvleDataPuller.class));
-        stopService(new Intent(Main.this,IvleDataPuller.class));		
+		//startService(new Intent(Main.this,IvleDataPuller.class));
+        //stopService(new Intent(Main.this,IvleDataPuller.class));		
 		DatabaseInterface database =
 		DatabaseInterface.getDatabaseInterface(getApplicationContext());
 		database.OpenDatabase(getApplicationContext());
